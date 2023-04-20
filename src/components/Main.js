@@ -1,20 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Navbar from "./Navbar";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import LogIn from "./pages/LogIn";
 import NotFound from "./NotFound";
+import '../index.css';
 
 function Main() {
-  return (
-    <Router>
-      <div >
-        <Navbar />     
-        <main >
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
-  );
+  return <BrowserRouter>
+    <Routes>
+
+      <Route path="/" element={<LogIn/> } />
+      <Route path="*" element={<NotFound/> } />
+
+    </Routes>
+  </BrowserRouter>;
 }
 export default Main;
