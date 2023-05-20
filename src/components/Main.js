@@ -4,10 +4,13 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/Verify";
 import Verified from "./pages/Verified";
-import Forget from "./pages/Forget";
-import ResetP from "./pages/ResetP";
+
 import NotFound from "./pages/NotFound";
 import '../index.css';
+import RecoverAccount from "./pages/RecoverAccount";
+import ResetPassword from "./pages/ResetPassword";
+
+
 
 function Main() {
   return <BrowserRouter>
@@ -17,8 +20,8 @@ function Main() {
       <Route path="/signup" element={<SignUp/> } />
       <Route path="/verify" element={<Verify/> } />
       <Route path="/verified" element={<Verified/> } />
-      <Route path="/forget" element={<Forget/> } />
-      <Route path="/resetp" element={<ResetP/> } />
+      <Route path="/forget" element={<RecoverAccount/> } />
+      <Route path="/resetpassword" element={<ResetPassword/> } />
       <Route path="*" element={<NotFound/> } />
 
     </Routes>
