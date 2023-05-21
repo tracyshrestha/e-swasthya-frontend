@@ -11,7 +11,7 @@ function Forget() {
     <form className=' items-center  sm:h-[310px] sm:w-[600px] h-[505px] w-[350px]  rounded-sm border-[2px] border-[#f8f8f8] p-9 m-9 mt-4 mx-24 bg-white '>
             <div className=' flex  flex-col justify-center items-center'>
               <h2 className='sm:text-[30px] text-[18px] font-bold sm:pt-0  pb-2 sm:px-[52px] px-[0px]  text-gray-700'>Forgot Your  Password?</h2>
-              <h6 className='sm:text-[15px] text-[11px]  sm:pb-5 pb-3 text-gray-400'>Enter your email below to reset it.</h6>
+              <h6 className='sm:text-[15px] text-[11px]  sm:pb-5 pb-3 text-gray-400'>Enter your email below to receive a link to reset it.</h6>
             </div>
 
             <div class=" pb-6">
@@ -25,7 +25,7 @@ function Forget() {
 
             <div className='flex flex-col items-center'>
               <button className='sm:w-[520px] w-[275px] text-center py-3 mt-5 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-xl text-white hover:bold'>
-                Confirm Password
+                Send Link
               </button>
             </div>
             
