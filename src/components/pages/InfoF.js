@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import camera from '../../assets/camera.png'
+import { format, differenceInYears } from 'date-fns';
+import logo from '../../assets/logo.png'
+
 function InfoF() {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0])
-  const [state, setState] = useState({})
+  const [state, setState] = useState({
+
+  })
+
   const inputHandle = (e) => {
     setState({
       ...state,
@@ -13,7 +19,20 @@ function InfoF() {
       [e.target.name]: e.target.value
 
 
-    })}
+    })
+  }
+
+  const [dob, setDob] = useState('');
+  const [age, setAge] = useState('');
+
+  const handleDateChange = (event) => {
+    const selectedDate = new Date(event.target.value);
+    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+    const calculatedAge = differenceInYears(new Date(), selectedDate);
+
+    setDob(formattedDate);
+    setAge(calculatedAge);
+  };
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState('');
@@ -30,12 +49,34 @@ function InfoF() {
   };
   const [sliderValue] = useState(40);
 
+  const handleformat = (event) => {
+    const { name, value } = event.target;
+    const formattedValue = formatCitizenshipNumber(value);
+    setState((prevState) => ({ ...prevState, [name]: formattedValue }));
+  };
+
+  const formatCitizenshipNumber = (value) => {
+    // Remove non-numeric characters from the input
+    const numericValue = value.replace(/[^0-9]/g, '');
+
+    // Format the value with hyphens
+    let formattedValue = '';
+    for (let i = 0; i < numericValue.length; i++) {
+      if (i === 2 || i === 4 || i === 6) {
+        formattedValue += '-';
+      }
+      formattedValue += numericValue[i];
+    }
+
+    return formattedValue;
+  };
+
   //does not allow going to the next step without filling of all fields
   const next = () => {
     if (formNo === 1 && state.selectedFile) {
       setFormNo(formNo + 1)
     }
-    else if (formNo === 2 && state.age && (state.male || state.female || state.other) && state.sliderValue) {
+    else if (formNo === 2 && dob && (state.male || state.female || state.other) && state.sliderValue) {
       setFormNo(formNo + 1)
     } else {
       toast.error('Please fill up all input field')
@@ -46,16 +87,23 @@ function InfoF() {
     setFormNo(formNo - 1)
   }
   const finalSubmit = () => {
-    if (state.citizenship && state.uniquehealthid && state.province && state.district && state.ward && state.city) {
+    if (state.citizenship && state.province && state.district && state.ward && state.city) {
       toast.success('form submit success')
     } else {
       toast.error('Please fill up all input field')
     }
   }
+
+
+
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center  bg-[#E6F4F9]">
       <ToastContainer />
-      <div className="sm:h-[620px] sm:w-[600px] h-[535px] w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 m-9 mt-4 mx-24 bg-white">
+      <div className='flex justify-center items-center '>
+            <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 " />
+          </div>
+      <div className=" sm:h-[620px] sm:w-[600px] h-[535px] w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 sm:m-9 m-0 sm:mx-24 bg-white">
         <div className='flex justify-center items-center'>
           <h2 className='sm:text-[30px] text-[22px] font-bold  text-gray-700'>Fill in your information
           </h2>
@@ -78,11 +126,11 @@ function InfoF() {
 
               <div className='flex justify-center items-center'>
                 {previewImage ? (
-                  <img src={previewImage} alt="Selected Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg"/>
+                  <img src={previewImage} alt="Selected Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg" />
                 ) : (
-                  <img src={camera} alt="Placeholder Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg"/>
+                  <img src={camera} alt="Placeholder Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg" />
                 )}
-            
+
               </div>
 
 
@@ -115,9 +163,28 @@ function InfoF() {
           formNo === 2 && <div>
 
 
-            <div className='flex flex-col mt-0 sm:mt-4 mb-4 '>
-              <label htmlFor="name">Enter Your Age:</label>
-              <input value={state.age} onChange={inputHandle} className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5' type="number" name='age' placeholder='Enter your age' />
+            <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
+              <div className='w-2/3 '>
+                <label htmlFor="name">Enter Your DOB:</label>
+                <div className=' '>
+                  <input
+                    type="date"
+                    id="dob"
+                    value={dob}
+                    onChange={(event) => {
+                      inputHandle(event);
+                      handleDateChange(event);
+                    }}
+                    className=" w-2/3 border border-gray-300 p-2 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="w-1/3">
+                <label htmlFor="dob" className="text-gray-700">Your Age:</label>
+                <div className='pt-1.5 '>
+                  {age && <p className='text-blue-500 font-bold pl-3 '> {age}</p>}
+                </div>
+              </div>
             </div>
 
             <div className='flex flex-col mb-4 '>
@@ -163,14 +230,19 @@ function InfoF() {
         {
           formNo === 3 && <div>
 
-            <div className='flex flex-col mt-0 sm:mt-4 mb-2'>
-              <label htmlFor="name">Citizenship Number:</label>
-              <input value={state.citizenship} onChange={inputHandle} className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5' type="number" name='citizenship' placeholder='Enter your citizenship number' />
-            </div>
-
-            <div className='flex flex-col mb-2'>
-              <label htmlFor="name">Unique Health Id:</label>
-              <input value={state.uniquehealthid} onChange={inputHandle} className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5' type="number" name='uniquehealthid' placeholder='Enter your Unique Health Id' />
+            <div>
+              <div className="flex flex-col mt-0 sm:mt-10 mb-2">
+                <label htmlFor="name">Citizenship Number:</label>
+                <input
+                  value={state.citizenship}
+                  onChange={handleformat}
+                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  type="text"
+                  name="citizenship"
+                  placeholder="Enter your citizenship number"
+                  maxLength={14} 
+                />
+              </div>
             </div>
 
             <div className='flex flex-col mb-4 '> Location:
@@ -182,11 +254,14 @@ function InfoF() {
                     Province:
                     <div className='text-base   '>
                       <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
-                        <option value="">&nbsp;&nbsp;&nbsp;------</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
+                        <option value="">&nbsp;&nbsp;&nbsp;--------------</option>
+                        <option value="">Koshi</option>
+                        <option value="">Madhesh</option>
+                        <option value="">Bagmati</option>
+                        <option value="">Gandaki</option>
+                        <option value="">Lumbini</option>
+                        <option value="">Karnali</option>
+                        <option value="">Sudurpashchim</option>
                       </select>
                     </div>
                   </div>
@@ -197,10 +272,10 @@ function InfoF() {
                     <div className='text-base   '>
                       <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
                         <option value="">&nbsp;&nbsp;&nbsp;------</option>
+                        <option value="">Bhojpur</option>
+                        <option value="">Dhankuta</option>
                         <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
+            
                       </select>
                     </div>
                   </div>
@@ -239,7 +314,7 @@ function InfoF() {
 
               </div>
             </div>
-            <div className='mt-4 gap-3 flex justify-center items-center'>
+            <div className='sm:mt-0 mt-9 gap-3 flex justify-center items-center'>
               <button onClick={pre} className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Previous</button>
               <button onClick={finalSubmit} className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Submit</button>
             </div>
