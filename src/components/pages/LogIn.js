@@ -6,6 +6,9 @@ import lock from '../../assets/lock.png'
 import logo from '../../assets/logo.png'
 
 function LogIn() {
+
+  
+
   return (
     <>
       <div className=' h-screen flex  flex-col justify-center items-center bg-[#E6F4F9] '>
