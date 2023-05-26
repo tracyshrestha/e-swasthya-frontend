@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import camera from '../../assets/camera.png'
 import { format, differenceInYears } from 'date-fns';
 import logo from '../../assets/logo.png'
