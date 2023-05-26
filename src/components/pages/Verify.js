@@ -1,44 +1,42 @@
 import React, { useState } from 'react';
-import laptop from '../../assets/laptop.png'
-import logout from '../../assets/logout.png'
-import email from '../../assets/email.png'
-import lock from '../../assets/lock.png'
+import google from '../../assets/google.png'
+import LoginImage from '../../assets/login.jpg'
 import logo from '../../assets/logo.png'
+
 
 function Verify() {
   return (
     <>
-      <div className=' h-screen flex  flex-col justify-center items-center bg-[#E6F4F9] '>
-     
-        <form className='sm:h-[230px] sm:w-[600px] h-[200px] w-[300px] items-center rounded-sm border-[2px] border-[#3065a1] p-9 m-9 mt-4 mx-24 bg-white '>
-          <div className='items-center'>
-            <h2 className='sm:text-[30px] text-[18px] font-bold sm:pt-1  pb-9 sm:px-[52px] px-[0px]  text-gray-700'>Please Verify Your Email First</h2>
-           
-          </div>
+      <div className='sm:overflow-hidden  overflow-hidden w-screen h-screen grid grid-cols-1 xl:grid-cols-2 bg-[#ffff]'>
 
-          <p className=' grid grid-cols-2'>
-            <button className='flex items-center  flex-col  sm:ml-[0px]  rounded-md '>
-              <span class="inline-flex items-baseline  relative sm:p-3 p-[7px] sm:pl-7 rounded-md border-[2px] hover:bg-[#E6F4F9] border-[#d2d3d4] sm:w-[200px] w-[122px] sm:text-[17px] text-[13px]">
-                <img src={email} alt="" class="self-center w-5 h-5 rounded-full mx-1" />
-                Resend Email
-              </span>
+        <div className='p-4 flex flex-col justify-center items-center  '>
 
-            </button>
-            <button className='flex items-center  flex-col  sm:ml-[0px] ml-6 rounded-md '>
-              <span class="inline-flex items-baseline  relative  sm:p-3 p-[7px] rounded-md border-[2px] hover:bg-[#E6F4F9] sm:pl-12 pl-2  border-[#d4d2d2] sm:w-[200px] w-[100px] sm:text-[17px] text-[13px]">
-                <img src={logout} alt="" class="self-center w-5 h-5 rounded-full mx-1" />
+          <form className='border-[#f8f8f8] h-auto sm:w-[600px] h-auto w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5'>
+            <div className='flex justify-center items-center pb-5'>
+              <img src={logo} alt="" class="self-center h-[70px] sm:h-[80px] pt-2 " />
+            </div>
+            <div className='items-center'>
+              <h6 className='sm:text-[18px] text-[16px] sm:mb-[-8px] font-medium text-gray-500'>ACTIVATE YOUR ACCOUNT</h6>
+              <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>Welcome Srijankc@gmail.com,</h2>
+              <h6 className='sm:text-[17px] text-[15px]  pb-5 text-gray-400'>We have send an email for verification.Please check your inbox.</h6>
+            </div>
+
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 sm:gap-5'>
+              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'>
+                Resend verification link
+              </button>
+              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'>
                 Log out
-              </span>
-            </button>
-          </p>
+              </button>
+            </div>
+          </form>
 
-       
-        </form>
-
-        {/* <div className='flex justify-center items-center '>
-        <img src={laptop} alt="" class="self-center h-[80px] pt-2" />
-          </div>
-         */}
+        </div>
+        <div className='  w-full h-full hidden xl:block mt-[15%] p-[2%] bg-white'>
+          <img className='inline auto' src={LoginImage} alt="/" />
+          {/* <img className='inline 2xl:w-[550px] 2xl:h-[550px]  w-[400px] h-[350px]' src={laptop} alt="/" /> */}
+        </div>
       </div>
     </>
   );
