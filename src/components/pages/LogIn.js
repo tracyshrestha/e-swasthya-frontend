@@ -20,6 +20,35 @@ let InitalState = {
 }
 
 function LogIn() {
+  const [values,setValues] = useState(InitalState);
+ 
+//When form input field changes
+  const Onchange = name => event  => {
+       setValues((prevState) => {
+          return {...prevState , [name] : event.target.value}
+       })
+  }
+
+//On form Submit
+  const onSubmit = async (event) => {
+       event.preventDefault();
+       try {
+           const res = await axios({
+              method : "POST",
+              url : `${process.env.REACT_APP_API}api/auth/authenticate`,
+              data : {
+                  email : values.email,
+                  password : values.password
+              }
+           })
+           const decodedData = jwtDecode(res.data.jwt);
+           console.log(decodedData);
+           
+       }catch(error){
+         console.log(error)
+       }
+  }
+   
   return (
     <>
       <div className='w-screen h-screen grid grid-cols-1 xl:grid-cols-2 bg-[#ffff]'>
