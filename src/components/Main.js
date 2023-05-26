@@ -4,7 +4,8 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/Verify";
 import Verified from "./pages/Verified";
-
+import DoctorPg from "./pages/DoctorPg";
+import InfoF from "./pages/InfoF";
 import NotFound from "./pages/NotFound";
 import '../index.css';
 import RecoverAccount from "./pages/RecoverAccount";
@@ -22,6 +23,8 @@ function Main() {
       <Route path="/verified" element={<Verified/> } />
       <Route path="/forget" element={<RecoverAccount/> } />
       <Route path="/resetpassword" element={<ResetPassword/> } />
+      <Route path="/doctorpg" element={<DoctorPg/> } />
+      <Route path="/infof" element={<InfoF/> } />
       <Route path="*" element={<NotFound/> } />
 
     </Routes>
