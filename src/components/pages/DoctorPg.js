@@ -6,7 +6,7 @@ import search from '../../assets/search.svg'
 function DoctorPg() {
     return (
 
-        <div id='' className='h-full w-full flex-items-center text-grey-600 bg-[#42adf020] '>
+        <div id='docpg' className='h-full w-full flex-items-center text-grey-600 bg-[#42adf020] '>
 
             <div className='flex flex-col  md:items-end md:pr-4 pb-4 bg-white'>
                 <div className='flex md:flex-row flex-col'>
