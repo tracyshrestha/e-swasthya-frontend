@@ -15,8 +15,6 @@ function NotFound() {
           <img src={lost} alt="" class="self-center sm:h-[400px] h-[250px] pt-2" />
         </div>
 
-        
-
       </div>
     </>
   );
