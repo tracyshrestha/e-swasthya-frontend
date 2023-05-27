@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes, Router, Navigate } from 'react-router-dom';
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "../Dashboard/Dashboard";
+import Home from "../Dashboard/UserDashboard/Home";
+import Doctors from "../Dashboard/UserDashboard/Doctors";
 import Verify from "./pages/Verify";
 import Verified from "./pages/Verified";
 import DoctorPg from "./pages/DoctorPg";
@@ -76,6 +78,8 @@ function Main() {
         <Route path="/forget" element={<RecoverAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/uhome" element={<Dashboard><Home/></Dashboard>}/>
+        <Route path="/dashboard/doctors" element={<Dashboard><Doctors/></Dashboard>}/>
 
       </Routes>
       </BrowserRouter>
