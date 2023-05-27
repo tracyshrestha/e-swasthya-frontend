@@ -49,7 +49,7 @@ function SignUp() {
       try {
         setValues((prevState) => {return {...prevState,loading : true}})
         const res = await axios({
-          url: `${process.env.REACT_APP_API}sign-up/admin`,
+          url: `${process.env.REACT_APP_API}api/user/sign-up`,
           method: 'POST',
           data: toSendData
         })
