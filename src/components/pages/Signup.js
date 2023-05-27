@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import axios from "axios";
 
 import Message from "../helpercomponents/Message";
+import {redirect,Link} from 'react-router-dom'
 
 
 let InitalState = {
@@ -19,7 +20,7 @@ let InitalState = {
   loading: false
 }
 
-function SignUp() {
+function SignUp({history}) {
 
   const [values, setValues] = useState(InitalState);
 
@@ -39,8 +40,8 @@ function SignUp() {
     } 
       const toSendData = {
         email: values.email,
-        firstname: values.fname,
-        lastname: values.lname,
+        firstName: values.fname,
+        lastName: values.lname,
         password: values.password,
         rolesId: [parseInt(values.role)]
       }
@@ -49,20 +50,23 @@ function SignUp() {
       try {
         setValues((prevState) => {return {...prevState,loading : true}})
         const res = await axios({
-          url: `${process.env.REACT_APP_API}sign-up/admin`,
+          url: `${process.env.REACT_APP_API}api/user/sign-up`,
           method: 'POST',
           data: toSendData
         })
         if(res) {
+            console.log(res);
             setValues((preState) => {
-               return {...preState,message:res.data.message,loading:false,error:false}
+               return {...preState,message:res.data.message,loading:false,error:false,fname:"",lname:"",password:"",repassword:"",email:""}
             })
+            setTimeout(function () { redirect('/') }, 3000);
         }
       }catch(error){
-          if(error) setValues((prevState) => {return {...prevState,loading:false}})
-          setValues((prevState) => {
-               return {...prevState,message:error.response.data.message,error:true}
-          })
+        if(error) {
+           setValues((prevState) => {
+                return {...prevState,loading:false,message:error?.response?.data?.data[0],error:true}
+           })
+        }
       }}
   
 
@@ -190,7 +194,7 @@ function SignUp() {
 
 
               <div className="flex flex-col items-center">
-                <button type="submit" disabled={values.loading}  className="sm:w-[520px] w-[275px] text-center py-3 mt-5 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-xl text-white hover:bold">
+                <button type="submit"  disabled={values.loading ? true : false} className="sm:w-[520px] w-[275px] text-center py-3 mt-5 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-xl text-white hover:bold">
                   Sign Up
                 </button>
               </div>
@@ -216,12 +220,12 @@ function SignUp() {
               <div className=" text-center sm:mt-[25px] mt-5 text-gray-500 ">
                 <p className="sm: text-l text-[14px] text-center ">
                   Already have an account?{" "}
-                  <a
+                  <Link
                     className="sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] "
-                    href="/"
+                    to="/"
                   >
                     Log in.
-                  </a>
+                  </Link>
                 </p>
               </div>
             </form>

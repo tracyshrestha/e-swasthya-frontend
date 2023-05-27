@@ -2,6 +2,7 @@ import React from 'react';
 import LoginImage from '../../assets/login.jpg'
 import logo from '../../assets/logo.png'
 import Message from '../helpercomponents/Message';
+import { Link } from 'react-router-dom';
 
 function ResetPassword() {
   return (
@@ -19,7 +20,7 @@ function ResetPassword() {
               <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>kcsrijan33@gmail.com,</h2>
               <h6 className='sm:text-[17px] text-[15px]  pb-5 text-gray-400'>Enter your new password and manage your account.</h6>
             </div>
-            <Message />
+            {/* <Message /> */}
             <div class="pb-6">
               <div className='grid grid-cols-1 pb-2'>
                 <div className=' text-left  text-gray-500 '>
@@ -47,7 +48,7 @@ function ResetPassword() {
               </button>
             </div>
             <div className='text-left sm:mt-[25px] mt-5 text-gray-500 '>
-              <p className='sm:text-l text-[14px]'>Remembered your password?  <a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Login here</a></p>
+              <p className='sm:text-l text-[14px]'>Remembered your password?  <Link className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] ' to="/">Login here</Link></p>
             </div>
           </form>
         </div>

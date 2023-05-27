@@ -2,6 +2,7 @@ import React from 'react';
 import LoginImage from '../../assets/login.jpg'
 import logo from '../../assets/logo.png'
 import Message from '../helpercomponents/Message';
+import { Link } from 'react-router-dom';
 
 function RecoverAccount() {
   return (
@@ -19,7 +20,7 @@ function RecoverAccount() {
               <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>Forgot your Password</h2>
               <h6 className='sm:text-[17px] text-[15px]  pb-5 text-gray-400'>Enter your email address below and we'll get you back on track</h6>
             </div>
-          <Message/>
+          {/* <Message/> */}
           <div className='grid grid-cols-2 pb-2'>
           <div className=' text-left  text-gray-400 '>
             <h1 className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your email</h1>
@@ -41,7 +42,7 @@ function RecoverAccount() {
           
 
           <div className='text-left sm:mt-[25px] mt-5 text-gray-500 '>
-            <p className='sm:text-l text-left text-[14px]'><a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Back to login</a></p>
+            <p className='sm:text-l text-left text-[14px]'><Link className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] ' to="/">Back to login</Link></p>
           </div>
         </form>
 

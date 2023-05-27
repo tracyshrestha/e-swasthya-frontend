@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 
 import google from '../../assets/google.png'
 import LoginImage from '../../assets/login.jpg'
@@ -8,6 +8,8 @@ import Message from '../helpercomponents/Message';
 import axios from 'axios';
 import jwt from 'jwt-decode';
 import jwtDecode from 'jwt-decode';
+import { AuthContext } from '../../Store/UserState';
+import { Link } from 'react-router-dom';
 
 
 //Inital state for values
@@ -21,6 +23,7 @@ let InitalState = {
 
 function LogIn() {
   const [values,setValues] = useState(InitalState);
+  const {onLogin,isAuth} = useContext(AuthContext)
  
 //When form input field changes
   const Onchange = name => event  => {
@@ -35,15 +38,13 @@ function LogIn() {
        try {
            const res = await axios({
               method : "POST",
-              url : `${process.env.REACT_APP_API}api/auth/authenticate`,
+              url : `${process.env.REACT_APP_API}api/auth/login`,
               data : {
                   email : values.email,
                   password : values.password
               }
            })
-           const decodedData = jwtDecode(res.data.jwt);
-           console.log(decodedData);
-           
+           console.log(res);
        }catch(error){
          console.log(error)
        }
@@ -85,7 +86,7 @@ function LogIn() {
             <h1 className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your password</h1>
           </div>
           <div className=' text-right  text-gray-400 '>
-            <a className='sm:text-[14px] text-[10px]  relative text-[#42ADF0] hover:text-[#4d82d7] '>Forgot password?</a>
+            <Link className='sm:text-[14px] text-[10px]  relative text-[#42ADF0] hover:text-[#4d82d7] ' to="/forget">Forgot password?</Link>
           </div>
           </div>
 
@@ -115,7 +116,7 @@ function LogIn() {
           </p>
 
           <div className=' text-center sm:mt-[25px] mt-5 text-gray-500 '>
-            <p className='sm:text-l text-[14px] text-center '>Don't have an account yet?  <a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Sign up here</a></p>
+            <p className='sm:text-l text-[14px] text-center '>Don't have an account yet?  <Link className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] ' to="/signup">Sign up here</Link></p>
 
           </div>
         </form>
