@@ -41,13 +41,12 @@ function LogIn() {
                   password : values.password
               }
            })
-           const decodedData = jwtDecode(res.data.jwt);
-           console.log(decodedData);
-           
+           console.log(res);
        }catch(error){
          console.log(error)
        }
   }
+
    
   return (
     <>
