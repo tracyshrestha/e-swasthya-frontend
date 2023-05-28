@@ -35,7 +35,7 @@ function LogIn() {
        try {
            const res = await axios({
               method : "POST",
-              url : `${process.env.REACT_APP_API}api/auth/authenticate`,
+              url : `${process.env.REACT_APP_API}api/auth/login`,
               data : {
                   email : values.email,
                   password : values.password
