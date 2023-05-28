@@ -4,7 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { FaFileMedical } from "react-icons/fa";
 import { MdOutlineVaccines } from "react-icons/md";
 import { BiRightArrow } from "react-icons/bi";
-import {HiPencilAlt} from "react-icons/hi";
+import { HiPencilAlt } from "react-icons/hi";
 
 import user1 from "../../assets/11.jpg";
 
@@ -26,11 +26,7 @@ const Home = () => {
           </div>
           <div className="grid lg:grid-cols-2 gap-4 sm:grid-cols-1">
             <div className="col-span-1 flex flex-col items-center">
-              <img
-                src={user1}
-                className="w-3/4 rounded-full"
-                alt=""
-              />
+              <img src={user1} className="w-3/4 rounded-full" alt="" />
               <button className="flex items-center justify-center mt-2 bg-eswasthya-blue hover:bg-sky-400 text-white py-2 px-4 rounded-md">
                 <span className="mr-1">Edit</span>
                 <HiPencilAlt className="w-4 h-4" />
@@ -84,19 +80,19 @@ const Home = () => {
                 </div>
               </div>
               <div class="ml-8 mr-4 mb-4 ">
-              <div>
-                <h1 class="text-gray-500">Drug Allergies</h1>
-                <span class="block">Paracetamol</span>
-              </div>
-              <div class="mt-7">
-                <h1 class="text-gray-500">Diseases that the patient had</h1>
-                <span class="block">Covid-19 Year: 2022</span>
-                <span class="block">Pneumonia Year: 2023</span>
-              </div>
-              <div className="mt-7">
-                <h1 class="text-gray-500">Operations Done</h1>
-                <span class="block">None</span>
-              </div>
+                <div>
+                  <h1 class="text-gray-500">Drug Allergies</h1>
+                  <span class="block">Paracetamol</span>
+                </div>
+                <div class="mt-7">
+                  <h1 class="text-gray-500">Diseases that the patient had</h1>
+                  <span class="block">Covid-19 Year: 2022</span>
+                  <span class="block">Pneumonia Year: 2023</span>
+                </div>
+                <div className="mt-7">
+                  <h1 class="text-gray-500">Operations Done</h1>
+                  <span class="block">None</span>
+                </div>
                 <div class="mt-7">
                   <button className="flex items-center space-x-2 bg-eswasthya-blue hover:bg-sky-400 text-white py-2 px-4 rounded-md">
                     <span>See More</span>

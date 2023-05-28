@@ -55,7 +55,7 @@ function LogIn() {
 
         <div className='p-4 flex flex-col justify-center items-center   '>
        
-          <form  onSubmit={onSubmit}  className='border-[#f8f8f8] h-auto sm:w-[600px] h-auto w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5'>
+          <form  onSubmit={onSubmit}  className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5'>
           <div className='flex justify-center items-center '>
             <img src={logo} alt="" class="self-center h-[80px] pt-2 " />
           </div>
@@ -85,7 +85,7 @@ function LogIn() {
             <h1 className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your password</h1>
           </div>
           <div className=' text-right  text-gray-400 '>
-            <a className='sm:text-[14px] text-[10px]  relative text-[#42ADF0] hover:text-[#4d82d7] '>Forgot password?</a>
+            <a href='/forget' className='sm:text-[14px] text-[10px]  relative text-[#42ADF0] hover:text-[#4d82d7] '>Forgot password?</a>
           </div>
           </div>
 
@@ -106,7 +106,7 @@ function LogIn() {
           </div>
 
           <p>
-            <button className='flex items-center items-center  flex-col mb-4 sm:ml-[160px] ml-12 rounded-md hover:bg-[#E6F4F9] '>
+            <button className='flex items-center  flex-col mb-4 sm:ml-[160px] ml-12 rounded-md hover:bg-[#E6F4F9] '>
               <span class="inline-flex items-baseline  relative p-3 rounded-md border-[2px] border-[#d4d2d2] sm:w-[200px] w-[172px] sm:text-[17px] text-[13px]">
                 <img src={google} alt="" class="self-center w-5 h-5 rounded-full mx-1" />
                 Log in with Google

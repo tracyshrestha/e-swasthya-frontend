@@ -10,7 +10,7 @@ function RecoverAccount() {
 
         <div className='p-4 flex flex-col justify-center items-center  '>
        
-          <form className='border-[#f8f8f8] h-auto sm:w-[600px] h-auto w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5'>
+          <form className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5'>
           <div className='flex justify-center items-center pb-5'>
             <img src={logo} alt="" class="self-center h-[80px] pt-2 " />
           </div>
@@ -41,7 +41,7 @@ function RecoverAccount() {
           
 
           <div className='text-left sm:mt-[25px] mt-5 text-gray-500 '>
-            <p className='sm:text-l text-left text-[14px]'><a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Back to login</a></p>
+            <p className='sm:text-l text-left text-[14px]'><a href='/' className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Back to login</a></p>
           </div>
         </form>
 
