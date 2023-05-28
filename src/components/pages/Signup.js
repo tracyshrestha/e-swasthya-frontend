@@ -39,8 +39,8 @@ function SignUp() {
     } 
       const toSendData = {
         email: values.email,
-        firstname: values.fname,
-        lastname: values.lname,
+        firstName: values.fname,
+        lastName: values.lname,
         password: values.password,
         rolesId: [parseInt(values.role)]
       }
@@ -54,15 +54,18 @@ function SignUp() {
           data: toSendData
         })
         if(res) {
+            console.log(res);
             setValues((preState) => {
-               return {...preState,message:res.data.message,loading:false,error:false}
+               return {...preState,message:res.data.message,loading:false,error:false,fname:"",lname:"",password:"",repassword:"",email:""}
             })
         }
       }catch(error){
-          if(error) setValues((prevState) => {return {...prevState,loading:false}})
-          setValues((prevState) => {
-               return {...prevState,message:error.response.data.message,error:true}
-          })
+        console.log(error);
+        if(error) {
+           setValues((prevState) => {
+                return {...prevState,loading:false,message:error?.response?.data?.data[0],error:true}
+           })
+        }
       }}
   
 

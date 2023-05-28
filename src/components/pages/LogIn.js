@@ -35,19 +35,18 @@ function LogIn() {
        try {
            const res = await axios({
               method : "POST",
-              url : `${process.env.REACT_APP_API}api/auth/authenticate`,
+              url : `${process.env.REACT_APP_API}api/auth/login`,
               data : {
                   email : values.email,
                   password : values.password
               }
            })
-           const decodedData = jwtDecode(res.data.jwt);
-           console.log(decodedData);
-           
+           console.log(res);
        }catch(error){
          console.log(error)
        }
   }
+
    
   return (
     <>
