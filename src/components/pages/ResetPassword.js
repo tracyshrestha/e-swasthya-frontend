@@ -46,7 +46,7 @@ function ResetPassword() {
                 RESET PASSWORD
               </h6>
               <h2 className="sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-                kcsrijan33@gmail.com,
+                {/* {userEmail} */}
               </h2>
               <h6 className="sm:text-[17px] text-[15px]  pb-5 text-gray-400">
                 Enter your new password and manage your account.

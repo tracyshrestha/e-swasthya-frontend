@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 import { FaUser } from "react-icons/fa";
 import { FaFileMedical } from "react-icons/fa";
@@ -94,10 +95,13 @@ const Home = () => {
                   <span class="block">None</span>
                 </div>
                 <div class="mt-7">
+                <Link to ="/medicalhistory">
                   <button className="flex items-center space-x-2 bg-eswasthya-blue hover:bg-sky-400 text-white py-2 px-4 rounded-md">
                     <span>See More</span>
                     <BiRightArrow className="w-4 h-4" />
                   </button>
+                </Link>
+                  
                 </div>
               </div>
             </div>
@@ -134,10 +138,12 @@ const Home = () => {
                   <span class="block">John Smith</span>
                 </div>
                 <div class="mt-7">
+                <Link to ="/medicalhistory">
                   <button className="flex items-center space-x-2 bg-eswasthya-blue hover:bg-sky-400 text-white py-2 px-4 rounded-md">
                     <span>See More</span>
                     <BiRightArrow className="w-4 h-4" />
                   </button>
+                </Link>
                 </div>
               </div>
             </div>
