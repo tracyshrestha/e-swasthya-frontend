@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import '../index.css';
 import RecoverAccount from "./pages/RecoverAccount";
 import ResetPassword from "./pages/ResetPassword";
+import InfoForm from "./pages/InfoForm";
 import jwtDecode from 'jwt-decode';
 
 
@@ -19,9 +20,10 @@ import jwtDecode from 'jwt-decode';
 function Main() {
 
   const decodedJWT = {
-    isVerified: true,
-    isFormFilled: true,
+    isVerified: false,
+    isFormFilled: false,
     role: 'PATIENT',
+    // role: 'DOCTOR',
   };
 
   return (
@@ -74,7 +76,8 @@ function Main() {
         <Route path="/verify" element={<Verify />} />
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/forget" element={<RecoverAccount />} />
+        <Route path="/InfoForm" element={<InfoForm />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

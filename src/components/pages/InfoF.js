@@ -9,7 +9,8 @@ function InfoF() {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0])
   const [state, setState] = useState({
-
+    sliderValue: '40',
+    gender:'',
   })
 
   const inputHandle = (e) => {
@@ -47,7 +48,7 @@ function InfoF() {
     };
     reader.readAsDataURL(file);
   };
-  const [sliderValue] = useState(40);
+  // const [sliderValue] = useState(40);
 
   const handleformat = (event) => {
     const { name, value } = event.target;
@@ -76,7 +77,7 @@ function InfoF() {
     if (formNo === 1 && state.selectedFile) {
       setFormNo(formNo + 1)
     }
-    else if (formNo === 2 && dob && (state.male || state.female || state.other) && state.sliderValue) {
+    else if (formNo === 2 && dob && state.gender && state.sliderValue) {
       setFormNo(formNo + 1)
     } else {
       toast.error('Please fill up all input field')
@@ -101,8 +102,8 @@ function InfoF() {
     <div className="w-screen h-screen flex flex-col justify-center items-center  bg-[#E6F4F9]">
       <ToastContainer />
       <div className='flex justify-center items-center '>
-            <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 " />
-          </div>
+        <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 " />
+      </div>
       <div className=" sm:h-[620px] sm:w-[600px] h-[535px] w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 sm:m-9 m-0 sm:mx-24 bg-white">
         <div className='flex justify-center items-center'>
           <h2 className='sm:text-[30px] text-[22px] font-bold  text-gray-700'>Fill in your information
@@ -193,9 +194,30 @@ function InfoF() {
               <div className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-700 focus:border-blue-500 block w-full  p-2.5'>
 
                 <div className='text-base'>
-                  <input type="radio" name="employeeStatus" name='male' value="male" checked={state.male} onChange={inputHandle} /> Male <br />
-                  <input type="radio" name="employeeStatus" name='female' value="female" checked={state.female} onChange={inputHandle} /> Female <br />
-                  <input type="radio" name="employeeStatus" name='other' value="other" checked={state.other} onChange={inputHandle} /> Other
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={state.gender === 'male'}
+                    onChange={inputHandle}
+                  />{' '}
+                  Male <br />
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={state.gender === 'female'}
+                    onChange={inputHandle}
+                  />{' '}
+                  Female <br />
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    checked={state.gender === 'other'}
+                    onChange={inputHandle}
+                  />{' '}
+                  Other
                 </div>
               </div>
             </div>
@@ -216,7 +238,7 @@ function InfoF() {
                   <span>0</span>
                   <span>100</span>
                 </div>
-                <p className="text-center">{sliderValue}</p>
+                <p className="text-center">{state.sliderValue}</p>
               </div>
             </div>
 
@@ -240,7 +262,7 @@ function InfoF() {
                   type="text"
                   name="citizenship"
                   placeholder="Enter your citizenship number"
-                  maxLength={14} 
+                  maxLength={14}
                 />
               </div>
             </div>
@@ -275,7 +297,7 @@ function InfoF() {
                         <option value="">Bhojpur</option>
                         <option value="">Dhankuta</option>
                         <option value=""></option>
-            
+
                       </select>
                     </div>
                   </div>
