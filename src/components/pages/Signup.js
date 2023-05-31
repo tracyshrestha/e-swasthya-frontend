@@ -42,7 +42,7 @@ function SignUp() {
         firstName: values.fname,
         lastName: values.lname,
         password: values.password,
-        rolesId: values.role,
+        roleId: values.role,
       }
 
       //API fetching 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import logo from "../../assets/logo.png";
-import camera from '../../assets/camera.png'
+import logo from "../../../assets/logo.png";
+import camera from '../../../assets/camera.png'
 import { format, differenceInYears } from 'date-fns';
 
 
-function InfoFDoc() {
+function EditProfileDoctor() {
 
   const [state, setState] = useState({
     sliderValue: '40',
@@ -83,14 +83,10 @@ function InfoFDoc() {
           </div>
           <div className="flex justify-center items-center">
             <h2 className="items-center sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-              Fill in your information
+              Edit Your Doctor Information
             </h2>
           </div>
-          <div className="flex justify-center items-center">
-            <h6 className="items-center sm:text-[17px] text-[15px]  pb-9 text-gray-400">
-              Just a few more questions before heading to your doctor dashboard.
-            </h6>
-          </div>
+          
 
 
           <div className=" pb-1 mx-3">
@@ -310,4 +306,4 @@ function InfoFDoc() {
   );
 }
 
-export default InfoFDoc;
+export default EditProfileDoctor;
