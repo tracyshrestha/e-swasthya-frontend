@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import doc1 from "../../assets/doc1.svg";
 import pin from "../../assets/pin.svg";
 import search from "../../assets/search.svg";
+import { Link } from "react-router-dom";
 
 function DoctorPg() {
   return (
@@ -73,9 +74,11 @@ function DoctorPg() {
                 eiusmod tempor{" "}
               </h2>
 
-              <button className=" w-[180px] h-full text-center py-2 px-1  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-lg text-white font-bold">
+             <Link to="/addappointment">
+             <button className=" w-[180px] h-full text-center py-2 px-1  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-lg text-white font-bold">
                 Book an appointment
               </button>
+             </Link>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center sm:w-[470px] w-[290px] h-50 p-5 m-5 bg-white border-2 shadow-2xl cursor-pointer border-[#42adf051] boarder-opacity-60 rounded-lg  transistion duration-300 ease-in">

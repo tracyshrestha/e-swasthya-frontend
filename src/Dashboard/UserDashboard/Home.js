@@ -56,6 +56,10 @@ const Home = () => {
                 <span class="block">75 kg</span>
               </div>
               <div class="mt-7">
+                <h1 class="text-gray-500">Blood</h1>
+                <span class="block">B+</span>
+              </div>
+              <div class="mt-7">
                 <h1 class="text-gray-500">Gender</h1>
                 <button className="flex items-center space-x-2 bg-eswasthya-blue text-white py-2 px-4 rounded-md">
                   <span>Male</span>

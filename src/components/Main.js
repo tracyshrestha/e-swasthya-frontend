@@ -19,6 +19,7 @@ import Medication from "../Dashboard/UserDashboard/Medication";
 import MedicalHistory from "../Dashboard/UserDashboard/MedicalHistory";
 import Appointments from "../Dashboard/UserDashboard/Appointments";
 import UserReports from "../Dashboard/UserDashboard/UserReports";
+import BookAppointment from "../Dashboard/UserDashboard/BookAppointment";
 
 import '../index.css';
 import jwtDecode from 'jwt-decode';
@@ -91,6 +92,7 @@ function Main() {
         <Route path="/medication" element={<Dashboard><Medication/></Dashboard>}/>
         <Route path="/medicalhistory" element={<Dashboard><MedicalHistory/></Dashboard>}/>
         <Route path="/appointments" element={<Dashboard><Appointments/></Dashboard>}/>
+        <Route path="/addappointment" element={<Dashboard><BookAppointment/></Dashboard>}/>
         <Route path="/ureports" element={<Dashboard><UserReports/></Dashboard>}/>
       </Routes>
       </BrowserRouter>
