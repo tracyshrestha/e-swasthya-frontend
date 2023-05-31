@@ -11,6 +11,9 @@ import InfoFDoc from "./pages/InfoFDoc";
 import NotFound from "./pages/NotFound";
 import RecoverAccount from "./pages/RecoverAccount";
 import ResetPassword from "./pages/ResetPassword";
+import EditProfilePatient from "./pages/EditProfile/EditProfilePatient";
+import EditProfileDoctor from "./pages/EditProfile/EditProfileDoctor";
+import ArrayInput from "./pages/ArrayInput";
 
 import Dashboard from "../Dashboard/Dashboard";
 import Home from "../Dashboard/UserDashboard/Home";
@@ -32,6 +35,7 @@ function Main() {
     isVerified: true,
     isFormFilled: true,
     role: 'PATIENT',
+    // role: 'DOCTOR',
   };
 
   return (
@@ -64,6 +68,20 @@ function Main() {
             )
           }
         />
+        <Route
+          path="/editprofile"
+          element={
+            decodedJWT.role === 'PATIENT' ? (
+              <EditProfilePatient />
+            ) : (
+              decodedJWT.role === 'DOCTOR' ? (
+                <EditProfileDoctor />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
+            )
+          }
+        />
 
         <Route
           path="/dashboard"
@@ -85,6 +103,7 @@ function Main() {
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="*" element={<NotFound />} />
         {/* for user dashboard but will later make it all render in one place
         aile lai kam chalau code ho! */}
