@@ -22,8 +22,8 @@ function Main() {
   const decodedJWT = {
     isVerified: false,
     isFormFilled: false,
-    role: 'PATIENT',
-    // role: 'DOCTOR',
+    // role: 'PATIENT',
+    role: 'DOCTOR',
   };
 
   return (

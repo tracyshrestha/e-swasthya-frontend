@@ -43,7 +43,12 @@ function LogIn() {
            })
            console.log(res);
        }catch(error){
-         console.log(error)
+         console.log(error);
+         if(error) {
+          setValues((prevState) => {
+               return {...prevState,loading:false,message:error?.response?.data?.data[0],error:true}
+          })
+       }
        }
   }
 
@@ -66,6 +71,7 @@ function LogIn() {
           
       
             {/* <Message/> */}
+            {values.error || values.message ? <Message message={values.message} error={values.error} /> : null}
           <div class="pb-6">
          
           <div className='grid grid-cols-2 pb-2'>

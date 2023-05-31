@@ -13,7 +13,7 @@ let InitalState = {
   email: '',
   password: '',
   repassword: '',
-  role: 1,
+  role: '1',
   error: false,
   message: '',
   loading: false
@@ -42,7 +42,7 @@ function SignUp() {
         firstName: values.fname,
         lastName: values.lname,
         password: values.password,
-        rolesId: [parseInt(values.role)]
+        rolesId: values.role,
       }
 
       //API fetching 
