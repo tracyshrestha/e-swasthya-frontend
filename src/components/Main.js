@@ -12,7 +12,9 @@ import NotFound from "./pages/NotFound";
 import '../index.css';
 import RecoverAccount from "./pages/RecoverAccount";
 import ResetPassword from "./pages/ResetPassword";
-import InfoForm from "./pages/InfoForm";
+import EditProfilePatient from "./pages/EditProfile/EditProfilePatient";
+import EditProfileDoctor from "./pages/EditProfile/EditProfileDoctor";
+import ArrayInput from "./pages/ArrayInput";
 import jwtDecode from 'jwt-decode';
 
 
@@ -20,10 +22,10 @@ import jwtDecode from 'jwt-decode';
 function Main() {
 
   const decodedJWT = {
-    isVerified: false,
-    isFormFilled: false,
-    // role: 'PATIENT',
-    role: 'DOCTOR',
+    isVerified: true,
+    isFormFilled: true,
+    role: 'PATIENT',
+    // role: 'DOCTOR',
   };
 
   return (
@@ -56,6 +58,20 @@ function Main() {
             )
           }
         />
+        <Route
+          path="/editprofile"
+          element={
+            decodedJWT.role === 'PATIENT' ? (
+              <EditProfilePatient />
+            ) : (
+              decodedJWT.role === 'DOCTOR' ? (
+                <EditProfileDoctor />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
+            )
+          }
+        />
 
         <Route
           path="/dashboard"
@@ -76,8 +92,8 @@ function Main() {
         <Route path="/verify" element={<Verify />} />
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/InfoForm" element={<InfoForm />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

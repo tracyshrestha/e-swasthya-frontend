@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import logo from "../../assets/logo.png";
-import camera from '../../assets/camera.png'
+import logo from "../../../assets/logo.png";
+import camera from '../../../assets/camera.png'
 import { format, differenceInYears } from 'date-fns';
 
 
-function InfoFDoc() {
+function EditProfilePatient() {
 
   const [state, setState] = useState({
     sliderValue: '40',
@@ -83,14 +83,10 @@ function InfoFDoc() {
           </div>
           <div className="flex justify-center items-center">
             <h2 className="items-center sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-              Fill in your information
+              Edit your Patient Information
             </h2>
           </div>
-          <div className="flex justify-center items-center">
-            <h6 className="items-center sm:text-[17px] text-[15px]  pb-9 text-gray-400">
-              Just a few more questions before heading to your doctor dashboard.
-            </h6>
-          </div>
+          
 
 
           <div className=" pb-1 mx-3">
@@ -149,82 +145,9 @@ function InfoFDoc() {
                   </div>
                 </div>
 
-                <div className="relative">
-                  <label htmlfor="role" class="block mb-2 text-sm  text-gray-400 dark:text-white"> Select your specialization</label>
-                  <select id="" required class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option selected value="">Select</option>
-                    <option value="">General practitioner</option>
-                    <option value="">Internal medicine</option>
-                    <option value="">Family medicine</option>
-                    <option value="">Neurologist</option>
-                    <option value="">Pediatrician</option>
-                    <option value="">Pediatrics</option>
-                    <option value="">Psychiatrist</option>
-                    <option value="">Obstetrics and gynaecology</option>
-                    <option value=""></option>
-                  </select>
-                </div>
 
-                <div>
-                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                    <label htmlFor="name">Citizenship Number:</label>
-                    <input required
-                      value={state.citizenship}
-                      onChange={handleformat}
-                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      type="text"
-                      name="citizenship"
-                      placeholder="Enter your citizenship number"
-                      maxLength={14}
-                    />
-                  </div>
-                </div>
+                
 
-                <div>
-                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                    <label htmlFor="name">Enter your Phone Number:</label>
-                    <input required
-                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                     type="number"
-                      placeholder="Enter your phone number"
-                      maxLength={10}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                    <label htmlFor="name">Enter your Liscence Number:</label>
-                    <input required
-                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                     type="number"
-                      placeholder="Enter your liscence number"
-                      maxLength={10}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                    <label htmlFor="name">Enter your Experience</label>
-                    <textarea required
-                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      placeholder="Enter your experience"
-                      rows='4' 
-                      maxLength={10}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                    <label htmlFor="name">Enter your Education</label>
-                    <textarea required
-                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      placeholder="Enter your education"
-                      rows='4' 
-                      maxLength={10}
-                    />
-                  </div>
-                </div>
 
 
                 <div className='flex flex-col mb-4 '> Location:
@@ -310,4 +233,4 @@ function InfoFDoc() {
   );
 }
 
-export default InfoFDoc;
+export default EditProfilePatient;
