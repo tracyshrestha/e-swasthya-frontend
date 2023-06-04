@@ -21,7 +21,6 @@ function EditProfilePatient() {
     })
   }
 
-  
 
   const [dob, setDob] = useState('');
   const [age, setAge] = useState('');
@@ -77,16 +76,16 @@ function EditProfilePatient() {
 
     <div className="w-screen h-full flex  justify-center items-center bg-[#E6F4F9]">
       <div className="p-4 flex justify-center items-center">
-        <form className="h-auto sm:w-[750px]  w-[350px] items-center rounded-sm  p-8 m-8 mt-1 mx-24  bg-white ">
+        <form className="h-full sm:w-[750px]  w-[350px] items-center rounded-sm  p-8 m-8 mt-1 mx-24  bg-white ">
           <div className="flex justify-center items-center ">
             <img src={logo} alt="" class="self-center h-[80px] pt-2 " />
           </div>
           <div className="flex justify-center items-center">
             <h2 className="items-center sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-              Edit your Patient Information
+              Edit Your Patient Information
             </h2>
           </div>
-          
+
 
 
           <div className=" pb-1 mx-3">
@@ -144,11 +143,101 @@ function EditProfilePatient() {
                     </div>
                   </div>
                 </div>
+               
+                <div>
+                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                    <label htmlFor="name">Citizenship Number:</label>
+                    <input required
+                      value={state.citizenship}
+                      onChange={handleformat}
+                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      type="text"
+                      name="citizenship"
+                      placeholder="Enter your citizenship number"
+                      maxLength={14}
+                    />
+                  </div>
+                </div>
 
+                <div>
+                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                    <label htmlFor="name">Enter your Phone Number:</label>
+                    <input required
+                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      type="number"
+                      placeholder="Enter your phone number"
+                      maxLength={10}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                    <label htmlFor="name">Enter your Blood Type:</label>
+                    <input required
+                      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      type="text"
+                      placeholder="Enter your phone number"
+                      maxLength={3}
+                    />
+                  </div>
+                </div>
+
+
+                <div className='flex flex-col mb-4 '>
+                  <label  >Select Your Gender:</label>
+
+                  <div className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-700 focus:border-blue-500 block w-full  p-2.5'>
+
+                    <div className='text-base'>
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="male"
+                        checked={state.gender === 'male'}
+                        onChange={inputHandle}
+                      />{' '}
+                      Male <br />
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="female"
+                        checked={state.gender === 'female'}
+                        onChange={inputHandle}
+                      />{' '}
+                      Female <br />
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="other"
+                        checked={state.gender === 'other'}
+                        onChange={inputHandle}
+                      />{' '}
+                      Other
+                    </div>
+                  </div>
+                </div>
 
                 
+            <div className="flex flex-col mb-2  ">
+              <label htmlFor="batch">Select Your Weight:</label>
+              <div className="border border-gray-300 rounded-lg p-2.5">
 
-
+                <input name='sliderValue' id='dept'
+                  type="range"
+                  min="0"
+                  max="200"
+                  value={state.sliderValue}
+                  onChange={inputHandle}
+                  className="w-full appearance-none h-3 rounded-full overflow-hidden bg-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                />
+                <div className="flex justify-between">
+                  <span>0</span>
+                  <span>100</span>
+                </div>
+                <p className="text-center">{state.sliderValue}</p>
+              </div>
+            </div>
 
                 <div className='flex flex-col mb-4 '> Location:
                   <div className='flex flex-wrap justify-center items-center bg-white p-2 text-center w-full '>
@@ -158,7 +247,7 @@ function EditProfilePatient() {
                       <div className=' sm:mb-4 sm:mr-4 mb-3 mr-1 border border-gray-300 rounded-lg' >
                         Province:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;--------------</option>
                             <option value="">Koshi</option>
                             <option value="">Madhesh</option>
@@ -171,11 +260,12 @@ function EditProfilePatient() {
                         </div>
                       </div>
                     </div>
+
                     <div className='text-base w-1/2 '>
                       <div className='sm:mb-3 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                         District:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value="">Bhojpur</option>
                             <option value="">Dhankuta</option>
@@ -187,9 +277,9 @@ function EditProfilePatient() {
                     </div>
                     <div className='text-base w-1/2 '>
                       <div className='sm:mt-4 sm:mr-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                        Ward:
+                        Municipality:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.municipality} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -201,9 +291,9 @@ function EditProfilePatient() {
                     </div>
                     <div className='text-base w-1/2 '>
                       <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                        City:
+                        Ward:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.city} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -214,12 +304,24 @@ function EditProfilePatient() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-center">
-                      <button type="submit" className="sm:w-[520px] w-[275px] text-center py-3 mt-5 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-xl text-white hover:bold">
-                        Submit
-                      </button>
+                    <div className='text-base w-1/2 '>
+                      <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
+                        Street Name:
+                        <div className='text-base   '>
+                          <input required
+                            className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]'
+                            type="text"
+                            placeholder="Enter your  Street Name"
+                            maxLength={10}
+                          />
+                        </div>
+                      </div>
                     </div>
+
                   </div>
+                </div>
+                <div className='sm:mt-0 mt-9 gap-3 flex justify-center items-center'>
+                  <button className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Submit</button>
                 </div>
               </div>
             </div>

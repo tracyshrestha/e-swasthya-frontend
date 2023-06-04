@@ -6,7 +6,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/VerifyAccPages/Verify";
 import Verified from "./pages/VerifyAccPages/Verified";
-import InfoF from "./pages/InfoPages/InfoF";
+import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
 import NotFound from "./pages/NotFound";
 import RecoverAccount from "./pages/RecoverPages/RecoverAccount";
@@ -38,8 +38,8 @@ function Main() {
   const decodedJWT = {
     isVerified: true,
     isFormFilled: true,
-    // role: 'PATIENT',
-    role: 'DOCTOR',
+    role: 'PATIENT',
+    // role: 'DOCTOR',
   };
 
   return (
@@ -62,7 +62,7 @@ function Main() {
           path="/info"
           element={
             decodedJWT.role === 'PATIENT' ? (
-              <InfoF />
+              <InfoP />
             ) : (
               decodedJWT.role === 'DOCTOR' ? (
                 <InfoFDoc />

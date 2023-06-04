@@ -5,7 +5,7 @@ import logo from "../../../assets/logo.png";
 
 function ReportVaccine() {
   const [state, setState] = useState({
-  
+
   })
 
   const inputHandle = (e) => {
@@ -15,7 +15,7 @@ function ReportVaccine() {
     });
     setSelectedDate(e.target.value);
   };
-  
+
   const [selectedDate, setSelectedDate] = useState('');
 
 
@@ -29,7 +29,7 @@ function ReportVaccine() {
           </div>
           <div className="flex justify-center items-center">
             <h2 className="items-center sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-            Upload Report
+              Vaccine Report
             </h2>
           </div>
 
@@ -38,18 +38,31 @@ function ReportVaccine() {
           <div className=" pb-1 mx-3">
             <div className="relative">
               <div className=''>
-                <div className='flex flex-col mb-2'>
 
-                  
+              <div className=' text-left  text-gray-400 '>
+                      <h1 className='sm:text-[15px] text-[12px] pb-2 relative text-gray-400'>Enter Report name:</h1>
+                      <input
+                        required
+                        type="text"
+                        id="email-address-icon"
+                        class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
+                        placeholder="Firstname"
+                        
+
+                      ></input>
+                    </div>
+                <div className=''>
+
+                  <input
+                    type="date"
+                    name="date"
+                    value={selectedDate}
+                    onChange={inputHandle}
+                  />
 
                 </div>
 
-                <input
-  type="date"
-  name="date"
-  value={selectedDate}
-  onChange={inputHandle}
-/>
+
 
 
                 <div className="relative">
@@ -72,7 +85,7 @@ function ReportVaccine() {
                   <div className="flex flex-col mt-0 sm:mt-3 mb-2">
                     <label htmlFor="name">Citizenship Number:</label>
                     <input required
-                     
+
                       className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       type="text"
                       name="citizenship"
@@ -137,21 +150,21 @@ function ReportVaccine() {
                         type="radio"
                         name="gender"
                         value="male"
-                    
+
                       />{' '}
                       Male <br />
                       <input
                         type="radio"
                         name="gender"
                         value="female"
-                     
+
                       />{' '}
                       Female <br />
                       <input
                         type="radio"
                         name="gender"
                         value="other"
-                     
+
                       />{' '}
                       Other
                     </div>
