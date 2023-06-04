@@ -1,43 +1,89 @@
+// import React, { useState } from 'react';
+
+// const FileInput = () => {
+//   const [files, setFiles] = useState([]);
+
+//   const handleFileChange = (e) => {
+//     const selectedFiles = Array.from(e.target.files);
+//     setFiles([...files, ...selectedFiles]);
+//   };
+
+//   const handleRemoveFile = (index) => {
+//     const newFiles = [...files];
+//     newFiles.splice(index, 1);
+//     setFiles(newFiles);
+//   };
+
+//   return (
+//     <div>
+//       <input type="file" multiple onChange={handleFileChange} />
+//       <ul>
+//         {files.map((file, index) => (
+//           <li key={index}>
+//             {file.name}
+//             <button onClick={() => handleRemoveFile(index)}>Remove</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default FileInput;
+
+
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const ArrayInput = () => {
-  const [values, setValues] = useState([]);
-  const [currentValue, setCurrentValue] = useState('');
+const FileUpload = () => {
+  const [files, setFiles] = useState([]);
 
-  const handleInputChange = (e) => {
-    setCurrentValue(e.target.value);
+  const handleFileChange = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setFiles(selectedFiles);
   };
 
-  const handleAddValue = () => {
-    if (currentValue !== '') {
-      setValues([...values, currentValue]);
-      setCurrentValue('');
+  const handleRemoveFile = (index) => {
+    const newFiles = [...files];
+    newFiles.splice(index, 1);
+    setFiles(newFiles);
+  };
+
+  const handleAddFiles = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
+
+      // Make an API request to upload the files using formData
+      const response = await axios.post(`${process.env.REACT_APP_API}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Files uploaded:', response.data);
+    } catch (error) {
+      console.log('Error uploading files:', error);
     }
-  };
-
-  const handleRemoveValue = (index) => {
-    const newValues = [...values];
-    newValues.splice(index, 1);
-    setValues(newValues);
   };
 
   return (
     <div>
-      <div>
-        <input
-          type="text"
-          value={currentValue}
-          onChange={handleInputChange}
-          placeholder="Enter a value"
-        />
-        <button onClick={handleAddValue}>Add</button>
-      </div>
-
+      <input type="file" multiple onChange={handleAddFiles} />
+      <button onClick={handleSubmit}>Upload</button>
       <ul>
-        {values.map((value, index) => (
+        {files.map((file, index) => (
           <li key={index}>
-            {value}
-            <button onClick={() => handleRemoveValue(index)}>Remove</button>
+            {file.name}
+            <button onClick={() => handleRemoveFile(index)}>Remove</button>
           </li>
         ))}
       </ul>
@@ -45,4 +91,4 @@ const ArrayInput = () => {
   );
 };
 
-export default ArrayInput;
+export default FileUpload;

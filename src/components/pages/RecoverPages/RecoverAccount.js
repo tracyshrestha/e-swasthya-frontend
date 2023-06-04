@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginImage from '../../assets/login.jpg'
-import logo from '../../assets/logo.png'
-import Message from '../helpercomponents/Message';
+import LoginImage from '../../../assets/login.jpg'
+import logo from '../../../assets/logo.png'
+import Message from '../../helpercomponents/Message';
 import { useState } from 'react';
 import axios from 'axios';
 

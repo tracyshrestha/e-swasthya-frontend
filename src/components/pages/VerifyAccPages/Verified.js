@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ver from '../../assets/ver.svg'
+import ver from '../../../assets/ver.svg'
 
 
 function Verified() {

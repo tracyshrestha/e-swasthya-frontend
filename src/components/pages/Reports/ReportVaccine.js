@@ -1,77 +1,23 @@
 import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
-import camera from '../../../assets/camera.png'
-import { format, differenceInYears } from 'date-fns';
 
 
-function EditProfileDoctor() {
 
+function ReportVaccine() {
   const [state, setState] = useState({
-    sliderValue: '40',
-    gender: '',
+  
   })
 
   const inputHandle = (e) => {
     setState({
       ...state,
-
       [e.target.name]: e.target.value
-
-
-    })
-  }
-
-
-
-  const [dob, setDob] = useState('');
-  const [age, setAge] = useState('');
-
-  const handleDateChange = (event) => {
-    const selectedDate = new Date(event.target.value);
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-    const calculatedAge = differenceInYears(new Date(), selectedDate);
-
-    setDob(formattedDate);
-    setAge(calculatedAge);
+    });
+    setSelectedDate(e.target.value);
   };
+  
+  const [selectedDate, setSelectedDate] = useState('');
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState('');
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // const [sliderValue] = useState(40);
-
-  const handleformat = (event) => {
-    const { name, value } = event.target;
-    const formattedValue = formatCitizenshipNumber(value);
-    setState((prevState) => ({ ...prevState, [name]: formattedValue }));
-  };
-
-  const formatCitizenshipNumber = (value) => {
-    // Remove non-numeric characters from the input
-    const numericValue = value.replace(/[^0-9]/g, '');
-
-    // Format the value with hyphens
-    let formattedValue = '';
-    for (let i = 0; i < numericValue.length; i++) {
-      if (i === 2 || i === 4 || i === 6) {
-        formattedValue += '-';
-      }
-      formattedValue += numericValue[i];
-    }
-
-    return formattedValue;
-  };
 
   return (
 
@@ -83,7 +29,7 @@ function EditProfileDoctor() {
           </div>
           <div className="flex justify-center items-center">
             <h2 className="items-center sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600">
-              Edit Your Doctor Information
+            Upload Report
             </h2>
           </div>
 
@@ -94,59 +40,20 @@ function EditProfileDoctor() {
               <div className=''>
                 <div className='flex flex-col mb-2'>
 
-                  <div className='flex justify-center items-center'>
-                    {previewImage ? (
-                      <img src={previewImage} alt="Selected Image" class="self-center h-[160px] p-5 border border-gray-300  rounded-lg" />
-                    ) : (
-                      <img src={camera} alt="Placeholder Image" class="self-center h-[160px] p-5 border border-gray-300  rounded-lg" />
-                    )}
-
-                  </div>
-
-
-                  <label htmlFor="batch" className='mt-0 sm:mt-10'>Upload Photo</label>
-                  <input
-                    id="uploadInput" required
-                    value={state.selectedFile}
-                    onChange={(event) => {
-                      inputHandle(event);
-                      handleFileChange(event);
-                    }}
-                    multiple={false}
-                    accept="image/*"
-                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    type="file"
-                    name="selectedFile"
-                  />
+                  
 
                 </div>
 
-                <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
-                  <div className='w-2/3 '>
-                    <label htmlFor="name">Enter Your DOB:</label>
-                    <div className=' '>
-                      <input
-                        type="date"
-                        id="dob" required
-                        value={dob}
-                        onChange={(event) => {
-                          inputHandle(event);
-                          handleDateChange(event);
-                        }}
-                        className=" w-2/3 border border-gray-300 p-2 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-1/3">
-                    <label htmlFor="dob" className="text-gray-700">Your Age:</label>
-                    <div className='pt-1.5 '>
-                      {age && <p className='text-blue-500 font-bold pl-3 '> {age}</p>}
-                    </div>
-                  </div>
-                </div>
+                <input
+  type="date"
+  name="date"
+  value={selectedDate}
+  onChange={inputHandle}
+/>
+
 
                 <div className="relative">
-                  <label htmlfor="role" class="block mb-2 text-sm  text-gray-400 dark:text-white"> Select your specialization</label>
+                  <label htmlfor="role" class="block mb-2 text-sm  text-gray-400 dark:text-white"> Select Report Type</label>
                   <select id="" required class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option selected value="">Select</option>
                     <option value="">General practitioner</option>
@@ -165,8 +72,7 @@ function EditProfileDoctor() {
                   <div className="flex flex-col mt-0 sm:mt-3 mb-2">
                     <label htmlFor="name">Citizenship Number:</label>
                     <input required
-                      value={state.citizenship}
-                      onChange={handleformat}
+                     
                       className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       type="text"
                       name="citizenship"
@@ -231,24 +137,21 @@ function EditProfileDoctor() {
                         type="radio"
                         name="gender"
                         value="male"
-                        checked={state.gender === 'male'}
-                        onChange={inputHandle}
+                    
                       />{' '}
                       Male <br />
                       <input
                         type="radio"
                         name="gender"
                         value="female"
-                        checked={state.gender === 'female'}
-                        onChange={inputHandle}
+                     
                       />{' '}
                       Female <br />
                       <input
                         type="radio"
                         name="gender"
                         value="other"
-                        checked={state.gender === 'other'}
-                        onChange={inputHandle}
+                     
                       />{' '}
                       Other
                     </div>
@@ -263,7 +166,7 @@ function EditProfileDoctor() {
                       <div className=' sm:mb-4 sm:mr-4 mb-3 mr-1 border border-gray-300 rounded-lg' >
                         Province:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
+                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction'  >
                             <option value="">&nbsp;&nbsp;&nbsp;--------------</option>
                             <option value="">Koshi</option>
                             <option value="">Madhesh</option>
@@ -280,7 +183,7 @@ function EditProfileDoctor() {
                       <div className='sm:mb-3 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                         District:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
+                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value="">Bhojpur</option>
                             <option value="">Dhankuta</option>
@@ -294,7 +197,7 @@ function EditProfileDoctor() {
                       <div className='sm:mt-4 sm:mr-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                         Ward:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
+                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction'  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -308,7 +211,7 @@ function EditProfileDoctor() {
                       <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                         City:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.city} onChange={inputHandle}  >
+                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction'   >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -338,4 +241,4 @@ function EditProfileDoctor() {
   );
 }
 
-export default EditProfileDoctor;
+export default ReportVaccine;

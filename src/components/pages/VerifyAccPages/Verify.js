@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import google from '../../assets/google.png'
-import LoginImage from '../../assets/login.jpg'
-import logo from '../../assets/logo.png'
+
+import LoginImage from '../../../assets/login.jpg'
+import logo from '../../../assets/logo.png'
 
 
 function Verify() {

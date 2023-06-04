@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-import camera from '../../assets/camera.png'
+import camera from '../../../assets/camera.png'
 import { format, differenceInYears } from 'date-fns';
-import logo from '../../assets/logo.png'
+import logo from '../../../assets/logo.png'
 
-function InfoF() {
+function InfoFDoc() {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0])
   const [state, setState] = useState({
     sliderValue: '40',
-    gender:'',
+    gender: '',
+    yourArrayProperty: [],
   })
 
   const inputHandle = (e) => {
@@ -22,6 +23,14 @@ function InfoF() {
 
     })
   }
+
+  const handleArrayInputChange = (values) => {
+    setState({
+      ...state,
+      yourArrayProperty: values,
+      currentValue: ''
+    });
+  };
 
   const [dob, setDob] = useState('');
   const [age, setAge] = useState('');
@@ -74,10 +83,10 @@ function InfoF() {
 
   //does not allow going to the next step without filling of all fields
   const next = () => {
-    if (formNo === 1 && state.selectedFile) {
+    if (formNo === 1) {
       setFormNo(formNo + 1)
     }
-    else if (formNo === 2 && dob && state.gender && state.sliderValue) {
+    else if (formNo === 2) {
       setFormNo(formNo + 1)
     } else {
       toast.error('Please fill up all input field')
@@ -99,14 +108,14 @@ function InfoF() {
 
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center  bg-[#E6F4F9]">
+    <div className="w-screen h-full pb-[80px] flex flex-col justify-center items-center  bg-[#E6F4F9]">
       <ToastContainer />
       <div className='flex justify-center items-center '>
         <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 " />
       </div>
-      <div className=" sm:h-[620px] sm:w-[600px] h-[535px] w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 sm:m-9 m-0 sm:mx-24 bg-white">
+      <div className="  sm:w-[600px] sm:h-full h-full w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 sm:m-9 m-0 sm:mx-24 bg-white">
         <div className='flex justify-center items-center'>
-          <h2 className='sm:text-[30px] text-[22px] font-bold  text-gray-700'>Fill in your information
+          <h2 className='sm:text-[30px] text-[22px] font-bold  text-gray-700'>Fill In Your InformationD
           </h2>
         </div>
         <div className='flex justify-center items-center'>
@@ -124,35 +133,57 @@ function InfoF() {
           formNo === 1 && <div>
 
             <div className='flex flex-col mb-2'>
-
-              <div className='flex justify-center items-center'>
-                {previewImage ? (
-                  <img src={previewImage} alt="Selected Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg" />
-                ) : (
-                  <img src={camera} alt="Placeholder Image" class="self-center h-[160px] p-5  mt-0 sm:mt-10 border border-gray-300  rounded-lg" />
-                )}
-
+              
+              <div>
+                <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                  <label htmlFor="name">Enter your Phone Number:</label>
+                  <input required
+                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    type="number"
+                    placeholder="Enter your phone number"
+                    maxLength={10}
+                  />
+                </div>
               </div>
-
-
-              <label htmlFor="batch" className='mt-0 sm:mt-10'>Upload Photo</label>
-              <input
-                id="uploadInput"
-                value={state.selectedFile}
-                onChange={(event) => {
-                  inputHandle(event);
-                  handleFileChange(event);
-                }}
-                multiple={false}
-                accept="image/*"
-                className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                type="file"
-                name="selectedFile"
-              />
+              <div>
+              <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                <label htmlFor="name">Citizenship Number:</label>
+                <input
+                  value={state.citizenship}
+                  onChange={handleformat}
+                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  type="text"
+                  name="citizenship"
+                  placeholder="Enter your citizenship number"
+                  maxLength={14}
+                />
+              </div>
+            </div>
+              <div>
+                <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                  <label htmlFor="name">Enter your NMC Liscence Number:</label>
+                  <input required
+                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    type="number"
+                    placeholder="Enter your liscence number"
+                    maxLength={10}
+                  />
+                </div>
+              </div>
 
             </div>
 
-
+            <div>
+              <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                <label htmlFor="name">Enter your Education</label>
+                <textarea required
+                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Enter your education"
+                  rows='4'
+                  maxLength={10}
+                />
+              </div>
+            </div>
 
             <div className='mt-0 sm:mt-10 flex justify-center items-center'>
               <button onClick={next} className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Next</button>
@@ -188,6 +219,32 @@ function InfoF() {
               </div>
             </div>
 
+            <div className="relative">
+              <label htmlfor="role" class="block mb-2 text-sm  text-gray-400 dark:text-white"> Select your specialization</label>
+              <select id="" required class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option selected value="">Select</option>
+                <option value="">General practitioner</option>
+                <option value="">Internal medicine</option>
+                <option value="">Family medicine</option>
+                <option value="">Neurologist</option>
+                <option value="">Pediatrician</option>
+                <option value="">Pediatrics</option>
+                <option value="">Psychiatrist</option>
+                <option value="">Obstetrics and gynaecology</option>
+                <option value=""></option>
+              </select>
+            </div>
+            <div>
+              <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                <label htmlFor="name">Enter your Experience</label>
+                <textarea required
+                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Enter your experience"
+                  rows='4'
+                  maxLength={10}
+                />
+              </div>
+            </div>
             <div className='flex flex-col mb-4 '>
               <label  >Select Your Gender:</label>
 
@@ -220,27 +277,11 @@ function InfoF() {
                   Other
                 </div>
               </div>
+
+
             </div>
 
-            <div className="flex flex-col mb-2  ">
-              <label htmlFor="batch">Select Your Weight:</label>
-              <div className="border border-gray-300 rounded-lg p-2.5">
 
-                <input name='sliderValue' id='dept'
-                  type="range"
-                  min="0"
-                  max="200"
-                  value={state.sliderValue}
-                  onChange={inputHandle}
-                  className="w-full appearance-none h-3 rounded-full overflow-hidden bg-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-                />
-                <div className="flex justify-between">
-                  <span>0</span>
-                  <span>100</span>
-                </div>
-                <p className="text-center">{state.sliderValue}</p>
-              </div>
-            </div>
 
             <div className='mt-0 sm:mt-11 gap-3 flex justify-center items-center'>
               <button onClick={pre} className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Previous</button>
@@ -253,20 +294,38 @@ function InfoF() {
           formNo === 3 && <div>
 
             <div>
-              <div className="flex flex-col mt-0 sm:mt-10 mb-2">
-                <label htmlFor="name">Citizenship Number:</label>
-                <input
-                  value={state.citizenship}
-                  onChange={handleformat}
-                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            <label htmlFor="name">Associated Hospitals:</label>
+            <div className="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5">
+              
+              <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
+              
+                <input className="border border-blue-500 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-2/3 py-2.5"
                   type="text"
-                  name="citizenship"
-                  placeholder="Enter your citizenship number"
-                  maxLength={14}
+                  value={state.currentValue}
+                  onChange={inputHandle}
+                  name="currentValue"
+                  placeholder="Enter a value"
                 />
+                <button className='border border-gray-500 rounded-lg my-1.5 px-6 ml-6  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange([...state.yourArrayProperty, state.currentValue])}>
+                  Add
+                </button>
               </div>
-            </div>
+              
 
+              <ul>
+                {state.yourArrayProperty.map((value, index) => (
+                  <li key={index}>
+                    {value}
+                    <button className='border border-gray-500 rounded-lg p-1 px-4 ml-6 mb-1  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange(state.yourArrayProperty.filter((_, i) => i !== index))}>
+                      Remove
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+</div>
+
+          
             <div className='flex flex-col mb-4 '> Location:
               <div className='flex flex-wrap justify-center items-center bg-white p-2 text-center w-full '>
 
@@ -304,6 +363,20 @@ function InfoF() {
                 </div>
                 <div className='text-base w-1/2 '>
                   <div className='sm:mt-4 sm:mr-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
+                  Municipality:
+                    <div className='text-base   '>
+                      <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.municipality} onChange={inputHandle}  >
+                        <option value="">&nbsp;&nbsp;&nbsp;------</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className='text-base w-1/2 '>
+                  <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                     Ward:
                     <div className='text-base   '>
                       <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
@@ -316,11 +389,12 @@ function InfoF() {
                     </div>
                   </div>
                 </div>
+                
                 <div className='text-base w-1/2 '>
                   <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                    City:
+                    Street Name:
                     <div className='text-base   '>
-                      <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.city} onChange={inputHandle}  >
+                      <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.streetname} onChange={inputHandle}  >
                         <option value="">&nbsp;&nbsp;&nbsp;------</option>
                         <option value=""></option>
                         <option value=""></option>
@@ -348,4 +422,4 @@ function InfoF() {
   );
 }
 
-export default InfoF;
+export default InfoFDoc;
