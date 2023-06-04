@@ -20,13 +20,17 @@ import Prescription from "./pages/Reports/Prescription";
 import ReportTest from "./pages/Reports/ReportTest";
 
 import Dashboard from "../Dashboard/Dashboard";
-import Home from "../Dashboard/UserDashboard/Home";
+import UserHome from "../Dashboard/UserDashboard/UserHome";
 import DoctorPg from "../Dashboard/UserDashboard/DoctorPg";
 import Medication from "../Dashboard/UserDashboard/Medication";
 import MedicalHistory from "../Dashboard/UserDashboard/MedicalHistory";
 import Appointments from "../Dashboard/UserDashboard/Appointments";
 import UserReports from "../Dashboard/UserDashboard/UserReports";
 import BookAppointment from "../Dashboard/UserDashboard/BookAppointment";
+
+import DoctorHome from "../Dashboard/DoctorDashboard/DoctorHome";
+import DocAppointments from "../Dashboard/DoctorDashboard/DocAppointments";
+import PatientInfo from "../Dashboard/DoctorDashboard/PatientInfo";
 
 import '../index.css';
 import jwtDecode from 'jwt-decode';
@@ -115,12 +119,16 @@ function Main() {
         <Route path="*" element={<NotFound />} />
         {/* for user dashboard but will later make it all render in one place
         aile lai kam chalau code ho! */}
-        <Route path="/uhome" element={<Dashboard><Home/></Dashboard>}/>
+        <Route path="/uhome" element={<Dashboard><UserHome/></Dashboard>}/>
         <Route path="/medication" element={<Dashboard><Medication/></Dashboard>}/>
         <Route path="/medicalhistory" element={<Dashboard><MedicalHistory/></Dashboard>}/>
         <Route path="/appointments" element={<Dashboard><Appointments/></Dashboard>}/>
         <Route path="/addappointment" element={<Dashboard><BookAppointment/></Dashboard>}/>
         <Route path="/ureports" element={<Dashboard><UserReports/></Dashboard>}/>
+          {/* for doctor dashboard */}
+        <Route path="/doctorhome" element={<Dashboard><DoctorHome/></Dashboard>}/>
+        <Route path="/docappointments" element={<Dashboard><DocAppointments/></Dashboard>}/>
+        <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo/></Dashboard>}/>
       </Routes>
       </BrowserRouter>
   );
