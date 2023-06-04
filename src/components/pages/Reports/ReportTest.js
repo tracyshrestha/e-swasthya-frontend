@@ -44,7 +44,7 @@ function ReportTest() {
                   <input
                     required
                     type="text"
-                    id="email-address-icon"
+                    id=""
                     class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                     placeholder="Firstname"
 
@@ -53,7 +53,7 @@ function ReportTest() {
                 <div className='pt-3 text-left  '>
                   <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Test Result:</h1>
                   <textarea required
-                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="border border-gray-300 placeholder-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Test Result"
                     rows='4'
                     maxLength={10}
@@ -62,7 +62,7 @@ function ReportTest() {
                 <div className='pt-3 text-left  '>
                   <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Description:</h1>
                   <textarea required
-                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="border border-gray-300 placeholder-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Description"
                     rows='4'
                     maxLength={10}

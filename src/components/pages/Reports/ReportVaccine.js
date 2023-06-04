@@ -44,7 +44,7 @@ function ReportVaccine() {
                   <input
                     required
                     type="text"
-                    id="email-address-icon"
+                    id=""
                     class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                     placeholder="Firstname"
 
@@ -55,7 +55,7 @@ function ReportVaccine() {
                   <input
                     required
                     type="number"
-                    id="email-address-icon"
+                    id=""
                     class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                     placeholder="Firstname"
 

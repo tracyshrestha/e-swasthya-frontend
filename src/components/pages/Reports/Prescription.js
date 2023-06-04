@@ -22,7 +22,7 @@ function Prescription() {
 
   return (
 
-    <div className="w-screen h-screen flex  justify-center items-center bg-[#E6F4F9]">
+    <div className="w-screen h-full flex  justify-center items-center bg-[#E6F4F9]">
       <div className="p-4 flex justify-center items-center">
         <form className="h-auto sm:w-[750px]  w-[350px] items-center rounded-sm  p-8 m-8 mt-1 mx-24  bg-white ">
           <div className="flex justify-center items-center ">
@@ -53,7 +53,7 @@ function Prescription() {
                 <h1 className='sm:text-[15px] text-[12px] pt-5 pb-2 relative'>Enter Dosage:</h1>
                 <input
                   required
-                  type="text"
+                  type="number"
                   id="email-address-icon"
                   class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                   placeholder="Enter Dosage"
@@ -61,21 +61,34 @@ function Prescription() {
                 />
               </div>
               <div className=' text-left  '>
-                <h1 className='sm:text-[15px] text-[12px] pt-5 pb-2 relative'>Enter Frequency:</h1>
+                <h1 className='sm:text-[15px] text-[12px] pt-5 pb-2 relative'>Enter Frequency (Per Day):</h1>
                 <input
                   required
-                  type="text"
+                  type="number"
                   id="email-address-icon"
                   class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                   placeholder="Enter Frequency"
 
                 />
               </div>
+
+              <div className='pt-3'>
+                <div className='pt-3 text-left  '>
+                  <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Description for frequency:</h1>
+                  <textarea required
+                    className="border border-gray-300 placeholder-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Description"
+                    rows='4'
+                    maxLength={10}
+                  />
+                </div>
+                </div>
+
               <div className=' text-left  '>
-                <h1 className='sm:text-[15px] text-[12px] pt-5 pb-2 relative'>Enter Duration:</h1>
+                <h1 className='sm:text-[15px] text-[12px] pt-5 pb-2 relative'>Enter Duration (In  days):</h1>
                 <input
                   required
-                  type="text"
+                  type="number"
                   id="email-address-icon"
                   class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                   placeholder="Enter Duration"
@@ -85,7 +98,7 @@ function Prescription() {
         
                 <div className='pt-3'>
                   <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Select Date:</h1>
-                  <input
+                  <input required className="placeholder-gray-300"
                     type="date"
                     name="date"
                     value={selectedDate}

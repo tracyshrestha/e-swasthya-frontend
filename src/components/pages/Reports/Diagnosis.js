@@ -52,7 +52,7 @@ function Diagnosis() {
                 <div className='pt-3 text-left  '>
                   <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Description:</h1>
                   <textarea required
-                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="border border-gray-300 placeholder-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Description"
                     rows='4'
                     maxLength={10}
@@ -61,7 +61,7 @@ function Diagnosis() {
 
                 <div className='pt-3'>
                   <h1 className='sm:text-[15px] text-[12px] pb-2 relative'>Select Date:</h1>
-                  <input
+                  <input required className="placeholder-gray-300"
                     type="date"
                     name="date"
                     value={selectedDate}
