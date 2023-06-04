@@ -1,7 +1,7 @@
 import React,{useState} from "react";
-import LoginImage from "../../assets/login.jpg";
-import logo from "../../assets/logo.png";
-import Message from "../helpercomponents/Message";
+import LoginImage from "../../../assets/login.jpg";
+import logo from "../../../assets/logo.png";
+import Message from "../../helpercomponents/Message";
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
