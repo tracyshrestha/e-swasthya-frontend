@@ -9,7 +9,7 @@ import { HiPencilAlt } from "react-icons/hi";
 
 import user1 from "../../assets/11.jpg";
 
-const Home = () => {
+const UserHome = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-full ">
       <div className="col-span-1 shadow-lg">
@@ -157,4 +157,4 @@ const Home = () => {
     </div>
   );
 };
-export default Home;
+export default UserHome;

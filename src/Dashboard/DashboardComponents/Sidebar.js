@@ -17,13 +17,18 @@ const Sidebar = () => {
   const userRole = 'user'; // Replace with the actual user role fetched from the backend
 
   const Menus = [
-    { title: 'Home', path: '/uhome', src: <AiFillHome /> },
+    //for doctor sidebar
+    { title: 'Home', path: '/doctorhome', src: <AiFillHome />,role:'doctor' },
+    { title: 'Appointments', path: '/docappointments', src: <BiCalendar/>, role: 'doctor' },
+    // for users
+    { title: 'Home', path: '/uhome', src: <AiFillHome />,role:'user' },
     { title: 'Doctors', path: '/doctorpg', src: <FaHospitalUser />, role: 'user' },
     { title: 'Medication', path: '/medication', src: <GiMedicines />, role: 'user' },
     {title: 'Medical History', path: '/medicalhistory', src: <MdMedicalInformation/>, role: 'user' },
     { title: 'Appointments', path: '/appointments', src: <BiCalendar/>, role: 'user' },
     { title: 'Reports', path: '/ureports', src: <FaFileMedicalAlt/>, role: 'user' },
     { title: 'Logout', path: '/action', src: <TbLogout /> }
+    
   ];
 
   const filteredMenus = Menus.filter(menu => !menu.role || menu.role === userRole);
