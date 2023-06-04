@@ -9,6 +9,7 @@ function EditProfileDoctor() {
   const [state, setState] = useState({
     sliderValue: '40',
     gender: '',
+    yourArrayProperty: [],
   })
 
   const inputHandle = (e) => {
@@ -21,7 +22,13 @@ function EditProfileDoctor() {
     })
   }
 
-
+  const handleArrayInputChange = (values) => {
+    setState({
+      ...state,
+      yourArrayProperty: values,
+      currentValue: ''
+    });
+  };
 
   const [dob, setDob] = useState('');
   const [age, setAge] = useState('');
@@ -77,7 +84,7 @@ function EditProfileDoctor() {
 
     <div className="w-screen h-full flex  justify-center items-center bg-[#E6F4F9]">
       <div className="p-4 flex justify-center items-center">
-        <form className="h-auto sm:w-[750px]  w-[350px] items-center rounded-sm  p-8 m-8 mt-1 mx-24  bg-white ">
+        <form className="h-full sm:w-[750px]  w-[350px] items-center rounded-sm  p-8 m-8 mt-1 mx-24  bg-white ">
           <div className="flex justify-center items-center ">
             <img src={logo} alt="" class="self-center h-[80px] pt-2 " />
           </div>
@@ -254,6 +261,37 @@ function EditProfileDoctor() {
                     </div>
                   </div>
                 </div>
+                <div>
+                  <label htmlFor="name">Associated Hospitals:</label>
+                  <div className="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5">
+
+                    <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
+
+                      <input className="border border-blue-500 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-2/3 py-2.5"
+                        type="text"
+                        value={state.currentValue}
+                        onChange={inputHandle}
+                        name="currentValue"
+                        placeholder="Enter a value"
+                      />
+                      <button className='border border-gray-500 rounded-lg my-1.5 px-6 ml-6  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange([...state.yourArrayProperty, state.currentValue])}>
+                        Add
+                      </button>
+                    </div>
+
+
+                    <ul>
+                      {state.yourArrayProperty.map((value, index) => (
+                        <li key={index}>
+                          {value}
+                          <button className='border border-gray-500 rounded-lg p-1 px-4 ml-6 mb-1  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange(state.yourArrayProperty.filter((_, i) => i !== index))}>
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
 
                 <div className='flex flex-col mb-4 '> Location:
                   <div className='flex flex-wrap justify-center items-center bg-white p-2 text-center w-full '>
@@ -263,7 +301,7 @@ function EditProfileDoctor() {
                       <div className=' sm:mb-4 sm:mr-4 mb-3 mr-1 border border-gray-300 rounded-lg' >
                         Province:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.province} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;--------------</option>
                             <option value="">Koshi</option>
                             <option value="">Madhesh</option>
@@ -280,7 +318,7 @@ function EditProfileDoctor() {
                       <div className='sm:mb-3 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                         District:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.district} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value="">Bhojpur</option>
                             <option value="">Dhankuta</option>
@@ -292,9 +330,9 @@ function EditProfileDoctor() {
                     </div>
                     <div className='text-base w-1/2 '>
                       <div className='sm:mt-4 sm:mr-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                        Ward:
+                        Municipality:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.municipality} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -306,9 +344,9 @@ function EditProfileDoctor() {
                     </div>
                     <div className='text-base w-1/2 '>
                       <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                        City:
+                        Ward:
                         <div className='text-base   '>
-                          <select required className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.city} onChange={inputHandle}  >
+                          <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.ward} onChange={inputHandle}  >
                             <option value="">&nbsp;&nbsp;&nbsp;------</option>
                             <option value=""></option>
                             <option value=""></option>
@@ -319,12 +357,24 @@ function EditProfileDoctor() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-center">
-                      <button type="submit" className="sm:w-[520px] w-[275px] text-center py-3 mt-5 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative rounded-xl text-white hover:bold">
-                        Submit
-                      </button>
+                    <div className='text-base w-1/2 '>
+                      <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
+                        Street Name:
+                        <div className='text-base   '>
+                          <input required
+                            className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]'
+                            type="text"
+                            placeholder="Enter your  Street Name"
+                            maxLength={10}
+                          />
+                        </div>
+                      </div>
                     </div>
+
                   </div>
+                </div>
+                <div className='sm:mt-0 mt-9 gap-3 flex justify-center items-center'>
+                  <button className='px-3 py-2 text-lg rounded-md w-full text-white bg-[#42ADF0]'>Submit</button>
                 </div>
               </div>
             </div>

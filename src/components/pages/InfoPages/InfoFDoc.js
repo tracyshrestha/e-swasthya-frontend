@@ -133,7 +133,7 @@ function InfoFDoc() {
           formNo === 1 && <div>
 
             <div className='flex flex-col mb-2'>
-              
+
               <div>
                 <div className="flex flex-col mt-0 sm:mt-3 mb-2">
                   <label htmlFor="name">Enter your Phone Number:</label>
@@ -146,19 +146,19 @@ function InfoFDoc() {
                 </div>
               </div>
               <div>
-              <div className="flex flex-col mt-0 sm:mt-3 mb-2">
-                <label htmlFor="name">Citizenship Number:</label>
-                <input
-                  value={state.citizenship}
-                  onChange={handleformat}
-                  className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  type="text"
-                  name="citizenship"
-                  placeholder="Enter your citizenship number"
-                  maxLength={14}
-                />
+                <div className="flex flex-col mt-0 sm:mt-3 mb-2">
+                  <label htmlFor="name">Citizenship Number:</label>
+                  <input
+                    value={state.citizenship}
+                    onChange={handleformat}
+                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    type="text"
+                    name="citizenship"
+                    placeholder="Enter your citizenship number"
+                    maxLength={14}
+                  />
+                </div>
               </div>
-            </div>
               <div>
                 <div className="flex flex-col mt-0 sm:mt-3 mb-2">
                   <label htmlFor="name">Enter your NMC Liscence Number:</label>
@@ -294,38 +294,38 @@ function InfoFDoc() {
           formNo === 3 && <div>
 
             <div>
-            <label htmlFor="name">Associated Hospitals:</label>
-            <div className="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5">
-              
-              <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
-              
-                <input className="border border-blue-500 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-2/3 py-2.5"
-                  type="text"
-                  value={state.currentValue}
-                  onChange={inputHandle}
-                  name="currentValue"
-                  placeholder="Enter a value"
-                />
-                <button className='border border-gray-500 rounded-lg my-1.5 px-6 ml-6  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange([...state.yourArrayProperty, state.currentValue])}>
-                  Add
-                </button>
+              <label htmlFor="name">Associated Hospitals:</label>
+              <div className="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5">
+
+                <div className=' flex flex-col-2 xl: flex-col-1 mt-0 sm:mt-4 mb-4 '>
+
+                  <input className="border border-blue-500 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-2/3 py-2.5"
+                    type="text"
+                    value={state.currentValue}
+                    onChange={inputHandle}
+                    name="currentValue"
+                    placeholder="Enter a value"
+                  />
+                  <button className='border border-gray-500 rounded-lg my-1.5 px-6 ml-6  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange([...state.yourArrayProperty, state.currentValue])}>
+                    Add
+                  </button>
+                </div>
+
+
+                <ul>
+                  {state.yourArrayProperty.map((value, index) => (
+                    <li key={index}>
+                      {value}
+                      <button className='border border-gray-500 rounded-lg p-1 px-4 ml-6 mb-1  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange(state.yourArrayProperty.filter((_, i) => i !== index))}>
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              
-
-              <ul>
-                {state.yourArrayProperty.map((value, index) => (
-                  <li key={index}>
-                    {value}
-                    <button className='border border-gray-500 rounded-lg p-1 px-4 ml-6 mb-1  bg-[#e5f5ffef] ' onClick={() => handleArrayInputChange(state.yourArrayProperty.filter((_, i) => i !== index))}>
-                      Remove
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
-</div>
 
-          
+
             <div className='flex flex-col mb-4 '> Location:
               <div className='flex flex-wrap justify-center items-center bg-white p-2 text-center w-full '>
 
@@ -363,7 +363,7 @@ function InfoFDoc() {
                 </div>
                 <div className='text-base w-1/2 '>
                   <div className='sm:mt-4 sm:mr-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
-                  Municipality:
+                    Municipality:
                     <div className='text-base   '>
                       <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.municipality} onChange={inputHandle}  >
                         <option value="">&nbsp;&nbsp;&nbsp;------</option>
@@ -389,7 +389,7 @@ function InfoFDoc() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className='text-base w-1/2 '>
                   <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                     Street Name:

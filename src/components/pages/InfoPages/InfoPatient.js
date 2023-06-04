@@ -5,7 +5,7 @@ import camera from '../../../assets/camera.png'
 import { format, differenceInYears } from 'date-fns';
 import logo from '../../../assets/logo.png'
 
-function InfoF() {
+function InfoPatient() {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0])
   const [state, setState] = useState({
@@ -99,10 +99,10 @@ function InfoF() {
 
 
   return (
-    <div className="w-screen h-full pb-[20px} flex flex-col justify-center items-center  bg-[#E6F4F9]">
+    <div className="w-screen h-full pb-[40px} flex flex-col justify-center items-center  bg-[#E6F4F9]">
       <ToastContainer />
       <div className='flex justify-center items-center '>
-        <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 " />
+        <img src={logo} alt="" class="self-center sm:h-[80px] h-[60px] pt-2 mt-8 " />
       </div>
       <div className=" sm:h-full sm:w-[600px] h-[535px] w-[350px] items-center rounded-sm border-[2px] border-[#f8f8f8] p-9 sm:m-9 m-0 sm:mx-24 bg-white">
         <div className='flex justify-center items-center'>
@@ -333,19 +333,15 @@ function InfoF() {
                   <div className='sm:mt-4 sm:ml-4 mb-3 mr-0  border border-gray-300 rounded-lg' >
                     Street Name:
                     <div className='text-base   '>
-                      <select className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]' name='loaction' value={state.streetname} onChange={inputHandle}  >
-                        <option value="">&nbsp;&nbsp;&nbsp;------</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                      </select>
+                      <input required
+                    className='border border-blue-500 rounded-lg pb-1 mb-2 bg-[#e5f5ff7f]'
+                    type="text"
+                    placeholder="Enter your  Street Name"
+                    maxLength={10}
+                  />
                     </div>
                   </div>
                 </div>
-
-
-
 
               </div>
             </div>
@@ -361,4 +357,4 @@ function InfoF() {
   );
 }
 
-export default InfoF;
+export default InfoPatient;
