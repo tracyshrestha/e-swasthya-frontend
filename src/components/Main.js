@@ -11,6 +11,7 @@ import InfoFDoc from "./pages/InfoPages/InfoFDoc";
 import NotFound from "./pages/NotFound";
 import RecoverAccount from "./pages/RecoverPages/RecoverAccount";
 import ResetPassword from "./pages/RecoverPages/ResetPassword";
+import VerifyResetPasswordLink from "./pages/RecoverPages/VerifyResetPasswordLink";
 import EditProfilePatient from "./pages/EditProfile/EditProfilePatient";
 import EditProfileDoctor from "./pages/EditProfile/EditProfileDoctor";
 import ArrayInput from "./pages/ArrayInput";
@@ -40,12 +41,14 @@ import jwtDecode from 'jwt-decode';
 function Main() {
 
   const decodedJWT = {
-    isVerified: true,
-    isFormFilled: true,
+    isVerified: false,
+    isFormFilled: false,
     role: 'PATIENT',
     // role: 'DOCTOR',
   };
-
+  // const jwtKey = 'JWT_KEY'; 
+  // const decodedJWT = jwtDecode(jwtKey);
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -55,7 +58,7 @@ function Main() {
           path="/verify"
           element={
             decodedJWT.isVerified ? (
-              <Navigate to="/dashboard" replace />
+              <Navigate to="/info" replace />
             ) : (
               <Verify />
             )
@@ -111,6 +114,7 @@ function Main() {
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
         <Route path="/diagnosis" element={<Diagnosis />} />
