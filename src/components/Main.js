@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes, Router, Navigate } from 'react-router-dom
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/VerifyAccPages/Verify";
+import Verifye from "./pages/VerifyAccPages/Verifye";
 import Verified from "./pages/VerifyAccPages/Verified";
 import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
@@ -34,26 +35,34 @@ import DocAppointments from "../Dashboard/DoctorDashboard/DocAppointments";
 import PatientInfo from "../Dashboard/DoctorDashboard/PatientInfo";
 
 import '../index.css';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
+import { useParams } from 'react-router-dom';
+
+
 
 
 
 function Main() {
 
   const decodedJWT = {
-    isVerified: false,
+    isVerified: true,
     isFormFilled: false,
     role: 'PATIENT',
+    email: '',
     // role: 'DOCTOR',
   };
-  // const jwtKey = 'JWT_KEY'; 
-  // const decodedJWT = jwtDecode(jwtKey);
+
+  // // Retrieve the JWT token from local storage
+  // const token = localStorage.getItem("jwt");
+
+  // // Decode the JWT token
+  // const decodedJWT = jwt_decode(token);
   
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LogIn />} />
-
+        {decodedJWT.email !== '' && (
         <Route
           path="/verify"
           element={
@@ -64,7 +73,7 @@ function Main() {
             )
           }
         />
-
+        )}
         <Route
           path="/info"
           element={
@@ -114,7 +123,9 @@ function Main() {
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} />
+        {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
+        <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
+        <Route path="/verifye" element={<Verifye />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
         <Route path="/diagnosis" element={<Diagnosis />} />

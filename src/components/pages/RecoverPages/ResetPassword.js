@@ -3,6 +3,7 @@ import LoginImage from "../../../assets/login.jpg";
 import logo from "../../../assets/logo.png";
 import Message from "../../helpercomponents/Message";
 import axios from 'axios';
+import { Route, useParams } from 'react-router-dom';
 
 function ResetPassword() {
 
@@ -15,6 +16,7 @@ function ResetPassword() {
   };
 
   const [values, setValues] = useState(initialState);
+  const { id, token } = useParams();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,6 +40,7 @@ function ResetPassword() {
     try {
       const requestData = {
         password: values.password,
+        // id:id,
       };
 
       const response = await axios.post(`${process.env.REACT_APP_API}api/user/change-password`, requestData);

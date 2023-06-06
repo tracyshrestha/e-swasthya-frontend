@@ -6,30 +6,35 @@ import Message from '../../helpercomponents/Message';
 import jwt_decode from 'jwt-decode';
 
 
+
 const initialState = {
   loading: false,
   error: false,
   message: '',
+  email: '',
 };
-function Verify() {
 
+function Verify() {
   const [values, setValues] = useState(initialState);
-  const [email, setEmail] = useState('');
+
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
-  
-    if (token) {
-      const decodedToken = jwt_decode(token);
-     setEmail(decodedToken?.email);
-      
+    const jwtToken = localStorage.getItem('jwt');
+    if (jwtToken) {
+      const decodedJWT = jwt_decode(jwtToken);
+      const email = decodedJWT.email;
+      console.log('Decoded JWT:', decodedJWT);
+      console.log('Email:', email);
+      setValues((prevState) => ({ ...prevState, email }));
     }
   }, []);
 
-  const resendVerificationEmail  = async () => {
+  const resendVerificationEmail = async () => {
     try {
+      console.log('Resending verification email...');
+      console.log('Email:', values.email);
       setValues((prevState) => ({ ...prevState, loading: true }));
-      const response = await axios.get(`${process.env.REACT_APP_API}api/user/verification-resend-email/${email}`);
-      console.log(response);
+      const response = await axios.get(`${process.env.REACT_APP_API}api/user/verification-resend-email/${values.email}`);
+      console.log('Response:', response);
       setValues((prevState) => ({
         ...prevState,
         message: response.data.message,
@@ -37,7 +42,7 @@ function Verify() {
         error: false,
       }));
     } catch (error) {
-      console.log(error);
+      console.log('Error:', error);
       setValues((prevState) => ({
         ...prevState,
         message: error?.response?.data?.data[0],
@@ -46,33 +51,29 @@ function Verify() {
       }));
     }
   };
-
-
   return (
     <>
       <div className='sm:overflow-hidden  overflow-hidden w-screen h-screen grid grid-cols-1 xl:grid-cols-2 bg-[#ffff]'>
 
         <div className='p-4 flex flex-col justify-center items-center  '>
 
-          <form className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5' onSubmit={resendVerificationEmail} disabled={values.loading}>
+          <form className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5' >
             <div className='flex justify-center items-center pb-5'>
               <img src={logo} alt="" class="self-center h-[70px] sm:h-[80px] pt-2 " />
             </div>
             <div className='items-center'>
             {values.error || values.message ? <Message message={values.message} error={values.error} /> : null}
               <h6 className='sm:text-[18px] text-[16px] sm:mb-[-8px] font-medium text-gray-500'>ACTIVATE YOUR ACCOUNT</h6>
-              <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>Welcome {email},</h2>
+              <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>Welcome  ,</h2>
               <h6 className='sm:text-[17px] text-[15px]  pb-5 text-gray-400'>We have send an email for verification.Please check your inbox.</h6>
             </div>
 
 
             <div className='grid grid-cols-1 sm:grid-cols-2 sm:gap-5'>
-              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'  type="submit" disabled={values.loading}>
+              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'  onSubmit={resendVerificationEmail} disabled={values.loading}>
                 Resend verification link
               </button>
-              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'>
-                Log out
-              </button>
+
             </div>
           </form>
 
