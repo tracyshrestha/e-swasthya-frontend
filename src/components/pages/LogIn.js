@@ -107,11 +107,11 @@ function LogIn() {
 
 
             <div className='flex flex-col items-center'>
-            <Link to="/verify">
+            {/* <Link to="/verify"> */}
               <button type="submit" className='sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold' href='/verify'>
                 Log In
               </button>
-              </Link>
+              {/* </Link> */}
             </div>
             <div class="relative flex py-5 items-center">
               <div class="flex-grow border-t border-gray-400"></div>

@@ -46,7 +46,7 @@ function Main() {
 
   const decodedJWT = {
     isVerified: true,
-    isFormFilled: false,
+    isFormFilled: true,
     role: 'PATIENT',
     email: '',
     // role: 'DOCTOR',
@@ -57,30 +57,34 @@ function Main() {
 
   // // Decode the JWT token
   // const decodedJWT = jwt_decode(token);
-  
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        {decodedJWT.email !== '' && (
         <Route
           path="/verify"
           element={
-            decodedJWT.isVerified ? (
-              <Navigate to="/info" replace />
-            ) : (
-              <Verify />
-            )
+            decodedJWT.email !== '' ? (
+              decodedJWT.isVerified ? (
+                decodedJWT.isFormFilled ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/info" replace />
+                )
+              ) : (
+                <Verify />
+              )
+            ) : null
           }
         />
-        )}
         <Route
           path="/info"
           element={
-            decodedJWT.role === 'PATIENT' ? (
+            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified ? (
               <InfoP />
             ) : (
-              decodedJWT.role === 'DOCTOR' ? (
+              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified ? (
                 <InfoFDoc />
               ) : (
                 <Navigate to="/dashboard" replace />
@@ -114,7 +118,7 @@ function Main() {
           }
         />
 
-        {decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled &&  (
+        {decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled && (
           <Route path="/doctorpg" element={<Dashboard><DoctorPg /></Dashboard>} />
         )}
 
@@ -134,18 +138,18 @@ function Main() {
         <Route path="*" element={<NotFound />} />
         {/* for user dashboard but will later make it all render in one place
         aile lai kam chalau code ho! */}
-        <Route path="/uhome" element={<Dashboard><UserHome/></Dashboard>}/>
-        <Route path="/medication" element={<Dashboard><Medication/></Dashboard>}/>
-        <Route path="/medicalhistory" element={<Dashboard><MedicalHistory/></Dashboard>}/>
-        <Route path="/appointments" element={<Dashboard><Appointments/></Dashboard>}/>
-        <Route path="/addappointment" element={<Dashboard><BookAppointment/></Dashboard>}/>
-        <Route path="/ureports" element={<Dashboard><UserReports/></Dashboard>}/>
-          {/* for doctor dashboard */}
-        <Route path="/doctorhome" element={<Dashboard><DoctorHome/></Dashboard>}/>
-        <Route path="/docappointments" element={<Dashboard><DocAppointments/></Dashboard>}/>
-        <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo/></Dashboard>}/>
+        <Route path="/uhome" element={<Dashboard><UserHome /></Dashboard>} />
+        <Route path="/medication" element={<Dashboard><Medication /></Dashboard>} />
+        <Route path="/medicalhistory" element={<Dashboard><MedicalHistory /></Dashboard>} />
+        <Route path="/appointments" element={<Dashboard><Appointments /></Dashboard>} />
+        <Route path="/addappointment" element={<Dashboard><BookAppointment /></Dashboard>} />
+        <Route path="/ureports" element={<Dashboard><UserReports /></Dashboard>} />
+        {/* for doctor dashboard */}
+        <Route path="/doctorhome" element={<Dashboard><DoctorHome /></Dashboard>} />
+        <Route path="/docappointments" element={<Dashboard><DocAppointments /></Dashboard>} />
+        <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo /></Dashboard>} />
       </Routes>
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 
