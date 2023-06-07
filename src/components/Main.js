@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Router, Navigate } from 'react-router-dom';
 
 
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/VerifyAccPages/Verify";
-import Verifye from "./pages/VerifyAccPages/Verifye";
 import Verified from "./pages/VerifyAccPages/Verified";
 import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
@@ -45,24 +44,55 @@ import { useParams } from 'react-router-dom';
 function Main() {
 
   const decodedJWT = {
-    isVerified: true,
-    isFormFilled: true,
+    isVerified: false,
+    isFormFilled: false,
     role: 'PATIENT',
     email: 's',
     // role: 'DOCTOR',
   };
 
-  // // Retrieve the JWT token from local storage
-  // const token = localStorage.getItem("jwt");
+  // const token = localStorage.getItem('token');
+  // const decodedJWT = token ? jwt_decode(token) : null;
 
-  // // Decode the JWT token
-  // const decodedJWT = jwt_decode(token);
+
+//   const [decodedJWT, setDecodedJWT] = useState({});
+
+//   useEffect(() => {
+//     // Retrieve the JWT token from local storage
+    
+//     const token = localStorage.getItem('token');
+// console.log(token)
+//     if (token) {
+//       // Decode the JWT token
+//       const decodedToken = jwt_decode(token);
+
+//       // Set the decoded token in state
+//       setDecodedJWT(decodedToken);
+//       console.log(decodedJWT.authority[0].authority)
+//     }
+//   }, []);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LogIn />} />
+
         <Route
+          path="/verify"
+          element={decodedJWT.email !== '' && (
+            decodedJWT.isVerified ? (
+              decodedJWT.isFormFilled ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/info" replace />
+              )
+            ) : (
+              <Verify />
+            )
+          )}
+        />
+
+        {/* <Route
           path="/verify"
           element={
             decodedJWT.email !== '' ? (
@@ -77,7 +107,7 @@ function Main() {
               )
             ) : null
           }
-        />
+        /> */}
         <Route
           path="/info"
           element={
@@ -87,7 +117,7 @@ function Main() {
               decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified ? (
                 <InfoFDoc />
               ) : (
-                <Navigate to="/dashboard" replace />
+                <Navigate to="/verify" replace />
               )
             )
           }
@@ -95,10 +125,10 @@ function Main() {
         <Route
           path="/editprofile"
           element={
-            decodedJWT.role === 'PATIENT' ? (
+            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
               <EditProfilePatient />
             ) : (
-              decodedJWT.role === 'DOCTOR' ? (
+              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
                 <EditProfileDoctor />
               ) : (
                 <Navigate to="/dashboard" replace />
@@ -113,7 +143,7 @@ function Main() {
             decodedJWT.isVerified && decodedJWT.isFormFilled ? (
               <Dashboard role={decodedJWT.role} />
             ) : (
-              <Navigate to="/info" replace />
+              <Navigate to="/" replace />
             )
           }
         />
@@ -129,7 +159,6 @@ function Main() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
         <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
-        <Route path="/verifye" element={<Verifye />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
         <Route path="/diagnosis" element={<Diagnosis />} />

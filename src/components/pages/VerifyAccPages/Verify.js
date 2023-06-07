@@ -18,7 +18,7 @@ function Verify() {
   const [values, setValues] = useState(initialState);
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem('jwt');
+    const jwtToken = localStorage.getItem('token');
     if (jwtToken) {
       const decodedJWT = jwt_decode(jwtToken);
       const email = decodedJWT.email;
@@ -28,21 +28,22 @@ function Verify() {
     }
   }, []);
 
-  const resendVerificationEmail = async () => {
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
     try {
-      console.log('Resending verification email...');
-      console.log('Email:', values.email);
       setValues((prevState) => ({ ...prevState, loading: true }));
-      const response = await axios.get(`${process.env.REACT_APP_API}api/user/verification-resend-email/${values.email}`);
-      console.log('Response:', response);
+      const res = await axios.get( `${process.env.REACT_APP_API}api/user/verification-resend-email/${values.email}`
+      );
+      console.log(res);
       setValues((prevState) => ({
         ...prevState,
-        message: response.data.message,
+        message: res.data.message,
         loading: false,
         error: false,
       }));
     } catch (error) {
-      console.log('Error:', error);
+      console.log(error);
       setValues((prevState) => ({
         ...prevState,
         message: error?.response?.data?.data[0],
@@ -57,7 +58,7 @@ function Verify() {
 
         <div className='p-4 flex flex-col justify-center items-center  '>
 
-          <form className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5' >
+          <form className='border-[#f8f8f8] h-auto sm:w-[600px] w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5' onSubmit={onSubmit} disabled={values.loading}>
             <div className='flex justify-center items-center pb-5'>
               <img src={logo} alt="" class="self-center h-[70px] sm:h-[80px] pt-2 " />
             </div>
@@ -70,7 +71,7 @@ function Verify() {
 
 
             <div className='grid grid-cols-1 sm:grid-cols-2 sm:gap-5'>
-              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'  onSubmit={resendVerificationEmail} disabled={values.loading}>
+              <button className='sm:w-auto rounded-md w-auto text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'  type="submit">
                 Resend verification link
               </button>
 
