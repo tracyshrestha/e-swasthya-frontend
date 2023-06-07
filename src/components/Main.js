@@ -48,7 +48,7 @@ function Main() {
     isVerified: true,
     isFormFilled: true,
     role: 'PATIENT',
-    email: '',
+    email: 's',
     // role: 'DOCTOR',
   };
 

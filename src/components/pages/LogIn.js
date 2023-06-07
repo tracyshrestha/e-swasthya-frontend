@@ -1,46 +1,46 @@
 import React, { useState } from 'react';
-
-import google from '../../assets/google.png'
-import LoginImage from '../../assets/login.jpg'
-import logo from '../../assets/logo.png'
-import { Link } from 'react-router-dom';
-import Message from '../helpercomponents/Message';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import jwt from 'jwt-decode';
-import jwtDecode from 'jwt-decode';
 
+import google from '../../assets/google.png';
+import LoginImage from '../../assets/login.jpg';
+import logo from '../../assets/logo.png';
+import Message from '../helpercomponents/Message';
 
-//Inital state for values
-let InitalState = {
+// Initial state for values
+let initialState = {
   email: '',
   password: '',
   error: false,
   message: '',
   loading: false
-}
+};
 
 function LogIn() {
-  const [values, setValues] = useState(InitalState);
+  const [values, setValues] = useState(initialState);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const navigate = useNavigate();
 
-  //When form input field changes
-  const Onchange = name => event => {
-    setValues((prevState) => {
-      return { ...prevState, [name]: event.target.value }
-    })
-  }
+  // When form input field changes
+  const Onchange = (name) => (event) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: event.target.value,
+    }));
+  };
 
-  //On form Submit
+  // On form submit
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
       const res = await axios({
-        method: "POST",
+        method: 'POST',
         url: `${process.env.REACT_APP_API}api/auth/login`,
         data: {
           email: values.email,
-          password: values.password
-        }
-      })
+          password: values.password,
+        },
+      });
 
       // Extract the JWT token from the response
       const token = res.data.jwt;
@@ -48,17 +48,28 @@ function LogIn() {
       // Store the token in local storage
       localStorage.setItem('token', token);
 
+      // Update the token state
+      setToken(token);
+
       console.log(res);
+
+      // Check if token exists before navigating to another page
+      if (token) {
+        // Redirect to the verify page
+        navigate('/verify');
+      }
     } catch (error) {
       console.log(error);
       if (error) {
-        setValues((prevState) => {
-          return { ...prevState, loading: false, message: error?.response?.data?.data[0], error: true }
-        })
+        setValues((prevState) => ({
+          ...prevState,
+          loading: false,
+          message: error?.response?.data?.data[0],
+          error: true,
+        }));
       }
     }
-  }
-
+  };
 
   return (
     <>
@@ -105,13 +116,14 @@ function LogIn() {
               <input onChange={Onchange('password')} value={values.password} required type="password" id="email-address-icon" class=" placeholder-gray-300 0 border h-[50px] border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  " placeholder='**********'></input>
             </div>
 
-
             <div className='flex flex-col items-center'>
-            {/* <Link to="/verify"> */}
-              <button type="submit" className='sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold' href='/verify'>
-                Log In
+              <button
+                type='submit'
+                className='sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold bg-[#42ADF0] hover:bg-[#4D6B9C] relative text-white hover:bold'
+                onClick={onSubmit}
+              >
+                Submit
               </button>
-              {/* </Link> */}
             </div>
             <div class="relative flex py-5 items-center">
               <div class="flex-grow border-t border-gray-400"></div>
