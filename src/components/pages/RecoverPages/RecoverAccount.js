@@ -26,8 +26,7 @@ function RecoverAccount() {
     event.preventDefault();
     try {
       setValues((prevState) => ({ ...prevState, loading: true }));
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}api/user/reset-password-request/${values.email}`
+      const res = await axios.get( `${process.env.REACT_APP_API}api/user/reset-password-request/${values.email}`
       );
       console.log(res);
       setValues((prevState) => ({

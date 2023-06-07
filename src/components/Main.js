@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Router, Navigate } from 'react-router-dom';
 
 
@@ -11,6 +11,7 @@ import InfoFDoc from "./pages/InfoPages/InfoFDoc";
 import NotFound from "./pages/NotFound";
 import RecoverAccount from "./pages/RecoverPages/RecoverAccount";
 import ResetPassword from "./pages/RecoverPages/ResetPassword";
+import VerifyResetPasswordLink from "./pages/RecoverPages/VerifyResetPasswordLink";
 import EditProfilePatient from "./pages/EditProfile/EditProfilePatient";
 import EditProfileDoctor from "./pages/EditProfile/EditProfileDoctor";
 import ArrayInput from "./pages/ArrayInput";
@@ -33,18 +34,43 @@ import DocAppointments from "../Dashboard/DoctorDashboard/DocAppointments";
 import PatientInfo from "../Dashboard/DoctorDashboard/PatientInfo";
 
 import '../index.css';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
+import { useParams } from 'react-router-dom';
+
+
 
 
 
 function Main() {
 
   const decodedJWT = {
-    isVerified: true,
-    isFormFilled: true,
+    isVerified: false,
+    isFormFilled: false,
     role: 'PATIENT',
+    email: 's',
     // role: 'DOCTOR',
   };
+
+  // const token = localStorage.getItem('token');
+  // const decodedJWT = token ? jwt_decode(token) : null;
+
+
+//   const [decodedJWT, setDecodedJWT] = useState({});
+
+//   useEffect(() => {
+//     // Retrieve the JWT token from local storage
+    
+//     const token = localStorage.getItem('token');
+// console.log(token)
+//     if (token) {
+//       // Decode the JWT token
+//       const decodedToken = jwt_decode(token);
+
+//       // Set the decoded token in state
+//       setDecodedJWT(decodedToken);
+//       console.log(decodedJWT.authority[0].authority)
+//     }
+//   }, []);
 
   return (
     <BrowserRouter>
@@ -53,25 +79,45 @@ function Main() {
 
         <Route
           path="/verify"
-          element={
+          element={decodedJWT.email !== '' && (
             decodedJWT.isVerified ? (
-              <Navigate to="/dashboard" replace />
+              decodedJWT.isFormFilled ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/info" replace />
+              )
             ) : (
               <Verify />
             )
-          }
+          )}
         />
 
+        {/* <Route
+          path="/verify"
+          element={
+            decodedJWT.email !== '' ? (
+              decodedJWT.isVerified ? (
+                decodedJWT.isFormFilled ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/info" replace />
+                )
+              ) : (
+                <Verify />
+              )
+            ) : null
+          }
+        /> */}
         <Route
           path="/info"
           element={
-            decodedJWT.role === 'PATIENT' ? (
+            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified ? (
               <InfoP />
             ) : (
-              decodedJWT.role === 'DOCTOR' ? (
+              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified ? (
                 <InfoFDoc />
               ) : (
-                <Navigate to="/dashboard" replace />
+                <Navigate to="/verify" replace />
               )
             )
           }
@@ -79,10 +125,10 @@ function Main() {
         <Route
           path="/editprofile"
           element={
-            decodedJWT.role === 'PATIENT' ? (
+            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
               <EditProfilePatient />
             ) : (
-              decodedJWT.role === 'DOCTOR' ? (
+              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
                 <EditProfileDoctor />
               ) : (
                 <Navigate to="/dashboard" replace />
@@ -97,12 +143,12 @@ function Main() {
             decodedJWT.isVerified && decodedJWT.isFormFilled ? (
               <Dashboard role={decodedJWT.role} />
             ) : (
-              <Navigate to="/info" replace />
+              <Navigate to="/" replace />
             )
           }
         />
 
-        {decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled &&  (
+        {decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled && (
           <Route path="/doctorpg" element={<Dashboard><DoctorPg /></Dashboard>} />
         )}
 
@@ -111,6 +157,8 @@ function Main() {
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
+        <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
         <Route path="/diagnosis" element={<Diagnosis />} />
@@ -119,18 +167,18 @@ function Main() {
         <Route path="*" element={<NotFound />} />
         {/* for user dashboard but will later make it all render in one place
         aile lai kam chalau code ho! */}
-        <Route path="/uhome" element={<Dashboard><UserHome/></Dashboard>}/>
-        <Route path="/medication" element={<Dashboard><Medication/></Dashboard>}/>
-        <Route path="/medicalhistory" element={<Dashboard><MedicalHistory/></Dashboard>}/>
-        <Route path="/appointments" element={<Dashboard><Appointments/></Dashboard>}/>
-        <Route path="/addappointment" element={<Dashboard><BookAppointment/></Dashboard>}/>
-        <Route path="/ureports" element={<Dashboard><UserReports/></Dashboard>}/>
-          {/* for doctor dashboard */}
-        <Route path="/doctorhome" element={<Dashboard><DoctorHome/></Dashboard>}/>
-        <Route path="/docappointments" element={<Dashboard><DocAppointments/></Dashboard>}/>
-        <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo/></Dashboard>}/>
+        <Route path="/uhome" element={<Dashboard><UserHome /></Dashboard>} />
+        <Route path="/medication" element={<Dashboard><Medication /></Dashboard>} />
+        <Route path="/medicalhistory" element={<Dashboard><MedicalHistory /></Dashboard>} />
+        <Route path="/appointments" element={<Dashboard><Appointments /></Dashboard>} />
+        <Route path="/addappointment" element={<Dashboard><BookAppointment /></Dashboard>} />
+        <Route path="/ureports" element={<Dashboard><UserReports /></Dashboard>} />
+        {/* for doctor dashboard */}
+        <Route path="/doctorhome" element={<Dashboard><DoctorHome /></Dashboard>} />
+        <Route path="/docappointments" element={<Dashboard><DocAppointments /></Dashboard>} />
+        <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo /></Dashboard>} />
       </Routes>
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 
