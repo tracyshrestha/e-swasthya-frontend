@@ -6,6 +6,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/VerifyAccPages/Verify";
 import Verified from "./pages/VerifyAccPages/Verified";
+import VerifyAccountLink from "./pages/VerifyAccPages/VerifyAccountLink";
 import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
 import NotFound from "./pages/NotFound";
@@ -166,10 +167,9 @@ function Main() {
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="/verify" element={<Verify />} /> */}
         <Route path="/verified" element={<Verified />} />
+        <Route path="/VerifyAccountLink/:id/:token" element={<VerifyAccountLink />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/resetpassword/:id" element={<ResetPassword />} />
-        {/* <Route path="/resetpassword" element={<ResetPassword />} /> */}
-        {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
+        <Route path="/resetpassword/:id/:token" element={<ResetPassword />} />
         <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
