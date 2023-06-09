@@ -1,0 +1,18 @@
+{
+     "prov1" : {
+          "district" : {
+               "Bhojpur District" : [
+                     "Fattanglung Rural Municipality",
+                     "Maiwakhola Rural Municipality",
+                     "Meringden Rural Municipality",
+                     "Mikawakhola Rural Municipality",
+                     "Aatharai Triveni Rural Municipality",
+                     "Yangwarak Rural Municipality"
+               ],
+               "Dhankuta District" : [
+                    "Chainpur Municipality",
+                    "Chichila Rural Municipality"
+               ]
+          }
+     }
+}
