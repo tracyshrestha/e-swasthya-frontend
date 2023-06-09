@@ -94,7 +94,7 @@ function RecoverAccount() {
 
 
             <div className='text-left sm:mt-[25px] mt-5 text-gray-500 '>
-              <p className='sm:text-l text-left text-[14px]'><a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C] '>Back to login</a></p>
+              <p className='sm:text-l text-left text-[14px]'><a className='sm:text-[15px] text-[15px]  text-[#42ADF0] hover:text-[#4D6B9C]' href='/'>Back to login</a></p>
             </div>
           </form>
 
