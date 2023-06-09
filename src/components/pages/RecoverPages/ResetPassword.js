@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from 'react';
 import LoginImage from "../../../assets/login.jpg";
 import logo from "../../../assets/logo.png";
 import Message from "../../helpercomponents/Message";
 import axios from 'axios';
-import { Route, useParams } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
-function ResetPassword() {
+const ResetPassword = ({ id }) => {
 
   const initialState = {
     password: '',
@@ -13,10 +13,11 @@ function ResetPassword() {
     loading: false,
     error: false,
     message: '',
+    id:'',
   };
 
   const [values, setValues] = useState(initialState);
-  const { id, token } = useParams();
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +41,7 @@ function ResetPassword() {
     try {
       const requestData = {
         password: values.password,
-        // id:id,
+        id:id,
       };
 
       const response = await axios.post(`${process.env.REACT_APP_API}api/user/change-password`, requestData);
@@ -67,7 +68,7 @@ function ResetPassword() {
     <>
       <div className="sm:overflow-hidden w-screen h-screen grid grid-cols-1 xl:grid-cols-2 bg-[#ffff]">
         <div className="p-4 flex flex-col justify-center items-center  ">
-          <form onSubmit={handleSubmit} className="border-[#f8f8f8] sm:w-[600px] h-auto w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5">
+          <form onSubmit={handleSubmit} disabled={values.loading}  className="border-[#f8f8f8] sm:w-[600px] h-auto w-[350px] items-center rounded-sm  p-9 m-8 mt-1 mx-24 bg-white mb-5">
             <div className="flex justify-center items-center pb-5">
               <img src={logo} alt="" class="self-center h-[80px] pt-2 " />
             </div>
@@ -128,7 +129,7 @@ function ResetPassword() {
               </div>
             </div>
             <div className="flex flex-col items-center">
-              <button type="submit" disabled={values.loading} className="sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold">
+              <button type="submit" className="sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold">
                 Submit
               </button>
             </div>

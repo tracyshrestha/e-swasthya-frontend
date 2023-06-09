@@ -42,35 +42,44 @@ import { useParams } from 'react-router-dom';
 
 
 function Main() {
+  const { id } = useParams();
 
-  const decodedJWT = {
+  // const decodedJWT = {
+  //   isVerified: false,
+  //   isFormFilled: false,
+  //   role: 'PATIENT',
+  //   // role: 'DOCTOR',
+  //    email: 's',
+  //    authority:[],
+  // };
+
+
+  const [decodedJWT, setDecodedJWT] = useState({
+    email: '',
     isVerified: false,
     isFormFilled: false,
-    role: 'PATIENT',
-    email: 's',
-    // role: 'DOCTOR',
-  };
+    authority: [],
+  });
 
-  // const token = localStorage.getItem('token');
-  // const decodedJWT = token ? jwt_decode(token) : null;
+  // useEffect(() => {
+  //   const jwtToken = localStorage.getItem('token');
+  //   if (jwtToken) {
+  //     const decodedJWT = jwt_decode(jwtToken);
+  //     console.log('Decoded JWT for routes:', decodedJWT);
+  //     setDecodedJWT(decodedJWT);
+  //   }
+  // }, []);
 
 
-//   const [decodedJWT, setDecodedJWT] = useState({});
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('token');
+    if (jwtToken) {
+      const decodedJWT = jwt_decode(jwtToken);
+      console.log('Decoded JWT for routes:', decodedJWT);
+      setDecodedJWT(decodedJWT);
+    }
+  }, [decodedJWT]);
 
-//   useEffect(() => {
-//     // Retrieve the JWT token from local storage
-    
-//     const token = localStorage.getItem('token');
-// console.log(token)
-//     if (token) {
-//       // Decode the JWT token
-//       const decodedToken = jwt_decode(token);
-
-//       // Set the decoded token in state
-//       setDecodedJWT(decodedToken);
-//       console.log(decodedJWT.authority[0].authority)
-//     }
-//   }, []);
 
   return (
     <BrowserRouter>
@@ -92,29 +101,15 @@ function Main() {
           )}
         />
 
-        {/* <Route
-          path="/verify"
-          element={
-            decodedJWT.email !== '' ? (
-              decodedJWT.isVerified ? (
-                decodedJWT.isFormFilled ? (
-                  <Navigate to="/dashboard" replace />
-                ) : (
-                  <Navigate to="/info" replace />
-                )
-              ) : (
-                <Verify />
-              )
-            ) : null
-          }
-        /> */}
+
+
         <Route
           path="/info"
           element={
-            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified ? (
+            decodedJWT.authority.some(item => item.authority === 'PATIENT') && decodedJWT.isVerified ? (
               <InfoP />
             ) : (
-              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified ? (
+              decodedJWT.authority.some(item => item.authority === 'DOCTOR') && decodedJWT.isVerified ? (
                 <InfoFDoc />
               ) : (
                 <Navigate to="/verify" replace />
@@ -122,13 +117,29 @@ function Main() {
             )
           }
         />
+
+        {/* <Route
+          path="/info"
+          element={
+          decodedJWT.authority.includes('PATIENT')  && decodedJWT.isVerified ? (
+              <InfoP />
+            ) : (
+              decodedJWT.authority.includes('DOCTOR') && decodedJWT.isVerified ? (
+                <InfoFDoc />
+              ) : (
+                <Navigate to="/verify" replace />
+              )
+            )
+          }
+        /> */}
+
         <Route
           path="/editprofile"
           element={
-            decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
+            decodedJWT.authority.includes('PATIENT') && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
               <EditProfilePatient />
             ) : (
-              decodedJWT.role === 'DOCTOR' && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
+              decodedJWT.authority.includes('DOCTOR') && decodedJWT.isVerified && decodedJWT.isFormFilled ? (
                 <EditProfileDoctor />
               ) : (
                 <Navigate to="/dashboard" replace />
@@ -141,22 +152,23 @@ function Main() {
           path="/dashboard"
           element={
             decodedJWT.isVerified && decodedJWT.isFormFilled ? (
-              <Dashboard role={decodedJWT.role} />
+              <Dashboard role={decodedJWT.authority} />
             ) : (
               <Navigate to="/" replace />
             )
           }
         />
 
-        {decodedJWT.role === 'PATIENT' && decodedJWT.isVerified && decodedJWT.isFormFilled && (
+        {decodedJWT.authority.includes('PATIENT') && decodedJWT.isVerified && decodedJWT.isFormFilled && (
           <Route path="/doctorpg" element={<Dashboard><DoctorPg /></Dashboard>} />
         )}
 
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/verify" element={<Verify />} />
+        {/* <Route path="/verify" element={<Verify />} /> */}
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword id={id} />} />
+        {/* <Route path="/resetpassword" element={<ResetPassword />} /> */}
         {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
         <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
         <Route path="/arrayinput" element={<ArrayInput />} />

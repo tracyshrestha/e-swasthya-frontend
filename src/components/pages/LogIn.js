@@ -53,10 +53,13 @@ function LogIn() {
 
       console.log(res);
 
+      
+
       // Check if token exists before navigating to another page
       if (token) {
         // Redirect to the verify page
         navigate('/verify');
+        window.location.reload(true);
       }
     } catch (error) {
       console.log(error);
