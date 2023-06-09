@@ -61,16 +61,6 @@ function Main() {
     authority: [],
   });
 
-  // useEffect(() => {
-  //   const jwtToken = localStorage.getItem('token');
-  //   if (jwtToken) {
-  //     const decodedJWT = jwt_decode(jwtToken);
-  //     console.log('Decoded JWT for routes:', decodedJWT);
-  //     setDecodedJWT(decodedJWT);
-  //   }
-  // }, []);
-
-
   useEffect(() => {
     const jwtToken = localStorage.getItem('token');
     if (jwtToken) {
@@ -78,7 +68,17 @@ function Main() {
       console.log('Decoded JWT for routes:', decodedJWT);
       setDecodedJWT(decodedJWT);
     }
-  }, [decodedJWT]);
+  }, []);
+
+
+  // useEffect(() => {
+  //   const jwtToken = localStorage.getItem('token');
+  //   if (jwtToken) {
+  //     const decodedJWT = jwt_decode(jwtToken);
+  //     console.log('Decoded JWT for routes:', decodedJWT);
+  //     setDecodedJWT(decodedJWT);
+  //   }
+  // }, [decodedJWT]);
 
 
   return (
@@ -167,7 +167,7 @@ function Main() {
         {/* <Route path="/verify" element={<Verify />} /> */}
         <Route path="/verified" element={<Verified />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/resetpassword" element={<ResetPassword id={id} />} />
+        <Route path="/resetpassword/:id" element={<ResetPassword />} />
         {/* <Route path="/resetpassword" element={<ResetPassword />} /> */}
         {/* <Route path="/verifyresetpasswordlink" element={<VerifyResetPasswordLink />} /> */}
         <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />

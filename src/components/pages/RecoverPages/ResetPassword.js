@@ -4,16 +4,19 @@ import logo from "../../../assets/logo.png";
 import Message from "../../helpercomponents/Message";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ResetPassword = ({ id }) => {
 
+const ResetPassword = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const initialState = {
-    password: '',
+    newPassword: '',
     confirmPassword: '',
     loading: false,
     error: false,
     message: '',
-    id:'',
+  
   };
 
   const [values, setValues] = useState(initialState);
@@ -28,7 +31,7 @@ const ResetPassword = ({ id }) => {
     event.preventDefault();
     setValues((prevState) => ({ ...prevState, loading: true }));
 
-    if (values.password !== values.confirmPassword) {
+    if (values.newPassword !== values.confirmPassword) {
       setValues((prevState) => ({
         ...prevState,
         error: true,
@@ -40,7 +43,7 @@ const ResetPassword = ({ id }) => {
 
     try {
       const requestData = {
-        password: values.password,
+        newPassword: values.newPassword,
         id:id,
       };
 
@@ -51,9 +54,11 @@ const ResetPassword = ({ id }) => {
         message: response.data.message,
         loading: false,
         error: false,
-        password: '',
+        newpassword: '',
         confirmPassword: '',
       }));
+      localStorage.removeItem('token');
+      navigate(`/`);
     } catch (error) {
       console.log(error);
       setValues((prevState) => ({
@@ -96,10 +101,10 @@ const ResetPassword = ({ id }) => {
 
               <div class="relative">
                 <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={values.password}
+                  type="newPassword"
+                  id="newPassword"
+                  name="newPassword"
+                  value={values.newPassword}
                   onChange={handleChange}
                   class=" placeholder-gray-300 0 h-[50px] border border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                   placeholder="Password"
