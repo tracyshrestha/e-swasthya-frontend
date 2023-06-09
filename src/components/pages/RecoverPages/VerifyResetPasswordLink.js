@@ -19,8 +19,8 @@ const VerifyResetPasswordLink = () => {
     const verifyAccount = async () => {
       try {
         await axios.get(`${process.env.REACT_APP_API}api/user/verify-reset-password-link/${id}/${token}`);
-        setValues({ ...values, loading: false, error: false });
-        navigate('/resetpassword');
+        setValues({ ...values, loading: false, error: false });;
+        navigate(`/resetpassword/${id}`);
       } catch (error) {
         setValues({
           ...values,
