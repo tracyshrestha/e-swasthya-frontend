@@ -6,6 +6,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/Signup";
 import Verify from "./pages/VerifyAccPages/Verify";
 import Verified from "./pages/VerifyAccPages/Verified";
+import SearchComponent from "./pages/SearchComponent/SearchComponent";
 import VerifyAccountLink from "./pages/VerifyAccPages/VerifyAccountLink";
 import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
@@ -167,9 +168,10 @@ function Main() {
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="/verify" element={<Verify />} /> */}
         <Route path="/verified" element={<Verified />} />
+        <Route path="/searchcomponent" element={<SearchComponent />} />
         <Route path="/VerifyAccountLink/:id/:token" element={<VerifyAccountLink />} />
         <Route path="/forget" element={<RecoverAccount />} />
-        <Route path="/resetpassword/:id/:token" element={<ResetPassword />} />
+        <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route path="/verifyresetpasswordlink/:id/:token" element={<VerifyResetPasswordLink />} />
         <Route path="/arrayinput" element={<ArrayInput />} />
         <Route path="/reportvaccine" element={<ReportVaccine />} />
