@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import nepalLocation from "../components/formState/nepalLocation.json"
+import nepalLocation from "./formState/nepalLocation.json"
 import { FormContext } from "./formState/State";
 
 const LegalInformation = () => {

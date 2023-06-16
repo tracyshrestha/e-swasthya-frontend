@@ -1,11 +1,14 @@
 import React from 'react'
-import { BrowserRouter, Routes } from 'react-router-dom'
-import IndexRoute from './Routes/IndexRoute'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+import IndexStep from './UserAuthentication/DoctorStepForm/indexStep'
 
 
 const App = () => {
   return (
-    <IndexRoute />
+  <Routes>
+      <Route path='/' element={<IndexStep/>}/>
+  </Routes>
   )
 }
 

@@ -14,36 +14,38 @@ const initialState = {
 
 function RecoverAccount() {
   
- const [values, setValues] = useState(initialState);
+  const [values, setValues] = useState(initialState);
 
- const handleChange = (event) => {
-   const { name, value } = event.target;
-   setValues((prevState) => ({ ...prevState, [name]: value }));
- };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues((prevState) => ({ ...prevState, [name]: value }));
+  };
 
- const onSubmit = async (event) => {
-   event.preventDefault();
-   try {
-     setValues((prevState) => ({ ...prevState, loading: true }));
-     const res = await axios.get( `${process.env.REACT_APP_API}api/user/reset-password-request/${values.email}`
-     );
-     console.log(res);
-     setValues((prevState) => ({
-       ...prevState,
-       message: res.data.message,
-       loading: false,
-       error: false,
-     }));
-   } catch (error) {
-     console.log(error);
-     setValues((prevState) => ({
-       ...prevState,
-       message: error?.response?.data?.data[0],
-       loading: false,
-       error: true,
-     }));
-   }
- };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    console.log(values);
+    try {
+      setValues((prevState) => ({ ...prevState, loading: true }));
+      const res = await axios.get( `${process.env.REACT_APP_API}api/user/reset-password-request/${values.email}`
+      );
+      console.log(res);
+      setValues((prevState) => ({
+        ...prevState,
+        message: res.data.message,
+        loading: false,
+        error: false,
+      }));
+    } catch (error) {
+      console.log(error);
+      setValues((prevState) => ({
+        ...prevState,
+        message: error?.response?.data?.data[0],
+        loading: false,
+        error: true,
+      }));
+    }
+  };
+  
 
   return (
     <>
@@ -63,12 +65,12 @@ function RecoverAccount() {
             {values.error || values.message ? <Message message={values.message} error={values.error} /> : null}
             <div className='grid grid-cols-2 pb-2'>
             <div className=' text-left  text-gray-400 '>
-            <h1  onChange={handleChange} className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your email</h1>
+            <h1   className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your email</h1>
           </div>
           </div>
 
           <div class="relative">
-            <input type="text" id="email-address-icon" class=" placeholder-gray-300 0 border h-[50px] border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  " placeholder='Email'></input>
+            <input onChange={handleChange} name="email" type="email" id="email-address-icon" class=" placeholder-gray-300 0 border h-[50px] border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  " placeholder='Email'></input>
           </div>
           
           <div className='flex flex-col items-center'>

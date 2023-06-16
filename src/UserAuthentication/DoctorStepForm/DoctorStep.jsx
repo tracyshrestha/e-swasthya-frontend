@@ -10,13 +10,15 @@ import UserInformation from './components/Userinformation'
 
 import { useContext } from "react";
 import { FormContext } from "./components/formState/State";
+import Message from "../Helper/Message"
+import DoctorInformation from "./components/DoctorInformation";
 
 
 
 
 function User() {
 
-  const {formNo,formArray,next,prev,onSubmit} = useContext(FormContext);
+  const {formNo,formArray,next,prev,onSubmit,Userinformation} = useContext(FormContext);
   
 
 
@@ -95,13 +97,15 @@ function User() {
                   </>
                 ))}
               </div>
-            </div>
+            </div> 
+           
+            {Userinformation.error || Userinformation.message ? <Message message={Userinformation.message} error={Userinformation.error} /> : null}
 
             <div class="pb-6">
 
                  {formNo === 1 && <ImageHandler /> } 
                  {formNo === 2 && <UserInformation/> }
-                 {formNo === 3 && <LegalInformation /> }
+                 {formNo === 3 && <DoctorInformation /> }
                   
             </div>
 

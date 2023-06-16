@@ -89,7 +89,7 @@ export const AuthContextProvider = (props) => {
                  onLogin : LoginHandler,
                  onLogout : LogoutHandler,
                  isAuth : isAuth,
-                 getStoredCookie : getStoredCookie,
+                 getStoredCookie : getStoredCookie
 
             }}
      >

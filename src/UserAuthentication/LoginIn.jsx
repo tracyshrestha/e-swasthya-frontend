@@ -76,22 +76,17 @@ function LogIn() {
               <h2 className='sm:text-[35px] text-[25px]  font-medium sm:pt-1  text-gray-600'>Welcome Back</h2>
               <h6 className='sm:text-[17px] text-[15px]  pb-9 text-gray-400'>Login to manage your account</h6>
             </div>
-
-
             {values.error || values.message ? <Message message={values.message} error={values.error} /> : null}
             <div class="pb-6">
-
               <div className='grid grid-cols-2 pb-2'>
                 <div className=' text-left  text-gray-500 '>
                   <h1 className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your email</h1>
                 </div>
               </div>
-
               <div class="relative">
                 <input onChange={Onchange('email')} value={values.email} required type="email" id="email-address-icon" class=" placeholder-gray-300 0 h-[50px] border border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  " placeholder="Email"></input>
               </div>
             </div>
-
             <div className='grid grid-cols-2 pb-2'>
               <div className=' text-left  text-gray-400 '>
                 <h1 className='sm:text-[15px] text-[12px]  relative text-gray-400'>Enter your password</h1>
@@ -100,12 +95,9 @@ function LogIn() {
                 <a className='sm:text-[14px] text-[10px]  relative text-[#42ADF0] hover:text-[#4d82d7] ' href="/RecoverAccount">Forgot password?</a>
               </div>
             </div>
-
             <div class="relative">
               <input onChange={Onchange('password')} value={values.password} required type="password" id="email-address-icon" class=" placeholder-gray-300 0 border h-[50px] border-gray-300 text-gray-900 text-[15px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  " placeholder='**********'></input>
             </div>
-
-
             <div className='flex flex-col items-center'>
               <button type="submit" className='sm:w-[520px] rounded-md w-[275px] text-center py-3 mt-8 font-bold  bg-[#42ADF0] hover:bg-[#4D6B9C] relative  text-white hover:bold'>
                 Sign In
