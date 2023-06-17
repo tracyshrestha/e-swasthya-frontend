@@ -76,7 +76,7 @@ export default function Chart() {
 
 ]
   return (
-<ResponsiveContainer  className="m-5" width="82%" height="82%">
+<ResponsiveContainer  className="m-5" width="81%" height="81%">
     <BarChart
       width={800}
       height={400}
