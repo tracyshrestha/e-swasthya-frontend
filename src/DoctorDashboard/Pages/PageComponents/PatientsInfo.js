@@ -15,7 +15,7 @@ const PatientsInfo = () => {
 
                 <div className="grid grid-cols-2 pl-5 pr-5 mt-2 grid-flow-col ">
                     <div className="info p-1 pb-3 row-span-2">
-                        <img class="md:w-40 md:h-40  w-28 h-28 rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
+                        <img class="md:w-36 md:h-36  w-20 h-20  rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
                     </div>
                     <div className="info p-1">
                         <span class="block">John Smith</span>

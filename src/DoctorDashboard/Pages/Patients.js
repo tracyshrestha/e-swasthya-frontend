@@ -109,9 +109,6 @@ const Patients = () => {
                         </tr>
 
                        
-                        
-                        
-
                     </tbody>
                 </table>
             </div>
