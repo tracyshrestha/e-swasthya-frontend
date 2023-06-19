@@ -5,7 +5,9 @@ import Appointments from './Pages/Appointments';
 import Patients from './Pages/Patients'
 import PatientInfo from './Pages/PatientInfo';
 import ViewMedical from './Pages/ViewMedical';
-import AddMedicalHistory from './Pages/AddHistory'
+
+
+import AddHistoryIndex from './Pages/AddHistory';
 
 const DoctorRoutes = () => {
      return (
@@ -15,7 +17,7 @@ const DoctorRoutes = () => {
         <Route path='/Patients' element={<Dashboard><Patients/></Dashboard>}/>
         <Route path='/PatientsInfo' element={<Dashboard><PatientInfo/></Dashboard>}/>
         <Route path='/ViewMedical/:id' element={<Dashboard><ViewMedical/></Dashboard>}/>
-        <Route path='/AddMedicalHistory/:id' element={<Dashboard><AddMedicalHistory/></Dashboard>}/>
+        <Route path='/AddMedicalHistory/:id' element={<Dashboard><AddHistoryIndex/></Dashboard>}/>
     </Routes>
    )
 }
