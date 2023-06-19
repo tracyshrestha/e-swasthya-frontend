@@ -32,6 +32,7 @@ import UserReports from "../Dashboard/UserDashboard/UserReports";
 import BookAppointment from "../Dashboard/UserDashboard/BookAppointment";
 
 import DoctorHome from "../Dashboard/DoctorDashboard/DoctorHome";
+import AdminHome from "../Dashboard/AdminDashboard/AdminHome";
 import DocAppointments from "../Dashboard/DoctorDashboard/DocAppointments";
 import PatientInfo from "../Dashboard/DoctorDashboard/PatientInfo";
 
@@ -191,6 +192,9 @@ function Main() {
         <Route path="/doctorhome" element={<Dashboard><DoctorHome /></Dashboard>} />
         <Route path="/docappointments" element={<Dashboard><DocAppointments /></Dashboard>} />
         <Route path="/patientinfo/:id" element={<Dashboard><PatientInfo /></Dashboard>} />
+
+        {/* for admin dashboard */}
+        <Route path="/adminhome" element={<Dashboard><AdminHome /></Dashboard>} />
       </Routes>
     </BrowserRouter>
   );
