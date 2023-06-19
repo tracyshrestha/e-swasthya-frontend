@@ -107,7 +107,7 @@ function AdminHome() {
                     <div className="justify-center items-center text-center col-span-2">
 
                         <div className="  w-full h-full  p-6 ">
-                        <div className=" justify-center items-center sm:w-full w-[200px]  h-full bg-[#f9f9f9] text-[#7eb2df] border-2 shadow-2xl cursor-pointer border-[#c2c2c2] boarder-opacity-60 rounded-lg  sm:m-0 m-0 sm:my-0">
+                        <div className=" justify-center items-center sm:w-full w-[200px]  sm:h-full h-[300px] bg-[#f9f9f9] text-[#7eb2df] border-2 shadow-2xl cursor-pointer border-[#c2c2c2] boarder-opacity-60 rounded-lg  sm:m-0 m-0 sm:my-0">
                         <h1 className="text-center  text-2xl font-bold mt-3 ">Total Vaccines</h1>
                              <DiseaseOutBreakChart/>
                         </div>
