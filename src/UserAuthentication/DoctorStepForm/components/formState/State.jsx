@@ -6,7 +6,7 @@ import {AuthContext} from "../../../../Store/UserState"
 export const FormContext = createContext();
 
 const FormContextProvider = (props) => {
-  const formArray = [1, 2, 3];
+  const formArray = [1, 2, 3, 4];
   const [formNo, setFormNo] = useState(formArray[0]);
   const {isAuth,getStoredCookie} = useContext(AuthContext)
 
@@ -24,17 +24,28 @@ const FormContextProvider = (props) => {
   const [Userinformation, setUserInformation] = useState({
     DOB: "",
     bloodGroup: "A+",
-    imageUrl: "sad",
-    height: "asd",
+
+    imageUrl: "",
+
+    height: "",
     Age: "0",
-    weight: "asd",
-    gender: "asd",
+    weight: "",
+    gender: "",
+
+    NMCno : "",
+    speciality : "",
+    experience : "",
+    qualification : "",
+
     selectedFile: selectedFile,
     citizenshipno: "21-123",
     phonenumber: "23432",
+
+
     error: false,
     message: '',
     loading: false,
+    hospitalName : [],
     location: {
       Locationid: "",
       prov: "",
@@ -44,12 +55,34 @@ const FormContextProvider = (props) => {
     },
   });
 
+  const AddHospital = (name,id) => {
+
+         const uniqueHospital = !Userinformation.hospitalName.some(
+            (object) => object.id === id
+         )
+
+         if(uniqueHospital){
+             setUserInformation((prevState) => {
+                  return {...prevState,hospitalName:[...prevState.hospitalName,{name:name,id:id}]}
+             })
+         }
+  }
+
+  const RemoveHospital = (id) => {
+    const UpdatedObject = Userinformation.hospitalName.filter((object) => object.id !== id)
+    setUserInformation((prevState) => {
+       return {...prevState,hospitalName : UpdatedObject}
+    })
+  }
+
 
   const PostData = () => {
-
+    let HospitalId = []
+    Userinformation.hospitalName.map((ele) => HospitalId.push(ele.id));
+    
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}api/patient/save`,
+      url: `${process.env.REACT_APP_API}api/doctor/save`,
       headers: {
         'Authorization': `Bearer ${getStoredCookie("token")}`,
       },
@@ -64,7 +97,12 @@ const FormContextProvider = (props) => {
           imagePath: Userinformation.imageUrl,
           municipalityId: parseInt(Userinformation.location.Locationid),
           streetAddress: Userinformation.location.Address,
-          dateOfBirth: Userinformation.DOB
+          dateOfBirth: Userinformation.DOB,
+          associatedHospitalIdList: HospitalId,
+          experience:Userinformation.experience,
+          specialization:Userinformation.speciality,
+          education:Userinformation.qualification,
+          nmcLicenseNo:Userinformation.NMCno
       }
     }).then((res) => {
          setUserInformation((prevState) => {
@@ -80,25 +118,26 @@ const FormContextProvider = (props) => {
   }
 
   const onSubmit = (event) => {
-    event.preventDefault();
-
-
+   
+    event.preventDefault(); 
     const data = new FormData();
     data.append("file", selectedFile);
     data.append("upload_preset", "mi8kekc6");
     data.append("cloud_name", "dwo9yx1r8");
-
     axios("https://api.cloudinary.com/v1_1/dwo9yx1r8/image/upload",{
        method : "post",
        data : data
     }).then((res) => {
-       setUserInformation({...Userinformation,imageUrl:res.data.url})
+       console.log(res.data.url);
+       setUserInformation((prevState) => {
+           return {...prevState,imageUrl:res?.data?.url}
+       })
      }).then(() => PostData())
     .catch((error) => {
         if(error) {
           setUserInformation((prevState) => {
-                    return {...prevState,message:"Please check the form.",error:true}
-                 })
+             return {...prevState,message:"Please check the form.",error:true}
+           })
         }
      })
   };
@@ -113,10 +152,13 @@ const FormContextProvider = (props) => {
 
         Userinformation,
         setUserInformation,
+      
 
         formArray,
         formNo,
         setFormNo,
+        AddHospital,
+        RemoveHospital,
 
         next: next,
         prev: prev,

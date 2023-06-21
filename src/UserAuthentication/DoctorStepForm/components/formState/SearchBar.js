@@ -1,47 +1,62 @@
-import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { json } from "react-router-dom";
+import { useState , useContext} from "react";
+import { AuthContext } from "../../../../Store/UserState";
+
+
+
+
 
 
 
 export const SearchBar = ({ setResults }) => {
+    const {getStoredCookie} = useContext(AuthContext);
     const hospitalName = [
         {"name" : "Patan Hospital"},
         {"name" : "Medicity Hospital"},
-        {"name" : "Bir Hospital"}
+        {"name" : "Bir Hospital"},
+        {"name" : "HAMS Hospital"},
+        {"name" : "Alka Hospital"}
     ]
     const [input, setInput] = useState("");
 
     const fetchData = (value) => {
-        const results = hospitalName.filter((name) => {
-             return (
-                        value &&
-                        name &&
-                        name.name &&
-                        name.name.toLowerCase().includes(value)
-             )
-        })
-        setResults(results);
-
-
-        
-        // fetch("https://jsonplaceholder.typicode.com/users")
-        //     .then((response) => response.json())
-        //     .then((json) => {
-        //         = json.filter((user) => {
-        //             return (
+        // const results = hospitalName.filter((name) => {
+        //     console.log(name)
+        //      return (
         //                 value &&
-        //                 user &&
-        //                 user.name &&
-        //                 user.name.toLowerCase().includes(value)
-        //             );
-        //         });
-        //         setResults(results);
-        //     });
+        //                 name &&
+        //                 name.name &&
+        //                 name.name.toLowerCase().includes(value)
+        //      )
+        // })
+
+        fetch(`${process.env.REACT_APP_API}api/hospital/list`,{
+            method : 'GET',
+            headers : new Headers({
+                 'Authorization' : `Bearer ${getStoredCookie("token")}`,
+            })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let results = data.data.filter((user) => {
+                    
+                    return (
+                        value &&
+                        user &&
+                        user.hospitalName &&
+                        user.hospitalName.toLowerCase().includes(value)
+                    );
+                });
+                setResults(results);
+            });
     };
 
+        
+      
+    
+
+
     const handleChange = (value) => {
-        setInput(value);
+        setInput(value.toLowerCase());
         fetchData(value);
     };
 

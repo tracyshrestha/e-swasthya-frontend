@@ -5,7 +5,6 @@ import { AuthContext } from '../Store/UserState';
 
 
 const PrivateRoute = () => {
-      const location = useLocation();
       const {isAuth} = useContext(AuthContext)
       
       return (

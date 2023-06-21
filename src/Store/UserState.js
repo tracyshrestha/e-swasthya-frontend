@@ -64,6 +64,8 @@ export const AuthContextProvider = (props) => {
     
     //isAuth
     const isAuth = () => {
+        
+          
         if(window !== 'undefined'){
             const cookieChecked = getStoredCookie('token');
             if(cookieChecked){

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useContext } from "react"
 import { Link, useLocation } from 'react-router-dom'
 
 import {BsArrowLeftCircle} from 'react-icons/bs'
@@ -7,19 +7,25 @@ import {BsThermometerSun} from 'react-icons/bs'
 import {TbLogout} from 'react-icons/tb'
 import {FaHospitalUser} from 'react-icons/fa'
 import Logo from "./Logo"
+import { AuthContext } from "../../Store/UserState"
 
 
 const Sidebar = () => {
     const [open, setOpen] = useState(false);
     const location = useLocation()
+    const {onLogout} = useContext(AuthContext)
 
     const Menus = [
-        { title: 'Home', path: '/',src: <AiFillHome/> },
-        { title: 'Appointments', path: '/Appointments' ,src:<BsThermometerSun/> },
-        { title: 'Patients', path: '/Patients' ,src:<FaHospitalUser/> },
-        { title: 'Logout', path: '/action' ,src:<TbLogout/> }
+        { title: 'Home',function:false ,path: '/home',src: <AiFillHome/> },
+        { title: 'Appointments',function:false  ,path: '/Appointments' ,src:<BsThermometerSun/> },
+        { title: 'Patients',path:'/Patients' ,function:false  ,src:<FaHospitalUser/> },
+        { title: 'Logout',function:true,src:<TbLogout/> }
     ]
 
+    const Logout = async () => {
+        onLogout()
+        window.location.reload();
+    } 
 
     return (
         <>  
@@ -39,10 +45,10 @@ const Sidebar = () => {
                     {
                         Menus.map((menu, index) => (
                             <Link to={menu.path} key={index}>
-                                <li className={`flex items-center gap-x-5 p-3 text-base font-medium rounded-lg cursor-pointer text-black 
+                                <li  onClick={menu.function ? Logout : null} className={`flex items-center gap-x-5 p-3 text-base font-medium rounded-lg cursor-pointer text-black 
                                        ${menu.gap ? 'mt-9' : 'mt-1'} ${location.pathname === menu.path && 'bg-eswasthyaprim text-white'}`}>
                                     <span className='text-2xl'>{menu.src}</span>
-                                    <span className={`${!open && 'hidden'} origin-left duration-300  hover:block ml-[1px] font-cera`}>
+                                    <span  className={`${!open && 'hidden'} origin-left duration-300  hover:block ml-[1px] font-cera`}>
                                         {menu.title}
                                     </span>
                                 </li>

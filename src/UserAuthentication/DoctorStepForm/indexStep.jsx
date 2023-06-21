@@ -1,7 +1,7 @@
 import FormContextProvider from './components/formState/State'
 import DoctorStep from './DoctorStep'
 
-const IndexStep = () => {
+export const IndexStep = () => {
    return (
       <FormContextProvider>
           <DoctorStep/>
@@ -9,4 +9,3 @@ const IndexStep = () => {
    )
 }
 
-export default IndexStep;

@@ -6,7 +6,7 @@ import { AuthContext } from '../Store/UserState';
 const PublicRoute = ({restriction}) => {
       const {isAuth} = useContext(AuthContext)
       return (
-           isAuth() && restriction ? <Navigate to="/IndexStep" replace/>
+           isAuth() && restriction ? <Navigate to="/home" replace/>
            :  <Outlet/>
       )
 }

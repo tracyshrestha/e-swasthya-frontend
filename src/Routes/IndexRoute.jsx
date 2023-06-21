@@ -5,8 +5,6 @@ import PublicRoute from "./PublicRoute";
 
 import IsVerified from "./SubRoutes/IsVerified";
 
-import User from "../UserAuthentication/StepForm/User";
-import IndexStep from "../UserAuthentication/StepForm/indexStep";
 
 import LogIn from "../UserAuthentication/LoginIn";
 import SignUp from "../UserAuthentication/Signup";
@@ -15,23 +13,31 @@ import RecoverAccount from "../UserAuthentication/RecoverAccount";
 import NotFound from "../UserAuthentication/NotFound";
 
 import Verified from "../UserAuthentication/Verified";
-import Verify from "../UserAuthentication/Verify";
+import IsFormFilled from "./SubRoutes/IsFormFilled";
+import {DoctorRoutes} from "../DoctorDashboard/DoctorRoutes";
 
 const IndexRoute = () => {
 
 
   return (
+    
     <Routes>
-
+      
       <Route element={<PrivateRoute />}>
         <Route element={<IsVerified/>}>
-           <Route path="/IndexStep" element={<IndexStep />} />
+            <Route element={<IsFormFilled/>}>
+                     {DoctorRoutes.map((ele) => {
+                         return (
+                             <Route path={ele.path} element={ele.element}/>
+                         )
+                     })}
+            </Route> 
         </Route> 
       </Route>
 
 
       <Route element={<PublicRoute restriction={true}/>}>
-           <Route  path="/" element={<LogIn />} />
+           <Route exact path="/" element={<LogIn />} />
       </Route>
      
       

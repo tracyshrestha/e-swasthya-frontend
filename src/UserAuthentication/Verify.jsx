@@ -4,7 +4,7 @@ import logo from '../assets/logo.png'
 import { AuthContext } from '../Store/UserState';
 import axios from 'axios';
 import Message from './Helper/Message';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const initialState = {
   loading: false,
@@ -46,7 +46,8 @@ function Verify() {
   
 
    const Logout = async () => {
-        onLogout()
+         onLogout()
+         window.location.reload();
    }
 
 
