@@ -72,7 +72,7 @@ const LegalInformation = () => {
         setUserInformation(prevState => {
             return {...prevState,location:{...prevState.location,Address:event.target.value}}
       })
-      console.log(Userinformation);
+      
     }
 
 

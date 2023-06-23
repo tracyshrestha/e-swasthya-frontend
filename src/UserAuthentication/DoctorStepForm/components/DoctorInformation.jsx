@@ -3,6 +3,8 @@ import { MdAddCircle } from 'react-icons/md'
 import SearchComponent from './formState/SearchComponent';
 import { useContext } from 'react';
 import { FormContext } from './formState/State';
+import { Accordion } from 'flowbite';
+import AccordionComponent from './Accordion';
 
 const DoctorInformation = () => {
     const { setUserInformation, Userinformation ,RemoveHospital} = useContext(FormContext);
@@ -55,6 +57,7 @@ const DoctorInformation = () => {
                             class="placeholder-gray-300 h-[50px] 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                             placeholder="01262"
                         ></input>
+                             
                     </div>
                     <div className=' text-left text-gray-400 '>
                         <h1 className='sm:text-[15px] text-[12px] pb-2 relative text-gray-400'>Qualification</h1>
@@ -72,6 +75,7 @@ const DoctorInformation = () => {
                         <h1 className='sm:text-[15px] mt-1 text-[12px] relative text-gray-400'>Add hospital</h1>
                         <div className='flex items-center'><SearchComponent /></div>
                     </div>
+                   
                     <hr />
                     <div className="grid md:grid-cols-3 gap-2">
                         {

@@ -10,8 +10,6 @@ const ImageHandler = () => {
         const file = event.target.files[0];
  
         setSelectedFile(file);
-
-
         const reader = new FileReader(file);
         reader.onloadend = () => {
             setPreviewImage(reader.result);

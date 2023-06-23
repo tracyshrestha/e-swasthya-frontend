@@ -70,7 +70,7 @@ const LegalInformation = () => {
 
     const onChangeAddress = event => {
         setUserInformation(prevState => {
-            return {...prevState,location:{...prevState.location,Address:event.target.value}}
+            return {...prevState,location:{...prevState?.location,Address:event.target.value}}
       })
       console.log(Userinformation);
     }
@@ -169,7 +169,7 @@ const LegalInformation = () => {
                     <div className=' text-left text-gray-400 '>
                         <h1 className='sm:text-[15px] text-[12px] pb-2 relative text-gray-400'>Address</h1>
                         <input
-                        value={Userinformation.location.Address}
+                        value={Userinformation?.location?.Address}
                         onChange={onChangeAddress}
                         type="text"
                         id="email-address-icon"

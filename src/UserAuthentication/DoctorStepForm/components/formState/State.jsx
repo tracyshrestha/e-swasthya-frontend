@@ -41,11 +41,11 @@ const FormContextProvider = (props) => {
     citizenshipno: "21-123",
     phonenumber: "23432",
 
-
     error: false,
     message: '',
     loading: false,
     hospitalName : [],
+
     location: {
       Locationid: "",
       prov: "",
@@ -79,7 +79,7 @@ const FormContextProvider = (props) => {
   const PostData = () => {
     let HospitalId = []
     Userinformation.hospitalName.map((ele) => HospitalId.push(ele.id));
-    
+    setUserInformation({loading:true})
     axios({
       method: "POST",
       url: `${process.env.REACT_APP_API}api/doctor/save`,
@@ -88,16 +88,11 @@ const FormContextProvider = (props) => {
       },
       data: {
           userId : isAuth().userId,
-          citizenshipNo: Userinformation.citizenshipValue,
           phoneNumber: Userinformation.phonenumber,
-          weight: Userinformation.weight,
-          height: Userinformation.height,
           gender: Userinformation.gender,
-          bloodGroup: Userinformation.bloodGroup,
           imagePath: Userinformation.imageUrl,
           municipalityId: parseInt(Userinformation.location.Locationid),
-          streetAddress: Userinformation.location.Address,
-          dateOfBirth: Userinformation.DOB,
+          streetAddress: Userinformation?.location?.Address,
           associatedHospitalIdList: HospitalId,
           experience:Userinformation.experience,
           specialization:Userinformation.speciality,
@@ -108,36 +103,41 @@ const FormContextProvider = (props) => {
          setUserInformation((prevState) => {
                return {...prevState,message:res.data.message,loading:false,error:false}
          })
+         setUserInformation((prevState) => {return {...prevState,loading:false}})
+         console.log(res);
      })
     .catch(error => {
       setUserInformation((prevState) => {
         return {...prevState,message:error?.response?.data?.data[0],error:true}
        })
+       setUserInformation((prevState) => {return {...prevState,loading:false}})
     });
-
   }
 
   const onSubmit = (event) => {
    
     event.preventDefault(); 
     const data = new FormData();
+    setUserInformation((prevState) => {return {...prevState,loading:true}})
     data.append("file", selectedFile);
     data.append("upload_preset", "mi8kekc6");
     data.append("cloud_name", "dwo9yx1r8");
+    setUserInformation({loading:true})
     axios("https://api.cloudinary.com/v1_1/dwo9yx1r8/image/upload",{
        method : "post",
        data : data
     }).then((res) => {
-       console.log(res.data.url);
        setUserInformation((prevState) => {
            return {...prevState,imageUrl:res?.data?.url}
        })
      }).then(() => PostData())
     .catch((error) => {
         if(error) {
-          setUserInformation((prevState) => {
+           
+           setUserInformation((prevState) => {
              return {...prevState,message:"Please check the form.",error:true}
            })
+           setUserInformation((prevState) => {return {...prevState,loading:false}})
         }
      })
   };

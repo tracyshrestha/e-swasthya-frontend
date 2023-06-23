@@ -58,6 +58,7 @@ export const AuthContextProvider = (props) => {
            setIsLoggedIn(true);
            setCookieHandler('token',response?.data?.jwt);
            let {userId,authority,email,isFormFilled,isVerified} = jwtDecode(response?.data?.jwt);
+           console.log(authority);
            authority = authority[0]["authority"];
            setLocalstorage('user',{userId,authority,email,isFormFilled,isVerified})
      }

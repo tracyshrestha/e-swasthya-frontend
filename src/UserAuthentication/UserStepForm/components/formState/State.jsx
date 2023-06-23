@@ -1,6 +1,7 @@
-import React, { createContext,useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
-import {AuthContext} from "../../../../Store/UserState"
+import { AuthContext } from "../../../../Store/UserState"
+
 
 
 export const FormContext = createContext();
@@ -8,7 +9,7 @@ export const FormContext = createContext();
 const FormContextProvider = (props) => {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0]);
-  const {isAuth,getStoredCookie} = useContext(AuthContext)
+  const { isAuth, getStoredCookie ,onLogin} = useContext(AuthContext)
 
   const next = () => {
     setFormNo(formNo + 1);
@@ -24,14 +25,14 @@ const FormContextProvider = (props) => {
   const [Userinformation, setUserInformation] = useState({
     DOB: "",
     bloodGroup: "A+",
-    imageUrl: "sad",
-    height: "asd",
+    imageUrl: "",
+    height: "",
     Age: "0",
-    weight: "asd",
-    gender: "asd",
+    weight: "",
+    gender: "",
     selectedFile: selectedFile,
-    citizenshipno: "21-123",
-    phonenumber: "23432",
+    citizenshipno: "",
+    phonenumber: "",
     error: false,
     message: '',
     loading: false,
@@ -54,53 +55,61 @@ const FormContextProvider = (props) => {
         'Authorization': `Bearer ${getStoredCookie("token")}`,
       },
       data: {
-          userId : isAuth().userId,
-          citizenshipNo: Userinformation.citizenshipValue,
-          phoneNumber: Userinformation.phonenumber,
-          weight: Userinformation.weight,
-          height: Userinformation.height,
-          gender: Userinformation.gender,
-          bloodGroup: Userinformation.bloodGroup,
-          imagePath: Userinformation.imageUrl,
-          municipalityId: parseInt(Userinformation.location.Locationid),
-          streetAddress: Userinformation.location.Address,
-          dateOfBirth: Userinformation.DOB
+        userId: isAuth().userId,
+        citizenshipNo: Userinformation.citizenshipValue,
+        phoneNumber: Userinformation.phonenumber,
+        weight: Userinformation.weight,
+        height: Userinformation.height,
+        gender: Userinformation.gender,
+        bloodGroup: Userinformation.bloodGroup,
+        imagePath: Userinformation.imageUrl,
+        municipalityId: parseInt(Userinformation.location.Locationid),
+        streetAddress: Userinformation.location.Address,
+        dateOfBirth: Userinformation.DOB
       }
     }).then((res) => {
-         setUserInformation((prevState) => {
-               return {...prevState,message:res.data.message,loading:false,error:false}
-         })
-     })
-    .catch(error => {
       setUserInformation((prevState) => {
-        return {...prevState,message:error?.response?.data?.data[0],error:true}
-       })
-    });
-
+        return { ...prevState, message: "User information saved sucessfully!", loading: false, error: false }
+      })
+      console.log(res);
+      onLogin(res);
+      window.location.reload();
+      setUserInformation((prevState) => { return { ...prevState, loading: false } })
+    })
+      .catch(error => {
+        console.log(error);
+        setUserInformation((prevState) => {
+          return { ...prevState, message: error?.response?.data?.data[0], error: true }
+        })
+        setUserInformation((prevState) => { return { ...prevState, loading: false } })
+      });
   }
 
   const onSubmit = (event) => {
     event.preventDefault();
-
+    setUserInformation((prevState) => { return { ...prevState, loading: true } })
 
     const data = new FormData();
     data.append("file", selectedFile);
     data.append("upload_preset", "mi8kekc6");
     data.append("cloud_name", "dwo9yx1r8");
 
-    axios("https://api.cloudinary.com/v1_1/dwo9yx1r8/image/upload",{
-       method : "post",
-       data : data
+    axios("https://api.cloudinary.com/v1_1/dwo9yx1r8/image/upload", {
+      method: "post",
+      data: data
     }).then((res) => {
-       setUserInformation({...Userinformation,imageUrl:res.data.url})
-     }).then(() => PostData())
-    .catch((error) => {
-        if(error) {
+      setUserInformation((prevState) => {
+        return { ...prevState, imageUrl: res?.data?.url }
+      })
+    }).then(() => PostData())
+      .catch((error) => {
+        if (error) {
           setUserInformation((prevState) => {
-                    return {...prevState,message:"Please check the form.",error:true}
-                 })
+            return { ...prevState, message: "Please check the form.", error: true }
+          })
+          setUserInformation((prevState) => { return { ...prevState, loading: false } })
         }
-     })
+      })
   };
 
   return (

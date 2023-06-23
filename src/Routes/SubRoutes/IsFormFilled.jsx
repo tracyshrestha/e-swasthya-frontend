@@ -9,8 +9,8 @@ import DoctorRoutes from "../../DoctorDashboard/DoctorRoutes";
 const IsFormFilled = () => {
     const {isAuth} = useContext(AuthContext);
     return (
-           ((!isAuth().isFormFilled && isAuth().authority === "PATIENT")) ? <UserStep/>
-          :((!isAuth().isFormFilled && isAuth().authority === "DOCTOR")) ? <DoctorStep/>
+           ((!isAuth()?.isFormFilled && isAuth()?.authority === "PATIENT")) ? <UserStep/>
+          :((!isAuth()?.isFormFilled && isAuth()?.authority === "DOCTOR")) ? <DoctorStep/>
           : <Outlet/>
     )
  }
