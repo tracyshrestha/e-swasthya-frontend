@@ -20,8 +20,8 @@ const Sidebar = () => {
     const Menus = [
         { title: 'Home', path: '/',src: <AiFillHome/> },
         { title: 'Doctors', path: '/doctors' ,src:<BsThermometerSun/> },
-        // { title: 'Medication', path: '/medication' ,src:<GiMedicines/> },
-        // { title: 'Reports', path: '/reports' ,src:<GrDocumentStore/> },
+        { title: 'Appointments', path: '/Appointments' ,src:<GiMedicines/> },
+        { title: 'History', path: '/reports' ,src:<GrDocumentStore/> },
         { title: 'Logout', function:true ,src:<TbLogout/> }
     ]
 

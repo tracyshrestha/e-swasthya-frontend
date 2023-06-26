@@ -7,7 +7,10 @@ import { useEffect ,useContext , useState} from 'react';
 import { AuthContext } from '../../Store/UserState';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import AppointmentComponent from "./AppointmentState/AppointmentState"
+
+
+import ConfirmationModal from './AppointmentState/ConfirmationModal';
+import AppointmentHandler from './AppointmentState/Main';
 
 
 const DoctorInfo = () => {
@@ -36,8 +39,11 @@ const DoctorInfo = () => {
 
 
     return (
+        <>
+       
         <div className='h-screen'>
-            <div className="w-full h-max bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
+             
+            <div className=" w-full h-max bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
                 <div className="lg:row-span-2  rounded-sm  border-[2px] border-[#f8f8f8] bg-white shadow-xl">
                     <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                         <span className='text-2xl mr-2'><BsFillPersonVcardFill /></span> General information
@@ -45,7 +51,7 @@ const DoctorInfo = () => {
 
                     <div className="grid grid-cols-2 pl-5 pr-5 mt-2 grid-flow-col ">
                         <div className="info p-1 pb-3 row-span-2">
-                            <img class="md:w-36 md:h-36  w-20 h-20  rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
+                            <img class="md:w-32 md:h-32  w-20 h-20 rounded-full shadow-lg" src="https://demo.midas.com.np/uploads/dr_atit_poudel-removebg-preview.png" alt="Bonnie image" />
                         </div>
                         <div className="info p-1">
                             <span class="block">Dr.{DoctorInfo.firstName} {DoctorInfo.lastName}</span>
@@ -120,7 +126,7 @@ const DoctorInfo = () => {
                     <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                         <span className='text-2xl mr-2'><MdVaccines /></span>Book an Appointment
                     </div>
-                    <AppointmentComponent hospitalList={DoctorInfo?.associatedhospitalList}/>
+                    <AppointmentHandler hospitalList={DoctorInfo?.associatedhospitalList}/>
                 </div>
                 {/* <div className="lg:col-span-12 rounded-sm border-[2px] border-[#f8f8f8] bg-white shadow-xl ">
                 
@@ -228,6 +234,7 @@ const DoctorInfo = () => {
 
             </div>
         </div>
+    </>
     )
 }
 

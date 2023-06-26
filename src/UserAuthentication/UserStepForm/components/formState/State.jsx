@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../../Store/UserState"
-
+import { useNavigate } from "react-router-dom"; 
 
 
 export const FormContext = createContext();
@@ -9,7 +9,8 @@ export const FormContext = createContext();
 const FormContextProvider = (props) => {
   const formArray = [1, 2, 3];
   const [formNo, setFormNo] = useState(formArray[0]);
-  const { isAuth, getStoredCookie ,onLogin} = useContext(AuthContext)
+  const { isAuth, getStoredCookie ,onLogin} = useContext(AuthContext);
+  const navitage = useNavigate();
 
   const next = () => {
     setFormNo(formNo + 1);
@@ -71,10 +72,9 @@ const FormContextProvider = (props) => {
       setUserInformation((prevState) => {
         return { ...prevState, message: "User information saved sucessfully!", loading: false, error: false }
       })
-      console.log(res);
-      onLogin(res);
-      window.location.reload();
       setUserInformation((prevState) => { return { ...prevState, loading: false } })
+      onLogin(res);
+      navitage("/");
     })
       .catch(error => {
         console.log(error);

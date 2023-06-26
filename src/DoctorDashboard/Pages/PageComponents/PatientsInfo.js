@@ -1,14 +1,21 @@
 import { BsFillPersonVcardFill } from 'react-icons/bs'
 import { RiMedicineBottleFill } from 'react-icons/ri'
 import { MdVaccines } from 'react-icons/md'
-import { FaWeight } from 'react-icons/fa'
 import Chart from './chart/Chart'
+
+import { useContext } from 'react'
+import { DoctorContext } from '../../DoctorGlobalState'
 
 
 const PatientsInfo = () => {
+   
+    const {DoctorInformation} = useContext(DoctorContext);
+    let HospitalList = DoctorInformation?.hospitalNames?.split(",");
+
+
     return (
-        <div className="w-full h-screen bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
-            <div className="lg:row-span-2 rounded-sm  border-[2px] border-[#f8f8f8] bg-white shadow-xl">
+        <div className="w-full h-max bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
+            <div className="lg:row-span-2 lg:w-[450px] rounded-sm  border-[2px] border-[#f8f8f8] bg-white shadow-xl">
                 <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                     <span className='text-2xl mr-2'><BsFillPersonVcardFill /></span> General information
                 </div>
@@ -18,12 +25,12 @@ const PatientsInfo = () => {
                         <img class="md:w-36 md:h-36  w-20 h-20  rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
                     </div>
                     <div className="info p-1">
-                        <span class="block">John Smith</span>
-                        <span class="block">john@example.com</span>
+                        <span class="block">Dr.{DoctorInformation.firstName} {DoctorInformation.lastName}</span>
+                        <span class="block">{DoctorInformation.email}</span>
                     </div>
                     <div className="info p-1">
                         <h1 class="text-gray-500" >Gender</h1>
-                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">Male</button>
+                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">{DoctorInformation.gender}</button>
                     </div>
 
                 </div>
@@ -31,11 +38,11 @@ const PatientsInfo = () => {
                 <div className="grid grid-cols-2 pl-5 pr-5  pb-3">
                     <div className="info p-1">
                         <span class="text-gray-500 block">Qualification</span>
-                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">MD</button>
+                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">{DoctorInformation.gender}</button>
                     </div>
                     <div className="info p-1">
                         <span class="block">Speciality</span>
-                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">Pediatrist</button>
+                        <button disabled class="rounded-md h-10 mt-1 px-5 text-lg bg-slate-200 text-eswasthya-blue">{DoctorInformation.specialization}</button>
                     </div>
 
                 </div>
@@ -43,17 +50,17 @@ const PatientsInfo = () => {
 
                     <div className="info p-1">
                         <h1 class="text-gray-500" >Experience</h1>
-                        <span class="text-gray-900">15 years</span>
+                        <span class="text-gray-900">{DoctorInformation.experience} years</span>
                     </div>
                     <div className="info p-1">
                         <h1 class="text-gray-500" >NMC no </h1>
-                        <span class="text-gray-900">045678</span>
+                        <span class="text-gray-900">{DoctorInformation.nmcLicenseNumber}</span>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 pl-5 pr-5  pb-3">
                     <div className="info p-1">
                         <span class="block">Tele no</span>
-                        <span class="text-gray-900">+977-9843807294</span>
+                        <span class="text-gray-900">+977-{DoctorInformation.phoneNumber}</span>
                     </div>
                     <div className="info p-1">
                         <h1 class="text-gray-500" >Location</h1>
@@ -66,20 +73,22 @@ const PatientsInfo = () => {
 
                 <div class="relative m-4 p-2">
                     <div className='grid grid-cols-3 gap-3'>
-                        <button
-                            type="button"
-                            disabled="true"
-                            className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                        >
-                            Patan hospital
-                        </button>
-                        <button
-                            type="button"
-                            disabled="true"
-                            className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                        >
-                            Bir Hospital
-                        </button>
+
+                        {
+                            HospitalList?.map((ele,key) => {
+                                 return (
+                                    <button
+                                    key={key}
+                                    type="button"
+                                    disabled="true"
+                                    className="px-2 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                >
+                                    {ele}
+                                </button>
+                                 )
+                            })
+                        }
+                        
 
                     </div>
                 </div>

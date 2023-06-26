@@ -1,11 +1,13 @@
-import { createContext, useState ,useEffect} from "react";
-
-
+import {useState ,useEffect} from "react";
 import Datepicker from 'flowbite-datepicker/Datepicker';
+import { useContext } from "react";
+import { AppointmentContext } from "./GlobalState";
+
 
 
 const AppointmentComponent = ({hospitalList}) => {
-    const [AppointmentData, setAppointment] = useState();
+   
+    const {onSubmit,onAppointmentChange} = useContext(AppointmentContext);
 
     useEffect(() => {
         const datepickerEl = document.getElementById('datepickerId');
@@ -37,32 +39,22 @@ const AppointmentComponent = ({hospitalList}) => {
         });
     }, [])
 
-    const onAppointmentChange = name => event => {
-        setAppointment((prevState) => {
-            return { ...prevState, [name]: event?.target?.value }
-        })
-    }
-
-    const onSubmit = () => {
-        const datepickerEl = document.getElementById('datepickerId');
-        setAppointment((prevState) => {
-            return { ...prevState, appointmentDate:datepickerEl?.value}
-        })
-    }
+    
 
     return (
-    <form onSubmit={onSubmit}>
+
+    <form onSubmit={(e) => {onSubmit(e)}}>
         <div className="mt-2 pb-3">
             <div className="relative p-4">
-                <div className='grid grid-cols-3 gap-6 '>
+                <div className='grid sm:grid-cols-1 lg:grid-cols-3 gap-6 '>
 
                     <div className=' text-left text-gray-400 overflow-hidden'>
                         <h1 className='sm:text-[15px] text-[12px] pb-2 relative text-gray-400'>Choose your Hospital</h1>
-                        <select required onChange={onAppointmentChange("HospitalId")} class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="HospitalName" required onChange={onAppointmentChange("HospitalId")} class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             {
                                  hospitalList?.map((ele,id) => {
                                      return(
-                                        <option value={ele?.id}>{ele?.name}</option>
+                                        <option value={ele?.id} Hospitalname={ele?.id}>{ele?.name}</option>
                                      )
                                  })
                             }

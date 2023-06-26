@@ -11,7 +11,9 @@ import axios from 'axios';
 
 const PatientsInfo = () => {
      const {userInformation,getProperty} = useContext(PatientContext)
+     
      return (
+       
         <div className="w-full h-max bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
             <div className="lg:row-span-2 rounded-sm  border-[2px] border-[#f8f8f8] bg-white shadow-xl">
                 <div className="info flex items-center bg-eswasthyaprim text-white p-3">

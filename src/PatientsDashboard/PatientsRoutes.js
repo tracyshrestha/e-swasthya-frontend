@@ -5,13 +5,14 @@ import Home from "./Pages/Home"
 import Doctor from "./Pages/Doctor"
 
 
-import { Routes,Route } from "react-router-dom"
+import MyAppointment from "./Pages/AppointmentState/MyAppointment"
 
 
 export const PatientsRoutes = [
     {path : '/' , element : <Dashboard><Home /></Dashboard>},
     {path : '/Doctors' , element : <Dashboard><Doctor/></Dashboard>},
     {path : 'Doctors/:id' , element : <Dashboard><DoctorInfo/></Dashboard>},
+    {path : '/Appointments' , element : <Dashboard><MyAppointment/></Dashboard>}
  ]
  
 

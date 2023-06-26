@@ -1,8 +1,10 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Dashboard from './Dashboard';
 import Home from "./Pages/Home"
-import Appointments from './Pages/Appointments';
-import Patients from './Pages/Patients'
+
+import AppointmentsContextRoute from './Pages/AppointmentState/AppointmentContext';
+import PatientsContext from './Pages/AppointmentState/PatientsContext'
+
 import PatientInfo from './Pages/PatientInfo';
 import ViewMedical from './Pages/ViewMedical';
 import AddHistoryIndex from './Pages/AddHistory';
@@ -24,8 +26,8 @@ import AddHistoryIndex from './Pages/AddHistory';
 
 export const DoctorRoutes = [
    {path : '/home' , element : <Dashboard><Home /></Dashboard>},
-   {path : '/Appointments' , element : <Dashboard><Appointments /></Dashboard>},
-   {path : '/Patients' , element : <Dashboard><Patients /></Dashboard> },
+   {path : '/Appointments' , element : <Dashboard><AppointmentsContextRoute /></Dashboard>},
+   {path : '/Patients' , element : <Dashboard><PatientsContext /></Dashboard> },
    {path : '/PatientsInfo' , element : <Dashboard><PatientInfo /></Dashboard>},
    {path : '/ViewMedical/:id' , element : <Dashboard><ViewMedical /></Dashboard>},
    {path : '/AddMedicalHistory/:id' , element : <Dashboard><AddHistoryIndex/></Dashboard>}
