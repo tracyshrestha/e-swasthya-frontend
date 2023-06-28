@@ -1,17 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext, useState ,useContext} from "react";
 import uuid from "react-uuid";
-
-
+import { PatientDetailsContext } from "../../PatientsDetailsState/PatientDetailContext";
+import { useParams } from "react-router-dom";
 export const HistoryContext = createContext();
 
 
 const HistoryDetailContext = (props) => {
+    const {patientsInformation} = useContext(PatientDetailsContext);
     const [Drug, setDrug] = useState([]);
     const [Report, setReport] = useState([]);
     const [Diagnosis, setDiagnosis] = useState({});
-
-
-
+    const [Final,setFinal] = useState([]);
+    const {AppointmentId} = useParams();
 
 
     const AddnewDrug = () => {
@@ -106,9 +106,31 @@ const HistoryDetailContext = (props) => {
             return { ...prev, [event.target.name]: event.target.value }
         })
     }
-    const onAdd = () => {
-        console.log(Report)
+
+    const onAdd = (e) => {
+           e.preventDefault();
+           let a = document.getElementById("historyModal");
+           a.classList.remove("hidden");
+           setFinal((prevState) => {
+                 return {
+                     ...prevState,
+                      diagnosis : {
+                        diseaseName : Diagnosis.diagonsis,
+                        diagnosisDescription : Diagnosis.diagonsisNote,
+                        patientDetailId : patientsInformation?.patientId,
+                        doctorDetailId : localStorage.getItem("doctorId"),
+                        appointmentId : patientsInformation?.AppointmentId
+                     }
+                 }
+           })
+
+           console.log(Final);
     }
+    const onClose = () => {
+           let a = document.getElementById("historyModal");
+            a.classList.add("hidden")
+    }
+
 
     return (
 
@@ -118,6 +140,7 @@ const HistoryDetailContext = (props) => {
                 OnDrugChange,
                 AddnewDrug,
                 RemoveItem,
+                onClose,
                 Diagnosis,
                 setDiagnosis,
                 onDiagonsisChange,

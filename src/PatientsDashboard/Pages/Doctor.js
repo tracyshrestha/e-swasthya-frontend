@@ -27,7 +27,7 @@ const Doctor = () => {
 
 
     return (
-        <div id="docpg" className="h-screen w-full flex-items-center text-grey-600  ">
+        <div id="docpg" className="h-max w-full flex-items-center text-grey-600  ">
             <div className="flex flex-col   md:pr-4 pb-4 bg-white">
                 <div className="flex md:flex-row flex-col">
                     <div class="relative md:w-[330px] md:mt-5 mt-3 md:mx-0 mx-3">

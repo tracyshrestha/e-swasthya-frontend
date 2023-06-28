@@ -5,26 +5,30 @@ import { useContext } from 'react'
 import MedicalReport from './Accordion/MedicalReport'
 import PescribeDrug from './Accordion/PescribeDrug'
 import { HistoryContext } from './HistoryState/HistoryState'
+import {useNavigate } from 'react-router-dom'
 import AddReport from './Accordion/AddReport'
 import { PatientDetailsContext } from '../PatientsDetailsState/PatientDetailContext'
+import AddHistoryModal from './AddHisoryModal/AddHistoryModal'
+
 
 
 const AddMedicalHistory = () => {
     const {AddnewDrug,AddnewReport,onAdd,onDiagonsisChange,ReportChange} = useContext(HistoryContext);
     const {patientsInformation} = useContext(PatientDetailsContext);
-
+    const navigate = useNavigate();
+    
     return (
-        <>
+        <> 
+            <AddHistoryModal patientsInformation={patientsInformation}/>
             <div className="w-full  bg-metal mx-auto grid lg:grid-rows-2 lg:grid-flow-col gap-2 md:grid-col-1">
                 <div className="lg:row-span-2  h-max rounded-sm border-[2px] border-[#f8f8f8] bg-white shadow-xl ">
-
+                <form onSubmit={onAdd}>
                     <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                         <span className='text-2xl mr-2'><RiMedicineBottleFill /></span> Fill in Medical record
                     </div>
 
                     <div className=' grid md:grid-cols-1 sm:grid-cols-1  lg:grid-cols-2'>
-
-
+               
                         <div className='p-5'>
 
                             <div class="w-3/2 pl-5 pr-5 pb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -82,7 +86,7 @@ const AddMedicalHistory = () => {
                                             </div>
                                         </div>
                                         <select onChange={onDiagonsisChange}
-                                            name="diseaseType" id="provinces" class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            name="diseaseType" id="provinces" required class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option value="Diabetes">Diabetes</option>
                                             <option value="Brain Tumor">Brain Tumor</option>
                                         </select>
@@ -90,7 +94,7 @@ const AddMedicalHistory = () => {
                                 </div>
                                 <div className="relative mt-2">
                                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clinical Description</label>
-                                    <textarea  onChange={onDiagonsisChange}
+                                    <textarea  required  onChange={onDiagonsisChange}
                                             name="diagonsisNote" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                 </div>
                             </div>
@@ -99,7 +103,7 @@ const AddMedicalHistory = () => {
                                 <div class="p-5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                     <p class="text-xl p-3 flex font-medium text-gray-900 truncate dark:text-white">
-                                        Medication Details <button onClick={AddnewReport} type="button" class="ml-2 flex items-center justify-center text-white bg-[#42ADF0]  rounded-full w-6 h-6">
+                                         Medical Reports <button onClick={AddnewReport} type="button" class="ml-2 flex items-center justify-center text-white bg-[#42ADF0]  rounded-full w-6 h-6">
                                             <svg aria-hidden="true" class="w-8 h-8 transition-transform group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                                             <span class="sr-only">Open actions menu</span>
                                         </button>
@@ -124,7 +128,7 @@ const AddMedicalHistory = () => {
                             </div>
                             <div className='p-5'>
                                 <p class="text-xl p-3 font-medium text-gray-900 truncate dark:text-white">
-                                    Medication Details
+                                    Active Medication Details
                                 </p>
                                 <div class="w-full p-5  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                     <ol class="relative border-l border-gray-200 dark:border-gray-700">
@@ -167,17 +171,16 @@ const AddMedicalHistory = () => {
 
                             </div>
                             <div class="float-right flex m-6 space-x-3 md:mt-6">
-                                <a onClick={() => onAdd()} class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-[#42ADF0] rounded-lg  focus:ring-4 focus:outline-none ">Add record</a>
-                                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Cancel</a>
+                                <button  type='submit' class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-[#42ADF0] rounded-lg  focus:ring-4 focus:outline-none ">Add record</button>
+                                <button onClick={() => navigate(-1)} class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Cancel</button>
                             </div>
-
                         </div>
-
-
                     </div>
-
+                    </form>
                 </div>
-            </div>
+              
+
+            </div>   
 
         </>
     )

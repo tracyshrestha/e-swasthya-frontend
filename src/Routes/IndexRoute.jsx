@@ -18,6 +18,7 @@ import { DoctorRoutes } from "../DoctorDashboard/DoctorRoutes";
 import { PatientsRoutes } from "../PatientsDashboard/PatientsRoutes"
 import { useContext } from "react";
 import { AuthContext } from "../Store/UserState";
+import { AdminRoutes } from "../AdminDashboard/AdminRoutes";
 
 
 const IndexRoute = () => {
@@ -26,6 +27,16 @@ const IndexRoute = () => {
   return (
 
     <Routes>
+
+      <Route element={<PrivateRoute />}>
+        {
+          isAuth()?.authority === "ADMIN" ? (
+            AdminRoutes.map((ele) => {
+              return (<Route path={ele.path} element={ele.element} />)
+            })
+          ) : null
+        }
+      </Route>
 
       <Route element={<PrivateRoute />}>
         <Route element={<IsVerified />}>
@@ -38,13 +49,13 @@ const IndexRoute = () => {
                       <Route path={ele.path} element={ele.element} />
                     )
                   })
-                ) : (
+                ) : isAuth()?.authority === "DOCTOR" ? (
                   DoctorRoutes.map((ele) => {
                     return (
                       <Route path={ele.path} element={ele.element} />
                     )
                   })
-                )
+                ) : null
             }
           </Route>
         </Route>
