@@ -18,6 +18,7 @@ const PatientContextProvider = ( props ) => {
            })
             .then((res) => {
                 SetPatientInformation(res.data.data);
+                localStorage.setItem("patientId",res?.data?.data?.patientId)
             })
             .catch((error) => console.log(error))
     }, [])
@@ -25,11 +26,15 @@ const PatientContextProvider = ( props ) => {
     const getProperty = (propertyName) => {
         return PatientInformation[propertyName]
     }
+    const getPatientId = () => {
+        return localStorage.getItem("patientId");
+    }
+
 
     return (
         
         <PatientContext.Provider
-            value={{userInformation:PatientInformation, getProperty }}
+            value={{userInformation:PatientInformation, getProperty,getPatientId }}
         >
             {props.children}
         </PatientContext.Provider>

@@ -3,7 +3,7 @@ import React from "react";
 import { HistoryContext } from "../HistoryState/HistoryState";
 
 const AddReport = () => {
-    const { RemoveReport, Report, OnDrugChange } = useContext(HistoryContext);
+    const { RemoveReport, Report, OnDrugChange, ReportChange,MedicalFileChange } = useContext(HistoryContext);
 
 
 
@@ -44,9 +44,9 @@ const AddReport = () => {
                                             <input
                                                 required
                                                 type="text"
-                                                // onChange = {OnDrugChange(element.id)}
-                                                // name="DrugName"
-                                                // value={element.DrugName}
+                                                onChange={ReportChange(element.id)}
+                                                name="ReportTitle"
+                                                value={element.ReportTitle}
                                                 class=" h-[50px] placeholder-gray-300 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                                                 placeholder="Brain MRI"
                                             ></input>
@@ -58,9 +58,9 @@ const AddReport = () => {
                                                     Report type
                                                 </h1>
                                             </div>
-                                            <select onChange={OnDrugChange(element.id)}
-                                                name="DrugType"
-                                                value={element.DrugType} id="provinces" class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <select onChange={ReportChange(element.id)}
+                                                name="ReportType"
+                                                value={element.ReportType} id="provinces" class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option value="X-ray" defaultChecked>X-ray</option>
                                                 <option value="CT-Scan">CT-scan</option>
                                                 <option value="Blood Report">Blood Report</option>
@@ -73,18 +73,36 @@ const AddReport = () => {
 
                                     <div className="relative   grid grid-cols-1">
                                         <label for="message" class="block mb-2 sm:text-[15px] text-[12px]  relative text-gray-400">Description</label>
-                                        <textarea onChange={OnDrugChange(element.id)}
-                                            name="Description"
-                                            value={element.Description} rows="3" class=" mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                        <textarea onChange={ReportChange(element.id)}
+                                            name="ReportDescription"
+                                            value={element.ReportDescription} rows="3" class=" mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
 
                                         <div class="flex items-center justify-center w-full">
-                                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <label for={`dropzone-file-${element.id}`} class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                    <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                                      {
+                                                         element.setPreviewImage && element.selectedFile ? (
+                                                            <img
+                                                            src={element.setPreviewImage}
+                                                            value={element.selectedFile}
+                                                            alt="Selected Image"
+                                                            class="self-center h-[200px] w-fit"
+                                                          />
+                                                         ) : (
+                                                            <>
+                                                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p> 
+                                                            </>
+                                                         )
+                                                      } 
+
+                                                   
+
+
                                                 </div>
-                                                <input id="dropzone-file" type="file" class="hidden" />
+                                                <input multiple={false}
+                                                    onChange={MedicalFileChange(element.id)} name="MedicalFile" id={`dropzone-file-${element.id}`} type="file" class="hidden" />
                                             </label>
                                         </div>
 

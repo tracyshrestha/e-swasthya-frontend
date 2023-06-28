@@ -9,7 +9,7 @@ const VerifyAppointment = () => {
   const [time, setTime] = useState(120);
   const [Loading, SetLoading] = useState(true);
 
-  const {closeGrant,value,VerifyCode} = useContext(AppointmentContext);
+  const {closeGrant,value,verifyGrant,grant,grantMessage} = useContext(AppointmentContext);
 
   useEffect(() => {
     if (time <= 0) {
@@ -56,7 +56,7 @@ const VerifyAppointment = () => {
       </div>
       <Message
         error={false}
-        message={`Dear ${getProperty("firstName")?.charAt(0)?.toUpperCase() + getProperty("firstName")?.slice(1)} , We have sent an verification code to associated phonenumber +977-**********`}
+        message={ !grantMessage ? `Dear ${getProperty("firstName")?.charAt(0)?.toUpperCase() + getProperty("firstName")?.slice(1)} , We have sent an verification code to associated phonenumber +977-**********` : grantMessage}
       />
       <form>
         <div class="flex flex-col space-y-16 p-5">
@@ -64,44 +64,44 @@ const VerifyAppointment = () => {
             <div class="w-16 h-16 ">
               <input
                 required
-                class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border-2 border-[#f24667] text-lg bg-white focus:ring-1 ring-eswasthyaprim"
+                class={`w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl  ${grant ? 'border-2 border-[#f24667]' : 'border border-gray-200'  } text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim`}
                 type="text"
                 name=""
-                id="a1"
+                id="a11"
               />
             </div>
             <div class="w-16 h-16 ">
               <input
                 required
-                class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim"
+                class={`w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl  ${grant ? 'border-2 border-[#f24667]' : 'border border-gray-200'  } text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim`}
                 type="text"
                 name=""
-                id="a2"
+                id="a22"
               />
             </div>
             <div class="w-16 h-16 ">
               <input
                 required
-                class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim"
+                class={`w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl  ${grant ? 'border-2 border-[#f24667]' : 'border border-gray-200'  } text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim`}
                 type="text"
                 name=""
-                id="a3"
+                id="a33"
               />
             </div>
             <div class="w-16 h-16 ">
               <input
                 required
-                class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim"
+                class={`w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl  ${grant ? 'border-2 border-[#f24667]' : 'border border-gray-200'  } text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-eswasthyaprim`}
                 type="text"
                 name=""
-                id="a4"
+                id="a44"
               />
             </div>
           </div>
 
           <div class="flex flex-col space-y-5">
             <div>
-              <button type="button" onClick={() => {VerifyCode()}} class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-eswasthyaprim border-none text-white text-sm shadow-sm">
+              <button type="button" onClick={() => {verifyGrant()}} class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-eswasthyaprim border-none text-white text-sm shadow-sm">
                 Verify Appointment
               </button>
             </div>

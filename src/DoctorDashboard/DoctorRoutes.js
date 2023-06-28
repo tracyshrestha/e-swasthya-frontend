@@ -4,12 +4,10 @@ import Home from "./Pages/Home"
 
 import AppointmentsContextRoute from './Pages/AppointmentState/AppointmentContext';
 import PatientsContext from './Pages/AppointmentState/PatientsContext'
-
-import PatientInfo from './Pages/PatientInfo';
 import ViewMedical from './Pages/ViewMedical';
-import AddHistoryIndex from './Pages/AddHistory';
 
-
+import AddHistoryIndex from './Pages/PageComponents/AddHistory';
+import PatientContextComponent from './Pages/PatientsDetailsState/PatientContext'
 
 // export const DoctorRoutes = () => {
 //    return (
@@ -28,8 +26,8 @@ export const DoctorRoutes = [
    {path : '/home' , element : <Dashboard><Home /></Dashboard>},
    {path : '/Appointments' , element : <Dashboard><AppointmentsContextRoute /></Dashboard>},
    {path : '/Patients' , element : <Dashboard><PatientsContext /></Dashboard> },
-   {path : '/PatientsInfo' , element : <Dashboard><PatientInfo /></Dashboard>},
+   {path : '/PatientsInfo/:AppointmentId' , element : <Dashboard><PatientContextComponent /></Dashboard>},
    {path : '/ViewMedical/:id' , element : <Dashboard><ViewMedical /></Dashboard>},
-   {path : '/AddMedicalHistory/:id' , element : <Dashboard><AddHistoryIndex/></Dashboard>}
+   {path : '/AddMedicalHistory/:AppointmentId' , element : <Dashboard><AddHistoryIndex/></Dashboard>}
 ]
 

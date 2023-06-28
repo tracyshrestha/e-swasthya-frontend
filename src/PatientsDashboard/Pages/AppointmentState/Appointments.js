@@ -1,8 +1,115 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppointmentContext } from "./GlobalState";
+import { PatientContext } from "../../PatientGlobalState";
+import { AuthContext } from "../../../Store/UserState";
+import axios from "axios";
 
 const Appointment = () => {
-    const {GrantAcess} = useContext(AppointmentContext);
+    const { GrantAcess, Fetch } = useContext(AppointmentContext);
+
+    const { getProperty, getPatientId } = useContext(PatientContext);
+
+    const { getStoredCookie } = useContext(AuthContext);
+    const [patientData, setPatientData] = useState([]);
+
+    function convertTo12HourFormat(time24) {
+        if (time24) {
+            var hour = parseInt(time24?.split(':')[0]);
+            var minute = time24.split(':')[1];
+
+            var ampm = (hour >= 12) ? 'PM' : 'AM';
+            hour = (hour % 12) || 12;
+
+            var time12 = hour + ':' + minute + ' ' + ampm;
+            return time12;
+        }
+    }
+
+
+    useEffect(() => {
+        setPatientData([]);
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/appointment/view-by-patient?patientId=${getPatientId()}&status=ALL`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`,
+            },
+        })
+            .then((res) => {
+                res?.data?.data.map((ele) => {
+                    axios({
+                        method: "GET",
+                        url: `${process.env.REACT_APP_API}api/doctor/view/${ele.doctorId}`,
+                        headers: {
+                            'Authorization': `Bearer ${getStoredCookie("token")}`
+                        }
+                    }).then((resData) => {
+                        setPatientData((prevState) => {
+                            return [
+                                ...prevState,
+                                {
+                                    appointmentTime: convertTo12HourFormat(ele?.appointmentTime),
+                                    appointmentDate: ele.appointmentDate,
+                                    appointmentId: ele.appointmentId,
+                                    hospitalName: ele.hospitalName,
+                                    doctorId: ele.doctorId,
+                                    doctorName: ele.doctorName,
+                                    status: ele.status,
+                                    patientId: ele.patientId,
+                                    reasonForVist: ele.reasonForVist,
+
+                                    imagePath: resData?.data?.data?.imagePath,
+                                    education: resData?.data?.data?.education,
+                                    specialization: resData?.data?.data?.specialization
+                                }
+                            ]
+                        })
+                    })
+                })
+            })
+            .catch((error) => console.log(error))
+    }, [Fetch])
+
+    const ConditionalEvaluate = (status) => {
+        if (status !== "CREATED") {
+            if (status === "VERIFIED") return "Pending.."
+            if (status === "ACCEPTED") return "Accepted"
+            if (status === "REJECTED") return "Rejected"
+        } else { return "Pending.." }
+    }
+
+
+
+    const GrantButton = (status,ele) => {
+        if (status !== "CREATED") {
+            if (status === "ACCEPTED" || status === "REJECTED" || status === "VERIFIED") {
+                return (
+                    <button
+                        type="button"
+                        disabled="true"
+                        className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                    >
+                        Granted
+                    </button>)
+            }
+        }
+       
+      if(status === "CREATED"){
+            return (
+                
+                <button
+                type="button"
+                onClick={() => {GrantAcess(ele.appointmentId,ele.doctorId,getPatientId())}}
+                className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+            >
+                Grant acess
+               </button>
+            
+         )
+        }     
+    }
+
+
     return (
         <section class="h-screen bg-white dark:bg-gray-900">
             <div class=" relative overflow-x-auto shadow-md sm:rounded-lg p-5">
@@ -46,130 +153,55 @@ const Appointment = () => {
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="flex items-center px-6 py-8 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Jese image" />
-                                <div class="pl-3">
-                                    <div class="text-base font-semibold">Dr.Leslie Livingston</div>
-                                    <div class="font-normal text-gray-500">Gastroenterologist,MD</div>
-                                </div>
-                            </th>
-                            <td class="px-3 py-4">
-                                Bir Hospital
-                            </td>
-                            <td class="px-3 py-4">
-                                2023-07-03
-                            </td>
-                            <td className="px-3 py-4">
-
-                                7:00 A.M
-
-                            </td>
-                            <td class="px-3 py-4">
-                                <textarea contentEditable="false" disabled id="message" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={"A headache is a pain in your head or face that's often described as a pressure that's throbbing, constant, sharp or dull. Headaches can differ greatly in regard"}></textarea>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Accepted
-                                </button>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Granted
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="flex items-center px-6 py-8 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Jese image" />
-                                <div class="pl-3">
-                                    <div class="text-base font-semibold">Dr.Leslie Livingston</div>
-                                    <div class="font-normal text-gray-500">Gastroenterologist,MD</div>
-                                </div>
-                            </th>
-                            <td class="px-3 py-4">
-                                Bir Hospital
-                            </td>
-                            <td class="px-3 py-4">
-                                2023-07-03
-                            </td>
-                            <td className="px-3 py-4">
-
-                                7:00 A.M
-
-                            </td>
-                            <td class="px-3 py-4">
-                                <textarea contentEditable="false" disabled id="message" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={"A headache is a pain in your head or face that's often described as a pressure that's throbbing, constant, sharp or dull. Headaches can differ greatly in regard"}></textarea>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#f24667]"
-                                >
-                                    Rejected
-                                </button>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    onClick={() => {GrantAcess()}}
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Grant access
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="flex items-center px-6 py-8 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Jese image" />
-                                <div class="pl-3">
-                                    <div class="text-base font-semibold">Dr.Leslie Livingston</div>
-                                    <div class="font-normal text-gray-500">Gastroenterologist,MD</div>
-                                </div>
-                            </th>
-                            <td class="px-3 py-4">
-                                Bir Hospital
-                            </td>
-                            <td class="px-3 py-4">
-                                2023-07-03
-                            </td>
-                            <td className="px-3 py-4">
-
-                                7:00 A.M
-
-                            </td>
-                            <td class="px-3 py-4">
-                                <textarea contentEditable="false" disabled id="message" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={"A headache is a pain in your head or face that's often described as a pressure that's throbbing, constant, sharp or dull. Headaches can differ greatly in regard"}></textarea>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#f24667]"
-                                >
-                                    Rejected
-                                </button>
-                            </td>
-                            <td className="px-3 py-4">
-                                <button
-                                    type="button"
-                                    onClick={() => {GrantAcess()}}
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Grant access
-                                </button>
-                            </td>
-                        </tr>
+                        {patientData.length === 0 ? <div class="pl-10 text-base mt-4 text-center font-semibold">No appointment data</div> : (
+                            patientData.map((ele, key) => {
+                                return (
+                                    <tr key={key} class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row" class="flex items-center px-6 py-8 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Jese image" />
+                                            <div class="pl-3">
+                                                <div class="text-base font-semibold">Dr.{ele?.doctorName}</div>
+                                                <div class="font-normal text-gray-500">{ele?.specialization},{ele?.education}</div>
+                                            </div>
+                                        </th>
+                                        <td class="px-2 py-2 w-min">
+                                            {ele?.hospitalName}
+                                        </td>
+                                        <td class="px-2 py-3">
+                                            {ele.appointmentDate}
+                                        </td>
+                                        <td className="px-2 py-3">
+                                            <button
+                                                type="button"
+                                                disabled="true"
+                                                className="px-3 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                            >
+                                                {ele.appointmentTime}
+                                            </button>
+                                        </td>
+                                        <td class="px-2 py-3">
+                                            <textarea contentEditable="false" disabled id="message" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{ele.reasonForVist}</textarea>
+                                        </td>
+                                        <td className="px-2 py-3">
+                                            <button
+                                                type="button"
+                                                disabled="true"
+                                                className={`px-5 py-2 text-sm rounded-md text-white ${ele.status === "REJECTED" ? "bg-[#db4369]" : "bg-[#42ADF0]"}`}
+                                            >
+                                                {
+                                                    ConditionalEvaluate(ele.status)
+                                                }
+                                            </button>
+                                        </td>
+                                        <td className="px-3 py-4">
+                                            {
+                                                GrantButton(ele.status,ele)
+                                            }
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        )}
                     </tbody>
                 </table>
             </div>

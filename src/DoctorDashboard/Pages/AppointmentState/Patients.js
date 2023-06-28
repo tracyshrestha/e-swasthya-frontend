@@ -2,13 +2,25 @@ import { useContext, useEffect, useState } from "react";
 import { DoctorContext } from "../../DoctorGlobalState";
 import { AuthContext } from "../../../Store/UserState";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 const Patients = () => {
 
-    const { getProperty,getDoctorId } = useContext(DoctorContext);
+    const { getProperty, getDoctorId } = useContext(DoctorContext);
     const { getStoredCookie } = useContext(AuthContext);
     const [patientData, setPatientData] = useState([]);
+
+    function convertTo12HourFormat(time24) {
+        var hour = parseInt(time24?.split(':')[0]);
+        var minute = time24.split(':')[1];
+
+        var ampm = (hour >= 12) ? 'PM' : 'AM';
+        hour = (hour % 12) || 12;
+
+        var time12 = hour + ':' + minute + ' ' + ampm;
+        return time12;
+    }
 
 
     useEffect(() => {
@@ -30,14 +42,16 @@ const Patients = () => {
                         }
                     }).then((resData) => {
                         setPatientData((prevState) => {
+
                             return [
                                 ...prevState,
                                 {
-                                    appointmentTime: ele.appointmentTime,
+                                    appointmentTime: convertTo12HourFormat(ele.appointmentTime),
                                     appointmentDate: ele.appointmentDate,
                                     appointmentId: ele.appointmentId,
                                     hospitalName: ele.hospitalName,
                                     patientId: ele.patientId,
+                                    reasonForVist: ele.reasonForVist,
                                     status: ele.status,
                                     patientName: ele.patientName,
                                     imagePath: resData?.data?.data?.imagePath,
@@ -87,63 +101,59 @@ const Patients = () => {
                                 Hospital
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                Reason for visit
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Access
+                                Action
                             </th>
                         </tr>
                     </thead>
 
                     <tbody>
 
-                        {patientData.length === 0 ? <div class="text-base mt-4 text-center font-semibold">No patient data</div> :
+                        {patientData.length === 0 ? <div class="pl-10 text-base mt-4 text-center font-semibold">No patient data</div> :
 
                             (
                                 patientData.map((ele, key) => {
                                     return (
                                         <tr key={key} class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
 
-                                            <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <th scope="row" class="flex items-center px-6 py-8 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Jese image" />
                                                 <div class="pl-3">
                                                     <div class="text-base font-semibold">{ele.patientName}</div>
                                                     <div class="font-normal text-gray-500">{ele.age} years, {ele.gender}</div>
                                                 </div>
                                             </th>
-                                            <td class="px-6 py-4">
-                                               {ele.appointmentDate}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                            <button
-                                                type="button"
-                                                disabled="true"
-                                                className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                            >
-                                                {ele.appointmentTime}
-                                            </button>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {ele.hospitalName}
-                                        </td>
 
-                                            <td className="px-6 py-4">
+                                            <td class="px-2 py-2">
+                                                {ele.appointmentDate}
+                                            </td>
+                                            <td class="px-2 py-2">
                                                 <button
                                                     type="button"
+                                                    disabled="true"
+                                                    className="px-3 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                                >
+                                                    {ele.appointmentTime}
+                                                </button>
+                                            </td>
+                                            <td class="px-2 py-2">
+                                                {ele.hospitalName}
+                                            </td>
+                                            <td class="px-3 py-4">
+                                                <textarea id="message" disabled rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{ele.reasonForVist}</textarea>
+                                            </td>
 
-                                                    className="mr-2 px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                            <td className="px-3 py-4">
+                                              <Link to={`../patientsInfo/${ele.appointmentId}`}>
+                                                <button
+                                                    type="button"
+                                                    className="mr-2 px-3 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
                                                 >
                                                     View more
                                                 </button>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <select
-                                                    id="provinces"
-                                                    disabled
-                                                    class="h-[50px] w-full bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                                                >
-                                                    <option value="Sun">Granted</option>
-                                                </select>
+                                            </Link>
                                             </td>
                                         </tr>
                                     )

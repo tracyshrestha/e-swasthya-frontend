@@ -11,7 +11,7 @@ const Appointments = () => {
     const { getProperty,getDoctorId } = useContext(DoctorContext);
     const { getStoredCookie } = useContext(AuthContext);
     const [patientData, setPatientData] = useState([]);
-    const {Reject} = useContext(AppointmentContext);
+    const {Reject,AcceptApiCall} = useContext(AppointmentContext);
 
     function convertTo12HourFormat(time24) {
         var hour = parseInt(time24.split(':')[0]);
@@ -30,7 +30,7 @@ const Appointments = () => {
         setPatientData([]);
         axios({
             method: "GET",
-            url: `${process.env.REACT_APP_API}api/appointment/view-by-doctor?doctorId=${getDoctorId()}&status=CREATED`,
+            url: `${process.env.REACT_APP_API}api/appointment/view-by-doctor?doctorId=${getDoctorId()}&status=VERIFIED`,
             headers: {
                 'Authorization': `Bearer ${getStoredCookie("token")}`,
             },
@@ -145,8 +145,8 @@ const Appointments = () => {
                                         <td className="px-6 py-4">
                                             <button
                                                 type="button"
-                                                disabled="true"
                                                 className="mr-2 px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                                onClick={() => AcceptApiCall(ele.appointmentId,getProperty("doctorId"),ele.patientId,ele.patientName)}
                                             >
                                                 Approve
                                             </button>

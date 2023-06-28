@@ -11,12 +11,8 @@ root.render(
   <AuthContextProvider>
     <BrowserRouter>
       <Routes>
-
         <Route path="/*" element={<App />} />
-
       </Routes>
     </BrowserRouter>
   </AuthContextProvider>
-
-
 );

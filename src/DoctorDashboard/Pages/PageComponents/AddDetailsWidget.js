@@ -4,7 +4,9 @@ import {BsJournalMedical} from 'react-icons/bs'
 import { Link } from "react-router-dom";
 
 
-const AddDetailsWidget = () => {
+const AddDetailsWidget = ({patientsInformation}) => {
+
+
 
     useEffect(() => {
         const $parentEl = document.getElementById('dialParent')
@@ -25,8 +27,7 @@ const AddDetailsWidget = () => {
       
 <div id="dialParent" class="fixed right-8 bottom-6 group">
     <div id="dialContent" class="flex flex-col items-center hidden mb-4 space-y-2">
-        
-        <Link to="/AddMedicalHistory/saa">
+        <Link to={`/AddMedicalHistory/${patientsInformation?.AppointmentId}`}>
         <button type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white">
              <div className="text-xl"><BsJournalMedical/></div>
             <span class="sr-only">Share</span>

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../../Store/UserState";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const AppointmentContext = createContext();
 
@@ -8,6 +9,7 @@ export const AppointmentContext = createContext();
 const AppointmentContextProvider = (props) => {
 
     const [modalState, setStateModal] = useState();
+    const navigate = useNavigate();
     const [patchData, setPatchData] = useState();
     const { getStoredCookie } = useContext(AuthContext)
 
@@ -42,14 +44,33 @@ const AppointmentContextProvider = (props) => {
             }
           })
             .then((res) => {
-                console.log(res);
+                navigate("/Appointments")
                 modalState.classList.add("hidden")
+            }).catch((error) => console.log(error))
+    }
+
+    const AcceptApiCall = (appointmentId,doctorId,patientId) => {
+        axios({
+            method: "PATCH",
+            url: `${process.env.REACT_APP_API}api/appointment/update-appointment-approval`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`,
+            },
+            data: {
+                appointmentId:appointmentId,
+                doctorId:doctorId,
+                patientId:patientId,
+                status: "ACCEPTED"
+            }
+          })
+            .then((res) => {
+                navigate("/Patients")
             }).catch((error) => console.log(error))
     }
 
     return (
         <AppointmentContext.Provider
-            value={{ Reject, closeModal, RejectAPIcall }}
+            value={{ Reject,AcceptApiCall,closeModal, RejectAPIcall }}
         >
             {props.children}
         </AppointmentContext.Provider>

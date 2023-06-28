@@ -107,6 +107,42 @@ const PescribeDrug = () => {
 
                                             <div className=" text-left  text-gray-400 ">
                                                 <h1 className=" mb-2 sm:text-[15px] text-[12px]  relative text-gray-400">
+                                                  Frequency per day
+                                                </h1>
+                                            </div>
+                                            <select onChange = {OnDrugChange(element.id)}
+                                                name="Frequency"
+                                                value={element.Frequency} id="provinces" class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option value="Once daily" defaultChecked>Once daily</option>
+                                                <option value="Twice daily">Twice daily</option>
+                                                <option value="Thrice daily">Thrice daily</option>
+                                            </select>
+                                        </div>
+                                        <div className="relative pb-6">
+
+                                            <div className=" mb-2 text-left  text-gray-400 ">
+                                                <h1 className="sm:text-[15px] text-[12px]  relative text-gray-400">
+                                                    Total duration
+                                                </h1>
+                                            </div>
+
+                                            <input
+                                                required
+                                                type="number"
+                                                min={1}
+                                                max={100}
+                                                onChange = {OnDrugChange(element.id)}
+                                                name="Duration"
+                                                value={element.Duration}
+                                                id="email-address-icon"
+                                                class=" h-[50px] placeholder-gray-300 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
+                                                placeholder="15days"
+                                            ></input>
+                                        </div>
+                                        <div className="relative pb-6">
+
+                                            <div className=" text-left  text-gray-400 ">
+                                                <h1 className=" mb-2 sm:text-[15px] text-[12px]  relative text-gray-400">
                                                     Drug type
                                                 </h1>
                                             </div>

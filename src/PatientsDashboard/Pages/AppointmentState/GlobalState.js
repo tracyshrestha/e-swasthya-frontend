@@ -12,8 +12,15 @@ const AppointmentContextProvider = (props) => {
     const [modalState, setState] = useState();
     const [grantState, setGrant] = useState();
     const [confirm, setConfirm] = useState(false);
+    const [appointmentId,setAppointmentId] = useState();
+
+    const [Fetch,SetFetch] = useState(false)
+
+    const [grantMessage,setGrantMessage] = useState('');
 
     const [error,setError] = useState(false);
+    const [grant,setgrantError] = useState(false);
+
     const [otpMessage,SetotpMessage] = useState('');
 
     let { id } = useParams();
@@ -29,6 +36,8 @@ const AppointmentContextProvider = (props) => {
     useEffect(() => {
         setState(document.getElementById("modalEl"));
         setGrant(document.getElementById("GrantId"));
+        
+
     }, [])
 
     const onAppointmentChange = name => event => {
@@ -95,10 +104,49 @@ const AppointmentContextProvider = (props) => {
         setConfirm(false);
     }
 
-    const GrantAcess = () => {
+    const GrantAcess = (id,doctorId,patientId) => {
+        setAppointmentId({id,doctorId,patientId});
+        resendOtp(id,doctorId,patientId)
+        setGrantMessage("");
+        setgrantError(false);
         grantState.classList.remove("hidden");
         timeValue(true)
     }
+
+    const verifyGrant = () => {
+        let a1 = document.getElementById("a11").value;
+        let a2 = document.getElementById("a22").value;
+        let a3 = document.getElementById("a33").value;
+        let a4 = document.getElementById("a44").value;
+
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/appointment/verify-appointment-otp?appointmentId=${appointmentId.id}&otp=${a1}${a2}${a3}${a4}`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`,
+            },
+        }).then((res) => {
+            setGrantMessage(res.data.message);
+
+            SetFetch(Fetch ? false : true);
+            
+            document.getElementById("a11").value = null;
+            document.getElementById("a22").value = null;
+            document.getElementById("a33").value = null;
+            document.getElementById("a44").value = null;
+            setgrantError(false);
+
+            setTimeout(() => {
+                grantState.classList.add("hidden");
+            },1000)
+        }).catch((error) => {
+             console.log(error);
+             setgrantError(true);
+        })
+    }
+
+
+
     const closeGrant = () => {
         grantState.classList.add("hidden");
         timeValue(false)
@@ -126,11 +174,9 @@ const AppointmentContextProvider = (props) => {
              console.log(error);
              setError(true);
         })
-
     }
 
     const resendOtp = (id,doctorId,patientId) => {
-        console.log(id,doctorId,patientId);
         axios({
             method: "POST",
             url: `${process.env.REACT_APP_API}api/appointment/resend-otp`,
@@ -170,7 +216,7 @@ const AppointmentContextProvider = (props) => {
             value={{
                 onAppointmentChange, VerifyCode, onSubmit, value,
                 getAppointmentId,
-                AppointmentData,resendOtp,otpMessage,error,closeAppointment, Onconfirm, confirm, GrantAcess, closeGrant
+                AppointmentData,Fetch,grant,grantMessage,verifyGrant,resendOtp,otpMessage,error,closeAppointment, Onconfirm, confirm, GrantAcess, closeGrant
             }}
         >
             {props.children}
