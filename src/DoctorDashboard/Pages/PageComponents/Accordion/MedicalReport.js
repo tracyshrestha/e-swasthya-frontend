@@ -8,7 +8,7 @@ const MedicalReport = ({ Reports}) => {
 
     const onView = (id) => {
         let documentView = document.getElementById(`${id}-body`);
-        documentView.classList !== "hidden" ? documentView.classList.remove("hidden") : documentView.classList.add("hidden");
+        documentView.classList.length === 1 ? documentView.classList.remove("hidden") : documentView.classList.add("hidden");
     }
 
   
