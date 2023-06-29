@@ -9,15 +9,14 @@ import VaccinationDetail from '../PageComponents/Accordion/VaccinationDetail'
 import MedicalHistory from '../PageComponents/Accordion/MedicalHistory'
 import AddDetailsWidget from '../PageComponents/AddDetailsWidget'
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { PatientDetailsContext } from './PatientDetailContext'
 
 const PatientInfo = () => {
-     
     const {patientsInformation} = useContext(PatientDetailsContext);
     return (
         <>
-         <AddDetailsWidget patientsInformation={patientsInformation}/>
+        {!patientsInformation?.AppointmentDetails?.isDiagnosisFilled ? <AddDetailsWidget patientsInformation={patientsInformation}/> : null}
         <div className="w-full h-max bg-metal mx-auto grid lg:grid-rows-1 lg:grid-flow-col gap-2 md:grid-col-1">
         <div className="lg:row-span-2 rounded-sm  border-[2px] border-[#f8f8f8] bg-white shadow-xl">
             <div className="info flex items-center bg-eswasthyaprim text-white p-3">

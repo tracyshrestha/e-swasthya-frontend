@@ -1,11 +1,11 @@
-import { Modal } from "flowbite"
+
 import { useContext } from "react";
-import { RiMedicineBottleFill } from "react-icons/ri";
 import { HistoryContext } from "../HistoryState/HistoryState";
+import Message from "../../../../UserAuthentication/Helper/Message"
 
 const AddHistoryModal = ({ patientsInformation }) => {
 
-    const { onClose, Drug, Report, Diagnosis } = useContext(HistoryContext)
+    const { onClose, Drug, Report, Diagnosis, finalSubmit, formattedDate, error, loading, Messages } = useContext(HistoryContext)
 
     return (
         <div id="historyModal" tabindex="-1" aria-hidden="true" class=" backdrop-blur-sm bg-gray/30 flex hidden items-center justify-center h-screen fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -21,6 +21,8 @@ const AddHistoryModal = ({ patientsInformation }) => {
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
+
+                    {error || Messages ? <Message message={Messages} error={error} /> : null}
                     <div class="p-6 space-y-6">
 
 
@@ -47,7 +49,7 @@ const AddHistoryModal = ({ patientsInformation }) => {
                                             <span className='font-bold'>Hospital: </span>{patientsInformation?.AppointmentDetails.hospitalName}
                                         </p>
                                         <p class="text-sm  text-gray-800 truncate dark:text-gray-400">
-                                            <span className='font-bold'>Date: </span> 2022/12/02
+                                            <span className='font-bold'>Date: </span> {formattedDate}
                                         </p>
                                         <p class="text-sm  text-gray-800 truncate dark:text-gray-400">
                                             <span className='font-bold'>Appointment id :</span> #EWAS0{patientsInformation?.AppointmentDetails?.appointmentId}
@@ -111,7 +113,7 @@ const AddHistoryModal = ({ patientsInformation }) => {
                                         </p>
                                         <ol class="relative border-l border-gray-200 dark:border-gray-700">
                                             {
-                                              Report.length != 0 ? Report.map((ele) => {
+                                                Report.length != 0 ? Report.map((ele) => {
                                                     return (
                                                         <li key={ele.id} class="mb-8 ml-4">
                                                             <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
@@ -128,7 +130,7 @@ const AddHistoryModal = ({ patientsInformation }) => {
                                                         </li>
                                                     )
                                                 }) : <h1 class="mb-1 text-sm font-normal  text-gray-800 ">No report data</h1>
-                                            } 
+                                            }
                                         </ol>
                                     </div>
                                 </div>
@@ -136,7 +138,11 @@ const AddHistoryModal = ({ patientsInformation }) => {
                         </div>
                     </div>
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button type="button" class="text-white bg-[#42ADF0]  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add history</button>
+                        <button type="button"  disabled={loading} onClick={finalSubmit} class="flex text-white bg-[#42ADF0]  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            {
+                                loading ? <>Loading....<svg aria-hidden="true" class="ml-3 w-7 h-7 text-gray-200 animate-spin fill-[#4e8fd0]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" /><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" /></svg> </> : "Add history"
+                            }
+                        </button>
                         <button type="button" onClick={onClose} class="text-gray-500 bg-white focus:outline-none  rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
                     </div>
                 </div>

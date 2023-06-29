@@ -42,24 +42,24 @@ const Patients = () => {
                         }
                     }).then((resData) => {
                         setPatientData((prevState) => {
-
-                            return [
-                                ...prevState,
-                                {
-                                    appointmentTime: convertTo12HourFormat(ele.appointmentTime),
-                                    appointmentDate: ele.appointmentDate,
-                                    appointmentId: ele.appointmentId,
-                                    hospitalName: ele.hospitalName,
-                                    patientId: ele.patientId,
-                                    reasonForVist: ele.reasonForVist,
-                                    status: ele.status,
-                                    patientName: ele.patientName,
-                                    imagePath: resData?.data?.data?.imagePath,
-                                    gender: resData?.data?.data?.gender,
-                                    age: resData?.data?.data?.age
-                                }
-                            ]
-
+                                return [
+                                    ...prevState,
+                                    {
+                                        appointmentTime: convertTo12HourFormat(ele.appointmentTime),
+                                        appointmentDate: ele.appointmentDate,
+                                        appointmentId: ele.appointmentId,
+                                        hospitalName: ele.hospitalName,
+                                        patientId: ele.patientId,
+                                        reasonForVist: ele.reasonForVist,
+                                        status: ele.status,
+                                        patientName: ele.patientName,
+                                        isDiagnosisFilled : ele.isDiagnosisFilled,
+                                        imagePath: resData?.data?.data?.imagePath,
+                                        gender: resData?.data?.data?.gender,
+                                        age: resData?.data?.data?.age
+                                    }
+                                ]
+                                
                         })
                     }).catch((error) => console.log(error))
                 })

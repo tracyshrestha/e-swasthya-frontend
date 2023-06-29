@@ -1,7 +1,7 @@
 import { BsFillPersonVcardFill } from 'react-icons/bs'
 import { RiMedicineBottleFill } from 'react-icons/ri'
 import { MdVaccines } from 'react-icons/md'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import MedicalReport from './Accordion/MedicalReport'
 import PescribeDrug from './Accordion/PescribeDrug'
 import { HistoryContext } from './HistoryState/HistoryState'
@@ -12,10 +12,18 @@ import AddHistoryModal from './AddHisoryModal/AddHistoryModal'
 
 
 
+
 const AddMedicalHistory = () => {
     const {AddnewDrug,AddnewReport,onAdd,onDiagonsisChange,ReportChange} = useContext(HistoryContext);
     const {patientsInformation} = useContext(PatientDetailsContext);
     const navigate = useNavigate();
+         
+    
+  
+         if(patientsInformation?.AppointmentDetails?.isDiagnosisFilled) {
+              navigate(`../patientsInfo/${patientsInformation?.AppointmentDetails?.appointmentId}`);
+         }
+  
     
     return (
         <> 

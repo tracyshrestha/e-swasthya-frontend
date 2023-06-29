@@ -55,6 +55,7 @@ const Appointments = () => {
                                     status : ele.status,
                                     patientId: ele.patientId,
                                     patientName: ele.patientName,
+                                    isDiagnosisFilled : ele.isDiagnosisFilled,
                                     imagePath: resData?.data?.data?.imagePath,
                                     gender: resData?.data?.data?.gender,
                                     age: resData?.data?.data?.age
