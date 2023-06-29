@@ -5,6 +5,7 @@ import { PatientDetailsContext } from '../../PatientsDetailsState/PatientDetailC
 import uuid from 'react-uuid';
 import axios from 'axios';
 import { AuthContext } from '../../../../Store/UserState';
+import { useNavigate } from 'react-router-dom';
 
 
 const MedicalHistory = () => {
@@ -12,6 +13,7 @@ const MedicalHistory = () => {
     const { patientsInformation } = useContext(PatientDetailsContext)
     const { getStoredCookie } = useContext(AuthContext)
     const [History, SetHistory] = useState([]);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -48,11 +50,10 @@ const MedicalHistory = () => {
             }
         })
     }
-
-
-
-
-
+     
+    const viewMore = (currentAppointmentId,reportAppointment) => {
+            navigate(`../ViewMedical/${currentAppointmentId}/${reportAppointment}`)
+    }
 
     // useEffect(() => {
     //    let accordionItems = []
@@ -93,7 +94,7 @@ const MedicalHistory = () => {
 
     // }, [History])
 
-    console.log(History);
+   
 
 
 
@@ -104,6 +105,7 @@ const MedicalHistory = () => {
             
             {
               History.length !== 0 ?  History.map((ele, key) => {
+                
                     return (
                         <>
                             <h2 id={`${ele.uniqueId}`} >
@@ -160,7 +162,8 @@ const MedicalHistory = () => {
                                         <textarea rows="4" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{ele?.diagnosisDescription}</textarea>
                                         <button
                                             type="button"
-                                            disabled="true"
+                                            
+                                            onClick={() => {viewMore(patientsInformation?.AppointmentDetails?.appointmentId,ele?.appointmentId)}}
                                             className="mt-5 px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
                                         >
                                             View More
