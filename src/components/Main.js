@@ -10,7 +10,9 @@ import SearchComponent from "./pages/SearchComponent/SearchComponent";
 import VerifyAccountLink from "./pages/VerifyAccPages/VerifyAccountLink";
 import InfoP from "./pages/InfoPages/InfoPatient";
 import InfoFDoc from "./pages/InfoPages/InfoFDoc";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/ErrorPages/NotFound";
+import InternalServerError from "./pages/ErrorPages/InternalServerError";
+import UnauthorizedError from "./pages/ErrorPages/UnauthorizedError";
 import RecoverAccount from "./pages/RecoverPages/RecoverAccount";
 import ResetPassword from "./pages/RecoverPages/ResetPassword";
 import VerifyResetPasswordLink from "./pages/RecoverPages/VerifyResetPasswordLink";
@@ -179,6 +181,8 @@ function Main() {
         <Route path="/diagnosis" element={<Diagnosis />} />
         <Route path="/prescription" element={<Prescription />} />
         <Route path="/reporttest" element={<ReportTest />} />
+        <Route path="/internalservererror" element={<InternalServerError />} />
+        <Route path="/unauthorizederror" element={<UnauthorizedError />} />
         <Route path="*" element={<NotFound />} />
         {/* for user dashboard but will later make it all render in one place
         aile lai kam chalau code ho! */}
