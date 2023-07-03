@@ -59,7 +59,6 @@ const ViewMedical = () => {
     return (
         <>
             {!patientsInformation?.AppointmentDetails?.isDiagnosisFilled ? <AddDetailsWidget patientsInformation={patientsInformation} /> : null}
-            
             <button  onClick={GoBack} type="button" class="mb-5 bg-[#72b4f5] text-white rounded-md  border-gray-100 py-2  px-3">
                 <div class="flex flex-row align-middle">
                     <svg class="w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

@@ -5,7 +5,7 @@ import Message from "../../../../UserAuthentication/Helper/Message"
 
 const AddHistoryModal = ({ patientsInformation }) => {
 
-    const { onClose, Drug, Report, Diagnosis, finalSubmit, formattedDate, error, loading, Messages } = useContext(HistoryContext)
+    const { onClose, Drug,Final ,Report, Diagnosis, finalSubmit, formattedDate, error, loading, Messages } = useContext(HistoryContext)
 
     return (
         <div id="historyModal" tabindex="-1" aria-hidden="true" class=" backdrop-blur-sm bg-gray/30 flex hidden items-center justify-center h-screen fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -60,7 +60,7 @@ const AddHistoryModal = ({ patientsInformation }) => {
                                         <div className="grid grid-cols-2 pb-2">
                                             <div className=" text-left  text-gray-400 ">
                                                 <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diagonsis</label>
-                                                {Diagnosis?.diagonsis}
+                                                 {Diagnosis?.diseaseName}
                                             </div>
                                         </div>
                                     </div>

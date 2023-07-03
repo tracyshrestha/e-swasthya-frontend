@@ -1,8 +1,11 @@
 import AdminHome from "./PageComponents/AdminHome";
+import DashBoardContextProvider from "./PageComponents/Context/Dashboard";
 
 const Home = () => {
     return (
-        <AdminHome/>
+        <DashBoardContextProvider>
+              <AdminHome/>
+        </DashBoardContextProvider>
     )
 }
 

@@ -4,11 +4,13 @@ import { PatientDetailsContext } from "../../PatientsDetailsState/PatientDetailC
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../../Store/UserState";
+
 export const HistoryContext = createContext();
 
 
 
 const HistoryDetailContext = (props) => {
+
 
     const { getStoredCookie } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -21,10 +23,90 @@ const HistoryDetailContext = (props) => {
     const { AppointmentId } = useParams();
 
 
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [Messages, setMessage] = useState('');
+
+    //Handling diseases form field - Updated for Admin dashboard
+    const [DiseaseType, SetDiseaseType] = useState("");
+    const [OptionsDiseases, SetoptionDiseases] = useState([]);
+    const [FetchedDiseases, SetfetchedDiseases] = useState([]);
+
+    const [DrugOptions, SetDrugoptions] = useState([]);
+    const [FetchedDrugName, SetFetchedDrugName] = useState([]);
+
+
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/diagnosis/list-disease-type`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`
+            }
+        })
+            .then((resData) =>
+                SetoptionDiseases(resData?.data?.data)
+            )
+            .catch((error) => console.log(error));
+
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/prescription/list-medicine-type`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`
+            }
+        })
+            .then((resData) =>
+                SetDrugoptions(resData?.data?.data)
+            )
+            .catch((error) => console.log(error));
+
+    }, [])
+
+    const [DrugTypeState, setDrugTypeState] = useState('');
+    
+
+    
+   
+    const HandleDrugChanges = (id,event) => {
+         setDrugTypeState(event.target.value)
+    }
+
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/prescription/list-medicine-name-by-type?medicineType=${DrugTypeState}`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`
+            }
+        })
+            .then((resData) => {
+                SetFetchedDrugName(() => (resData?.data?.data))
+            })
+            .catch((error) => console.log(error));
+    }, [DrugTypeState])
+
+
+
+
+
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: `${process.env.REACT_APP_API}api/diagnosis/list-disease-name-by-type?diseaseType=${Diagnosis?.diseaseType}`,
+            headers: {
+                'Authorization': `Bearer ${getStoredCookie("token")}`
+            }
+        })
+            .then((resData) =>
+                SetfetchedDiseases(resData.data.data)
+            )
+            .catch((error) => console.log(error));
+    }, [Diagnosis])
+
+
+
+
 
 
     let currentDate = new Date();
@@ -35,9 +117,9 @@ const HistoryDetailContext = (props) => {
     let formattedDate = `${year}-${month}-${day}`;
 
 
-    const [track,setTrack] = useState(false);
+    const [track, setTrack] = useState(false);
 
-    const [superFinal,setSuperFinal] = useState();
+    const [superFinal, setSuperFinal] = useState();
 
 
     const AddnewDrug = () => {
@@ -47,12 +129,39 @@ const HistoryDetailContext = (props) => {
                 id: random,
                 DrugName: 'DrugName',
                 Dosage: '',
-                DrugType: '',
+                DrugType: DrugOptions[0],
                 Frequency: '',
                 Description: '',
                 Duration: ''
             }]
         })
+    }
+
+    const OnDrugChange = id => event => {
+        if(event.target.name === "DrugType"){HandleDrugChanges(id,event)}
+        setDrug(prevItems => {
+            return prevItems.map(item => {
+                if (item.id === id) {
+                    return { ...item, [event.target.name]: event.target.value };
+                }
+                return item;
+            });
+        });
+    }
+
+    const setDrugName = (id, value) => {
+        setDrug(prevItems => {
+            return prevItems.map(item => {
+                if (item.id === id) {
+                    return { ...item, "DrugName": value };
+                }
+                return item;
+            });
+        });
+    }
+
+    const getDrugValue = (id) => {
+        return null;
     }
 
     const AddnewReport = () => {
@@ -116,29 +225,25 @@ const HistoryDetailContext = (props) => {
 
     }
 
-    const OnDrugChange = id => event => {
-        setDrug(prevItems => {
-            return prevItems.map(item => {
-                if (item.id === id) {
-                    return { ...item, [event.target.name]: event.target.value };
-                }
-                return item;
-            });
-        });
-    }
-
     const onDiagonsisChange = (event) => {
         setDiagnosis((prev) => {
             return { ...prev, [event.target.name]: event.target.value }
         })
+        if (event.target.name != "diagonsisNote") { SetDiseaseType('') }
     }
 
     const onAdd = (e) => {
         e.preventDefault();
         let a = document.getElementById("historyModal");
+
         a.classList.remove("hidden");
+        setDiagnosis((prevState) => {
+            return { ...prevState, "diseaseName": DiseaseType }
+        })
+
         let diagnosis = {
-            diseaseName: Diagnosis.diagonsis,
+            diseaseName: DiseaseType,
+            diseaseType: Diagnosis.diseaseType,
             diagnosisDescription: Diagnosis.diagonsisNote,
             patientDetailId: patientsInformation?.patientId,
             doctorDetailId: localStorage.getItem("doctorId"),
@@ -149,6 +254,7 @@ const HistoryDetailContext = (props) => {
             Drug.map((ele) => {
                 prescriptionList.push({
                     medicineName: ele?.DrugName,
+                    medicineType: ele?.DrugType,
                     dosageInUnit: ele?.Dosage,
                     frequencyPerDay: ele?.Frequency,
                     additionalNote: ele?.Description,
@@ -166,18 +272,17 @@ const HistoryDetailContext = (props) => {
                 prescriptionList
             }
         })
+        console.log(Final, "srijan")
     }
-   
-
 
 
     const finalSubmit = async () => {
         setTrack(true);
         setLoading(true);
-     }
+    }
 
-   useEffect(() => {
-        if(superFinal) { 
+    useEffect(() => {
+        if (superFinal) {
             axios({
                 method: "POST",
                 url: `${process.env.REACT_APP_API}api/diagnosis/save-diagnosis-test-result-prescription`,
@@ -187,17 +292,15 @@ const HistoryDetailContext = (props) => {
                 data: superFinal
             })
                 .then((res) => {
-                    setLoading(false);
                     setMessage(res?.data?.data?.message);
                     setTimeout(() => {
+                        setLoading(false);
                         navigate(-1);
-                    },1500)
-                    
+                    }, 1500)
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => { console.log(error); setLoading(false); })
         }
-           
-   },[superFinal])
+    }, [superFinal])
 
     useEffect(() => {
         const handleTestResults = async () => {
@@ -225,10 +328,12 @@ const HistoryDetailContext = (props) => {
                             imagePath: ress[id]?.data?.url,
                         };
                     })
-                     
+
                     setSuperFinal((prevState) => {
-                         return {...Final,testResultList}
+                        return {...Final, testResultList }
                     })
+                }else {
+                    setSuperFinal((prevState) => {return {...Final}})
                 }
             } catch (error) {
                 console.log(error);
@@ -237,7 +342,7 @@ const HistoryDetailContext = (props) => {
         };
         handleTestResults();
     }, [track]);
-    
+
 
     // const handleTestResults = async () => {
     //     try {
@@ -349,6 +454,9 @@ const HistoryDetailContext = (props) => {
                 loading,
                 Messages,
 
+                FetchedDrugName,
+                setDrugName,
+
                 Drug,
                 OnDrugChange,
                 AddnewDrug,
@@ -358,12 +466,17 @@ const HistoryDetailContext = (props) => {
                 setDiagnosis,
                 onDiagonsisChange,
                 Report,
+                DiseaseType, SetDiseaseType,
                 setReport,
                 AddnewReport,
                 RemoveReport,
+                OptionsDiseases,
                 finalSubmit,
                 MedicalFileChange,
+                getDrugValue,
                 formattedDate,
+                FetchedDiseases,
+                DrugOptions,
                 onAdd,
                 ReportChange
             }}

@@ -2,15 +2,17 @@ import { BsFillPersonVcardFill } from 'react-icons/bs'
 import { RiMedicineBottleFill } from 'react-icons/ri'
 import { MdVaccines } from 'react-icons/md'
 import Chart from './chart/Chart'
+import { Link } from 'react-router-dom'
 
 import { useContext } from 'react'
 import { DoctorContext } from '../../DoctorGlobalState'
 
 
 const PatientsInfo = () => {
-   
-    const {DoctorInformation} = useContext(DoctorContext);
+
+    const { DoctorInformation, PatientsData } = useContext(DoctorContext);
     let HospitalList = DoctorInformation?.hospitalNames?.split(",");
+
 
 
     return (
@@ -75,20 +77,20 @@ const PatientsInfo = () => {
                     <div className='grid grid-cols-3 gap-3'>
 
                         {
-                            HospitalList?.map((ele,key) => {
-                                 return (
+                            HospitalList?.map((ele, key) => {
+                                return (
                                     <button
-                                    key={key}
-                                    type="button"
-                                    disabled="true"
-                                    className="px-2 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    {ele}
-                                </button>
-                                 )
+                                        key={key}
+                                        type="button"
+                                        disabled="true"
+                                        className="px-2 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                    >
+                                        {ele}
+                                    </button>
+                                )
                             })
                         }
-                        
+
 
                     </div>
                 </div>
@@ -98,10 +100,10 @@ const PatientsInfo = () => {
                 <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                     <span className='text-2xl mr-2'><MdVaccines /></span>Patients flow
                 </div>
-                <Chart/>
+                <Chart />
             </div>
             <div className="lg:col-span-12 rounded-sm border-[2px] border-[#f8f8f8] bg-white shadow-xl ">
-                
+
                 <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                     <span className='text-2xl mr-2'><RiMedicineBottleFill /></span> Appointments
                 </div>
@@ -110,100 +112,65 @@ const PatientsInfo = () => {
                         <thead>
                             <tr className='text-left'>
                                 <th>Patients Name</th>
-                                <th>Date</th>
+                                <th>Time</th>
                                 <th>Hospital</th>
                                 <th>View</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            <tr>
-                                <td className='py-3'>
-                                    <div class="flex items-center space-x-4">
-                                        <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="" />
-                                        <div class="font-medium dark:text-white">
-                                            <div>Jese Leos</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">Male, 65 years</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>2023/02/22</td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Bir Hospital
-                                </button></td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    View more
-                                </button></td>
-                            </tr>
-                            
-                            <tr>
-                                <td className='py-3'>
-                                    <div class="flex items-center space-x-4">
-                                        <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="" />
-                                        <div class="font-medium dark:text-white">
-                                            <div>Jese Leos</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">Female, 15 years</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>2023/02/22</td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Bir Hospital
-                                </button></td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    View more
-                                </button></td>
-                            </tr>
-                            <tr>
-                                <td className='py-3'>
-                                    <div class="flex items-center space-x-4">
-                                        <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="" />
-                                        <div class="font-medium dark:text-white">
-                                            <div>Jese Leos</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">Female, 15 years</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>2023/02/22</td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    Bir Hospital
-                                </button></td>
-                                <td><button
-                                    type="button"
-                                    disabled="true"
-                                    className="px-5 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
-                                >
-                                    View more
-                                </button></td>
-                            </tr>
+
+                            {PatientsData.length === 0 ? <div class="pl-10 text-base mt-4 text-center font-semibold">No patient data</div> :
+                      
+                                (
+                                    PatientsData.slice(0,4).map((ele, key) => {
+                                         if(key !==4) 
+                                        return (
+                                            <tr key={key} class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                <td className='py-3'>
+                                                    <div class="flex items-center space-x-4">
+                                                        <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="" />
+                                                        <div class="font-medium dark:text-white">
+                                                            <div>{ele.patientName}</div>
+                                                            <div class="text-sm text-gray-500 dark:text-gray-400">{ele.age} years, {ele.gender}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-3 py-2">
+                                                    <button
+                                                        type="button"
+                                                        disabled="true"
+                                                        className="px-2 py-2 w-max text-sm rounded-md text-white bg-[#42ADF0]"
+                                                    >
+                                                        {ele.appointmentTime}
+                                                    </button>
+                                                </td>
+                                                <td class="px-3 py-2">
+                                                    {ele.hospitalName}
+                                                </td>
+                                                <td className="px-3 py-4">
+                                                    <Link to={`../patientsInfo/${ele.appointmentId}`}>
+                                                        <button
+                                                            type="button"
+                                                            className="mr-2 px-3 py-2 text-sm rounded-md text-white bg-[#42ADF0]"
+                                                        >
+                                                            View more
+                                                        </button>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                )}
+
+
                         </tbody>
                         <div className='flex mt-5'>
-                                 <svg data-accordion-icon class="w-12 h-12 text-eswasthyaprim " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            </div>
+                            <svg data-accordion-icon class="w-12 h-12 text-eswasthyaprim " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </div>
                     </table>
                 </div>
             </div>
-            
+
         </div>
     )
 }

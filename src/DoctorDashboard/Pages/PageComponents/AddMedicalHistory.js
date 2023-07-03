@@ -9,20 +9,22 @@ import {useNavigate } from 'react-router-dom'
 import AddReport from './Accordion/AddReport'
 import { PatientDetailsContext } from '../PatientsDetailsState/PatientDetailContext'
 import AddHistoryModal from './AddHisoryModal/AddHistoryModal'
+import SearchComponent from './DiseasesSearch/SearchComponent'
+
+
 
 
 
 
 const AddMedicalHistory = () => {
-    const {AddnewDrug,AddnewReport,onAdd,onDiagonsisChange,ReportChange} = useContext(HistoryContext);
+    const {AddnewDrug,AddnewReport,FetchedDiseases,OptionsDiseases,onAdd,onDiagonsisChange,ReportChange} = useContext(HistoryContext);
     const {patientsInformation} = useContext(PatientDetailsContext);
     const navigate = useNavigate();
          
-    
-  
-         if(patientsInformation?.AppointmentDetails?.isDiagnosisFilled) {
+
+    if(patientsInformation?.AppointmentDetails?.isDiagnosisFilled) {
               navigate(`../patientsInfo/${patientsInformation?.AppointmentDetails?.appointmentId}`);
-         }
+    }
   
     
     return (
@@ -71,11 +73,33 @@ const AddMedicalHistory = () => {
                                         <div className="grid grid-cols-2 pb-2">
                                             <div className=" text-left  text-gray-400 ">
                                                 <h1 className="sm:text-[15px] text-[12px]  relative text-gray-400">
+                                                    Select Disease
+                                                </h1>
+                                            </div>
+                                        </div>
+                                        <select onChange={onDiagonsisChange}
+                                            name="diseaseType" defaultValue={OptionsDiseases[0]} id="provinces" required class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                  {
+                                                     OptionsDiseases.map((ele,key) => {
+                                                         return (
+                                                            <option value={ele} key={key} selected={key === 0}>{ele}</option>
+                                                         )
+                                                     })
+                                                  }
+                                           
+                                        </select>
+                                    </div>
+
+                                    <div className="relative pb-6">
+                                        <div className="grid grid-cols-2 pb-2">
+                                            <div className=" text-left  text-gray-400 ">
+                                                <h1 className="sm:text-[15px] text-[12px]  relative text-gray-400">
                                                     Diagnosis
                                                 </h1>
                                             </div>
                                         </div>
-                                        <input
+                                          <SearchComponent SearchField={FetchedDiseases}/>
+                                        {/* <input
                                             required
                                             onChange={onDiagonsisChange}
                                             name="diagonsis"
@@ -83,22 +107,9 @@ const AddMedicalHistory = () => {
                                             id="email-address-icon"
                                             class=" h-[50px] placeholder-gray-300 0 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5  "
                                             placeholder="diabetes mellitus"
-                                        ></input>
+                                        ></input> */}
                                     </div>
-                                    <div className="relative pb-6">
-                                        <div className="grid grid-cols-2 pb-2">
-                                            <div className=" text-left  text-gray-400 ">
-                                                <h1 className="sm:text-[15px] text-[12px]  relative text-gray-400">
-                                                    Select Disease
-                                                </h1>
-                                            </div>
-                                        </div>
-                                        <select onChange={onDiagonsisChange}
-                                            name="diseaseType" id="provinces" required class="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 text-xs lg:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            <option value="Diabetes">Diabetes</option>
-                                            <option value="Brain Tumor">Brain Tumor</option>
-                                        </select>
-                                    </div>
+                                    
                                 </div>
                                 <div className="relative mt-2">
                                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clinical Description</label>

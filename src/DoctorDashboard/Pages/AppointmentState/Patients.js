@@ -111,7 +111,7 @@ const Patients = () => {
 
                     <tbody>
 
-                        {patientData.length === 0 ? <div class="pl-10 text-base mt-4 text-center font-semibold">No patient data</div> :
+                        {patientData.length === 0  ? <div class="pl-10 text-base mt-4 text-center font-semibold">No patient data</div> :
 
                             (
                                 patientData.map((ele, key) => {

@@ -17,7 +17,7 @@ const MedicalReport = ({ Reports}) => {
         <div className="w-full">
 
             {
-                Reports?.map((ele, key) => {
+               Reports?.length !== 0 ? ( Reports?.map((ele, key) => {
                     return (
                         <>
                             <h2 key={key} id={`${ele?.id}`} >
@@ -54,13 +54,8 @@ const MedicalReport = ({ Reports}) => {
                             </div>
                         </>
                     )
-                })
+                })) : <div class="text-base mt-4 text-center font-semibold">No Medical record</div>
             }
-
-
-
-
-
         </div>
 
     )

@@ -7,10 +7,12 @@ import  {LiaStethoscopeSolid} from 'react-icons/lia'
 
 
 import Map from './Map';
-import { useState } from 'react';
+import { useState , useContext} from 'react';
+import { DashBoardContext } from './Context/Dashboard';
 
 const AdminHome = () => {
     const [Name, setName] = useState('')
+    const {Total}  = useContext(DashBoardContext)
     return (
         <>
             <div className="h-fit  overflow-hidden rounded-sm border-[2px] border-[#f8f8f8] bg-white shadow-xl ">
@@ -23,15 +25,11 @@ const AdminHome = () => {
 
                         <div className='grid grid-cols-3'>
                             <div class="flex flex-col col-span-2 pl-5 pb-5">
-
                                 <h5 class="mb-1 text-xl align-left font-bold text-gray-900">Total Patients</h5>
-                                <h5 class="mb-1 text-5xl align-left font-bold text-gray-900">48</h5>
-
+                                <h5 class="mb-1 text-5xl align-left font-bold text-gray-900">{Total.totalPatients}</h5>
                             </div>
-
                             <h1 className='text-7xl'><FiUsers /></h1>
                         </div>
-
                     </div>
                     <div class="w-full h-fit max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow">
 
@@ -39,7 +37,7 @@ const AdminHome = () => {
                             <div class="flex col-span-2 flex-col pl-5 pb-5">
 
                                 <h5 class="mb-1 text-xl align-left font-bold text-gray-900">Total Doctors</h5>
-                                <h5 class="mb-1 text-5xl align-left font-bold text-gray-900">49</h5>
+                                <h5 class="mb-1 text-5xl align-left font-bold text-gray-900">{Total.totalDoctors}</h5>
 
                             </div>
 
@@ -72,7 +70,7 @@ const AdminHome = () => {
                     <div className="info flex items-center bg-eswasthyaprim text-white p-3">
                         <span className='text-2xl mr-2'><RiMedicineBottleFill /></span> Demographic visualization
                     </div>
-                    <div className="relative grid grid-cols-1 pl-7 pr-5 overflow-scroll">
+                    <div className="relative grid grid-cols-1  overflow-scroll">
                         <Map Name={Name} setName={setName} />
                     </div>
                 </div>
@@ -119,9 +117,9 @@ const AdminHome = () => {
                                 <div class="w-full h-fit max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow">
 
                                     <div className='grid grid-cols-1'>
-                                        <div class="flex flex-col pl-5 pb-8">
+                                        <div class="flex flex-col h-[105px] pl-5 pb-8">
                                             <h5 class="mb-1 text-lg align-left font-bold text-gray-600">District Name</h5>
-                                            <h5 class="mb-1 text-2xl align-left font-bold text-gray-900">{Name}</h5>
+                                            <h5 class="mb-1 text-2xl align-left font-bold text-gray-900">{Name.charAt(0).toUpperCase() + Name.slice(1)}</h5>
                                         </div>
                                     </div>
 
