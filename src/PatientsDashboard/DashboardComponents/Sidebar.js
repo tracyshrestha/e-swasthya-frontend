@@ -21,7 +21,7 @@ const Sidebar = () => {
         { title: 'Home', path: '/',src: <AiFillHome/> },
         { title: 'Doctors', path: '/doctors' ,src:<BsThermometerSun/> },
         { title: 'Appointments', path: '/Appointments' ,src:<GiMedicines/> },
-        { title: 'History', path: '/reports' ,src:<GrDocumentStore/> },
+        { title: 'History', path: '/viewMedical' ,src:<GrDocumentStore/> },
         { title: 'Logout', function:true ,src:<TbLogout/> }
     ]
 
